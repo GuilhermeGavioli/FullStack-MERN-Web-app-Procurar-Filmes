@@ -4,9 +4,11 @@ import { grey } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 
 import { useGoogleLogin } from '@react-oauth/google';
-
+import Cookies from 'js-cookie';
 import { useContext } from 'react';
 import { AuthContext } from '../App';
+
+import { useNavigate } from 'react-router-dom';
 
 const GoogleButtonStyle = styled(Button)(({ theme }) => ({
     color: grey[900],
@@ -20,6 +22,7 @@ const GoogleButtonStyle = styled(Button)(({ theme }) => ({
 
 
 export default function GoogleButonComp() {
+  const navigator = useNavigate()
 
   const {auth, setAuth} = useContext(AuthContext)
 
@@ -45,6 +48,8 @@ async function delegateGoogleOAuthToBackend(){
       image: data.user.image
     }
   })
+  Cookies.set('token', data.token, { expires: 7 });
+  navigator('/')
   
 }
 

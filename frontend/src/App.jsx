@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { lightTheme, darkTheme } from './theme'
 
@@ -9,7 +9,7 @@ import MainPage from './Components/Pages/MainPage';
 import MenuAppBar from './Components/AppBar';
 
 import { createContext } from 'react';
-
+import Cookies from 'js-cookie';
 
 export const ThemeContext = createContext();
 export const AuthContext = createContext();
@@ -20,6 +20,7 @@ function App() {
 
   function toggleThemeHandler(){
     setIsDarkMode(!isDarkMode)
+    Cookies.set('theme', isDarkMode, {expires: 1})
   }
 
   const [auth, setAuth] = useState({
@@ -31,7 +32,22 @@ function App() {
     }
   })
 
+  useEffect(()=>{
+    const preftheme = Cookies.get('theme')
+    console.log(preftheme)
+    if (preftheme){
+      setIsDarkMode(true)    
+      } else {
+      setIsDarkMode(false)
 
+    }
+    const token = Cookies.get('token')
+    if (token){
+      setAuth({...auth, isAuth: true})
+    }
+    //call the server
+    console.log('test')
+  }, [])
   
   
   
