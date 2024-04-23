@@ -1,10 +1,10 @@
 import { createTheme } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 
-const lightTheme = createTheme({
+const darkTheme = createTheme({
   palette: {
     hover: grey[400],
-    primary: {
+    primary: { //bg
       main: '#ffffff',
       darker: grey[500]
     },
@@ -15,10 +15,10 @@ const lightTheme = createTheme({
   },
 });
 
-const darkTheme = createTheme({
+const lightTheme = createTheme({
     palette: {
       hover: grey[200],
-      primary: {
+      primary: { //bg
         main: grey[900],
       },
       secondary: {

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { lightTheme, darkTheme } from './theme'
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import LoginPage from './Components/Pages/LoginPage';
 import MainPage from './Components/Pages/MainPage';
 import MenuAppBar from './Components/AppBar';
@@ -11,16 +11,33 @@ import MenuAppBar from './Components/AppBar';
 import { createContext } from 'react';
 import Cookies from 'js-cookie';
 
+
+
 export const ThemeContext = createContext();
 export const AuthContext = createContext();
 
 function App() {
   
+  const navigator = useNavigate()
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   function toggleThemeHandler(){
     setIsDarkMode(!isDarkMode)
-    Cookies.set('theme', isDarkMode, {expires: 1})
+    // Cookies.set('theme', isDarkMode, {expires: 1})
+  }
+
+  function logout(){
+
+    Cookies.remove('token')
+    setAuth({
+      isAuth: false,
+      token: null,
+      user: {
+        name: null,
+        image: null
+    }
+    })
+    navigator('/login')
   }
 
   const [auth, setAuth] = useState({
@@ -60,15 +77,15 @@ function App() {
 
   return (
 
-  <AuthContext.Provider value={{auth, setAuth}}>
+  <AuthContext.Provider value={{auth, setAuth, logout}}>
         <ThemeContext.Provider value={{theme, toggleThemeHandler}}>
           <MenuAppBar></MenuAppBar>
-          <BrowserRouter>
+  
               <Routes>
                 <Route path="/"       element={ <MainPage /> }></Route>
                 <Route path="/login"  element={ <LoginPage /> }></Route>
               </Routes>
-          </BrowserRouter>
+   
           </ThemeContext.Provider>
       </AuthContext.Provider>
 

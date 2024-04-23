@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom"
 import Cookies from 'js-cookie';
 import { AuthContext } from "../../App";
 import MovieCard from "../MovieCard";
+import { grey } from "@mui/material/colors";
 // import { movies_mock } from "../../moviesmock";
+
 
 export default function MainPage() {
 
@@ -72,7 +74,7 @@ export default function MainPage() {
   
 <>
     
-      <div style={{marginTop: '60px', marginBottom: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
+      <div style={{backgroundColor: grey[900], paddingTop: '70px', marginBottom: '50px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
         {movies.map((movie, i) => {
           return (
      

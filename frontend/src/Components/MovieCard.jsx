@@ -14,14 +14,14 @@ export default function MovieCard({title, description, rating}) {
   return (
 
 
-    <Card sx={{ maxWidth: 200, minWidth: 200 }}>
+    <Card sx={{ maxWidth: 200, minWidth: 200, background: grey[900],  }}>
     <CardMedia
-      sx={{ height: 200 }}
+      sx={{ height: 200, margin: '10px' }}
       image="https://play-lh.googleusercontent.com/-thEPwcogHMGgY9K6F2zVpmVHSRw30FLH3vTdsR_nd6g2_RL3Jz3S4XkqBSqa0KomGW_"
       title={title}
     />
     <CardContent>
-      <Typography gutterBottom variant="h5" component="div" color={grey[800]}>
+      <Typography gutterBottom variant="h5" component="div" color={grey[50]}>
         {title}
       </Typography>
       <Typography variant="body2"  color={grey[500]}>

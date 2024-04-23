@@ -9,14 +9,18 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 
+
 import { GoogleOAuthProvider  } from '@react-oauth/google';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <GoogleOAuthProvider clientId="483651865774-nt9c6up5vhk94roqmijr7kgdjd8jliud.apps.googleusercontent.com">
+       <BrowserRouter>
   <React.StrictMode>
     <App />
   </React.StrictMode>
+       </BrowserRouter>
   </GoogleOAuthProvider>
 );
 

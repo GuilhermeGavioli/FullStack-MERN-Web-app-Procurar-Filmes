@@ -15,7 +15,7 @@ import { ThemeContext, AuthContext } from '../App';
 export default function MenuAppBar() {
 
   const { theme, toggleThemeHandler } = useContext(ThemeContext);
-  const {auth, setAuth} = useContext(AuthContext);
+  const {auth, setAuth, logout} = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleChange = (event) => {
@@ -31,12 +31,12 @@ export default function MenuAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100vw', zIndex: 10 }}>
+    <Box sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100vw', zIndex: 10, boxShadow: 'none', textShadow: 'none' }}>
 
       <AppBar position="static" sx={{
           '& .MuiToolbar-root': {
             display: 'flex',
-            background: 'red',
+            background: theme.palette.primary.main,
            justifyContent: 'space-between'
           }
         }}>
@@ -52,7 +52,7 @@ export default function MenuAppBar() {
 
           </IconButton> */}
      
- <CustomizedSwitch toggleThemeHandler={toggleThemeHandler}></CustomizedSwitch>
+ {/* <CustomizedSwitch toggleThemeHandler={toggleThemeHandler}></CustomizedSwitch> */}
 
           {auth.isAuth && (
             <div>
@@ -82,7 +82,7 @@ export default function MenuAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
+                <MenuItem onClick={() => {handleClose(); logout()}}>Logout</MenuItem>
               </Menu>
             </div>
           )}

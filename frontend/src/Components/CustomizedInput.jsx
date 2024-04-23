@@ -8,14 +8,14 @@ import { ThemeContext } from '../App';
 
 
 const CustomizedInputStyle = styled(TextField)(({ theme }) => ({
-    backgroundColor: 'white',
+    backgroundColor: theme.palette.primary.hover,
     color: 'yellow',
     '&:hover': {
-      backgroundColor: theme.palette.primary.hover,
+      backgroundColor: 'white',
     },
 
     '& .MuiOutlinedInput-notchedOutline .MuiInputBase-input': {
-      color: 'yellow',
+      color: 'red',
     }
 }));
 
