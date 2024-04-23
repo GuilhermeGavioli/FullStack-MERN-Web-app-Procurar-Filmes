@@ -4,9 +4,9 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-// import AccountCircle from '@mui/icons-material/AccountCircle';
-// import MenuItem from '@mui/material/MenuItem';
-// import Menu from '@mui/material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import CustomizedSwitch from './CustomizedSwitch';
 import { useContext, useState } from 'react';
 import { ThemeContext, AuthContext } from '../App';
@@ -31,7 +31,7 @@ export default function MenuAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100vw' }}>
+    <Box sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100vw', zIndex: 10 }}>
 
       <AppBar position="static" sx={{
           '& .MuiToolbar-root': {
@@ -41,7 +41,7 @@ export default function MenuAppBar() {
           }
         }}>
         <Toolbar >
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -50,13 +50,11 @@ export default function MenuAppBar() {
           >
             <MenuIcon />
 
-          </IconButton>
-          <p>
-            {auth.isAuth ? 'auth' : 'non auth'}
-          </p>
+          </IconButton> */}
+     
  <CustomizedSwitch toggleThemeHandler={toggleThemeHandler}></CustomizedSwitch>
 
-          {/* {auth.isAuth && (
+          {auth.isAuth && (
             <div>
               <IconButton
                 size="large"
@@ -84,10 +82,10 @@ export default function MenuAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <MenuItem onClick={handleClose}>Logout</MenuItem>
               </Menu>
             </div>
-          )} */}
+          )}
         </Toolbar>
       </AppBar>
     </Box>

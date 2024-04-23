@@ -39,14 +39,7 @@ function App() {
       setIsDarkMode(true)    
       } else {
       setIsDarkMode(false)
-
     }
-    const token = Cookies.get('token')
-    if (token){
-      setAuth({...auth, isAuth: true})
-    }
-    //call the server
-    console.log('test')
   }, [])
   
   
