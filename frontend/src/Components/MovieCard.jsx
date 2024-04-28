@@ -5,50 +5,112 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Rating } from '@mui/material';
 import Fab from '@mui/material/Fab';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { grey } from '@mui/material/colors';
-import CustomizedButton from './CustomizedButton';
 
+import { grey, amber } from '@mui/material/colors';
+import CustomizedButton from './CustomizedButton';
+import styled from 'styled-components'
+import { useState } from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { StyledEngineProvider } from '@mui/material';
 
 export default function MovieCard({title, description, rating}) {
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
 
+  <Container
+    onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
+    >
 
-    <Card sx={{ maxWidth: 200, minWidth: 200, background: grey[900],  }}>
-    <CardMedia
-      sx={{ height: 200, margin: '10px' }}
-      image="https://play-lh.googleusercontent.com/-thEPwcogHMGgY9K6F2zVpmVHSRw30FLH3vTdsR_nd6g2_RL3Jz3S4XkqBSqa0KomGW_"
-      title={title}
-    />
-    <CardContent>
-      <Typography gutterBottom variant="h5" component="div" color={grey[50]}>
-        {title}
-      </Typography>
-      <Typography variant="body2"  color={grey[500]}>
-       {description}
-      </Typography>
-      <Rating
-      sx={{marginTop: '10px'}}
-        name="read-only"
-        readOnly 
-        value={2}
-        onChange={(event, newValue) => {
-            //   setValue(newValue);
-        }}/>
-    </CardContent>
-    <CardActions>
-    
-        <CustomizedButton size="small" text="View More"></CustomizedButton>
-        <Button size="small">Rate</Button>
+      <MaskAround>
 
-    </CardActions>
-  </Card>
+      <BottomMask>
+
+     
+          <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column', padding: '5px' }}>
+            <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>Django Unchained</p>
+            <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>action</p>
+            
+          </div>
+          <div style={{padding: '0 5px 0 5px', height: '100%', width: 'fit-content', display: 'flex', alignItems: 'center'}}>
+          <Fab sx={{height: '20px', width: '40px', background: amber[700], color:"white"}}>
+          <FavoriteIcon size="small" color="white" sx={{height: '20px', width: '20px'}}/>
+
+        </Fab>
+
+          </div>
+       
+   
+     
+       
+
+      </BottomMask>
+
+      </MaskAround>
+<MovieImage ishovered={`${isHovered}`}
+src="" alt="" />
+{/* src="https://static.hd-trailers.net/images/-142844-poster-xlarge-resized.jpg" alt="" /> */}
+  </Container>
 
 
 
   );
 }
 
+const Container = styled.div`
+background-image: blue;
+width: 160px;
+height: 230px;
+position: relative;
+overflow: hidden;
+`
+
+const MaskAround = styled.div`
+  position: absolute;
+  inset: 0 0 0 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: ease-in-out 0.4s;
+  background: radial-gradient(circle, rgba(0,0,0,0.17689073920583853) 0%, rgba(0,0,0,0.5326330361246061) 53%, rgba(0,0,0,0.8939775739397321) 100%); 
+)}
+`
+
+const BottomMask = styled.div`
+display: flex;
+position: absolute;
+justify-content: space-between;
+bottom: 0;
+width: 100%;
+height: 50px;
+z-index: 2;
+
+background: linear-gradient(360deg, rgba(0,0,0,0.9079831761806285) 0%, rgba(0,0,0,0.4722128680573792) 53%, rgba(0,0,0,0) 100%); 
+`
+
+const ButtonContainer = styled(Fab)`
+  width: 50px;
+  height: 100%;
+`
+
+const MovieImage = styled.img`
+position: absolute;
+width: ${({ ishovered }) => (ishovered == "false" ? '160px' : '165px')};
+height: ${({ ishovered }) => (ishovered == "false" ? '230px' : '237px')};
+top: 50%;
+left: 50%;
+transform: ${({ ishovered }) => (ishovered == "false" ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) scale(1.05)')};
+
+transition: ease-in-out 0.3s;
+
+filter: ${({ ishovered }) => (ishovered == "false" ? 'brightness(0.5)' : 'brightness(1)')};
+`
 
 
-
+      {/* <Typography sx={{color: 'white', fontWeight: '700'}} variant="subtitle1" gutterBottom noWrap={true}>
+        Spider Man And The Spider Verse
+        </Typography>
+      <Typography sx={{color: 'white', fontWeight: '700'}} variant="subtitle2" gutterBottom noWrap={true}>
+        Suspense / Action
+      </Typography> */}

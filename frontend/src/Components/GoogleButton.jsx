@@ -1,6 +1,6 @@
 
 import Button from '@mui/material/Button';
-import { useGoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin, GoogleLogin  } from '@react-oauth/google';
 import Cookies from 'js-cookie';
 import { useContext } from 'react';
 import { AuthContext } from '../App';
@@ -9,8 +9,7 @@ import { ThemeContext } from '../App';
 import { grey } from '@mui/material/colors';
 
 
-//ID=  483651865774-nt9c6up5vhk94roqmijr7kgdjd8jliud.apps.googleusercontent.com
-//SECRET KEY=  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
+import {jwtDecode} from "jwt-decode";
 
 
 
@@ -21,14 +20,25 @@ export default function GoogleButonComp() {
   const {auth, setAuth} = useContext(AuthContext)
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => onGoogleSuccessLogin(tokenResponse),
-    flow: 'auth-code'
+    onSuccess: (tokenResponse, b) => onGoogleSuccessLogin(tokenResponse),
+    
 });
 
 function onGoogleSuccessLogin(tokenResponse){
   console.log(tokenResponse)
   delegateGoogleOAuthToBackend()
+
+  // delegateGoogleOAuthToBackend()
 }
+
+// const onSuccess = (response) => {
+//   const d = jwtDecode(response.credential)
+//   console.log(d)
+// };
+
+// const onFailure = (error) => {
+//   console.error('Login failed:', error);
+// };
 
 async function delegateGoogleOAuthToBackend(){
   // fetch backend
@@ -62,6 +72,13 @@ return (
     >
       Continue with Google</Button>
 
+
+   // <GoogleLogin
+    //clientId='483651865774-nt9c6up5vhk94roqmijr7kgdjd8jliud.apps.googleusercontent.com'
+    //buttonText="Login with Google"
+    //onSuccess={onSuccess}
+    //onFailure={onFailure}
+    ///> 
 )}
 
 

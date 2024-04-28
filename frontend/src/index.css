@@ -1,4 +1,46 @@
-body{
+*{
   padding: 0;
   margin: 0;
+  box-sizing: border-box;
+  
+}
+
+::-webkit-scrollbar-track{
+  display: none;
+    visibility: hidden;
+}
+
+::-webkit-scrollbar-button{
+  display: none;
+    visibility: hidden;
+}
+
+::-webkit-scrollbar-corner{
+  display: none;
+    visibility: hidden;
+}
+
+::-webkit-scrollbar-thumb{
+  display: none;
+    visibility: hidden;
+}
+
+::-webkit-scrollbar-track-piece{
+  display: none;
+  visibility: hidden;
+}
+
+body{
+  width: 100vw;
+  height: 100vh;
+}
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

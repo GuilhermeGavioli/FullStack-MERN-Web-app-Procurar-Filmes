@@ -10,6 +10,8 @@ import MenuAppBar from './Components/AppBar';
 
 import { createContext } from 'react';
 import Cookies from 'js-cookie';
+import AppBar2 from './Components/AppBar2';
+import BottomBar from './Components/BottomBar';
 
 
 
@@ -77,9 +79,11 @@ function App() {
 
   return (
 
-  <AuthContext.Provider value={{auth, setAuth, logout}}>
+  <AuthContext.Provider value={{auth, setAuth, logout}} style={{background: 'red'}}>
         <ThemeContext.Provider value={{theme, toggleThemeHandler}}>
-          <MenuAppBar></MenuAppBar>
+          {/* <MenuAppBar></MenuAppBar> */}
+          <AppBar2></AppBar2>
+          <BottomBar></BottomBar>
   
               <Routes>
                 <Route path="/"       element={ <MainPage /> }></Route>

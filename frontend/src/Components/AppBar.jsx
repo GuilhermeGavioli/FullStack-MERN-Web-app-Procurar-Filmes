@@ -10,6 +10,8 @@ import Menu from '@mui/material/Menu';
 import CustomizedSwitch from './CustomizedSwitch';
 import { useContext, useState } from 'react';
 import { ThemeContext, AuthContext } from '../App';
+import { Avatar } from '@mui/material';
+import { grey, amber } from '@mui/material/colors';
 
 
 export default function MenuAppBar() {
@@ -31,7 +33,7 @@ export default function MenuAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100vw', zIndex: 10, boxShadow: 'none', textShadow: 'none' }}>
+    <Box sx={{ flexGrow: 1, top: 0, width: '100vw', zIndex: 10, boxShadow: 'none', textShadow: 'none' }}>
 
       <AppBar position="static" sx={{
           '& .MuiToolbar-root': {
@@ -63,8 +65,10 @@ export default function MenuAppBar() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
+     
               >
-                <AccountCircle />
+                <Avatar alt="Gemy Sharp" src="/static/images/avatar/1.jpg"  sx={{ bgcolor: grey[600] }} />
+              
               </IconButton>
               <Menu
                 id="menu-appbar"
