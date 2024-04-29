@@ -1,18 +1,18 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState, useContext } from 'react';
-import { AuthContext } from '../App';
+import { AuthContext, SidebarContext } from '../App';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import { grey,amber } from '@mui/material/colors';
+import AppBar from '@mui/material/AppBar';
 
 
-
-export default function AppBar2() {
+export default function TopBar() {
+  const { setIsSidebarOpen } = useContext(SidebarContext)
     const {auth, setAuth, logout} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = useState(null);
   
@@ -32,8 +32,8 @@ export default function AppBar2() {
     <Box sx={{ flexGrow: 1, position: 'fixed',top: 0, width: '100vw', zIndex: 10 }}>
       <AppBar position="static" sx={{background: grey[900]}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between'}}>
-          <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <MenuIcon />
+          <IconButton onClick={() => {setIsSidebarOpen(true)}} edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+            <MenuIcon  />
           </IconButton>
           <Typography variant="h6" color="inherit" component="div">
             Movies

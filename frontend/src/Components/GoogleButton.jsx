@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import { useContext } from 'react';
 import { AuthContext } from '../App';
 import { useNavigate } from 'react-router-dom';
-import { ThemeContext } from '../App';
+// import { ThemeContext } from '../App';
 import { grey } from '@mui/material/colors';
 
 
@@ -14,7 +14,7 @@ import {jwtDecode} from "jwt-decode";
 
 
 export default function GoogleButonComp() {
-  const { theme } = useContext(ThemeContext)
+  // const { theme } = useContext(ThemeContext)
   const navigator = useNavigate()
 
   const {auth, setAuth} = useContext(AuthContext)
@@ -64,9 +64,9 @@ return (
     sx={{
       color: 'white',
       backgroundColor: grey[900],
-      border: `1px solid ${theme.palette.secondary.main}`,
+      // border: `1px solid ${theme.palette.secondary.main}`,
       '&:hover': {
-        border: `1px solid ${theme.palette.secondary.main}`,
+        // border: `1px solid ${theme.palette.secondary.main}`,
       }
     }}
     >

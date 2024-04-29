@@ -20,7 +20,7 @@ import { grey, orange } from '@mui/material/colors';
 
 
 export default function CustomizedButton({text, clickHandler}) {
-  const { theme, toggleThemeHandler } = useContext(ThemeContext);
+
 return (
   
     <Button fullWidth onClick={clickHandler} variant="contained"
@@ -29,8 +29,8 @@ return (
         color: 'white',
         backgroundColor: orange[600],
         '&:hover': {
-          color: theme.palette.primary.main,
-          backgroundColor: theme.palette.secondary.main,
+          // color: theme.palette.primary.main,
+          // backgroundColor: theme.palette.secondary.main,
         },
       }}
     

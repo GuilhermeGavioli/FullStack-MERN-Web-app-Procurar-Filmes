@@ -9,7 +9,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 import HomeIcon from '@mui/icons-material/Home';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import { grey } from '@mui/material/colors';
+import { grey, amber } from '@mui/material/colors';
 
 export default function BottomBar() {
   const [value, setValue] = React.useState('Home');
@@ -22,8 +22,9 @@ export default function BottomBar() {
     <BottomNavigation color="red" sx={{ background: grey[900], position: 'fixed',bottom: 0, width: '100vw', zIndex: 10  }} value={value} onChange={handleChange}>
       <BottomNavigationAction 
         label="Home"
-        color="red"
-        icon={value === 'home' ? <HomeIcon sx={{ width: '35px' }} color="white" /> : <HomeOutlinedIcon sx={{ width: '35px' }} />}
+        sx={{color: amber[700]}}
+        icon={<HomeIcon sx={{ width: '35px',  color:"white" }} />}
+        // icon={value === 'home' ? <HomeIcon sx={{ width: '35px' }} color="white" /> : <HomeOutlinedIcon sx={{ width: '35px' }} />}
     
       />
       <BottomNavigationAction 
@@ -31,7 +32,7 @@ export default function BottomBar() {
         value="favorites"
         icon={<FavoriteIcon />}
       />
-     
+  
       <BottomNavigationAction label="Folder" value="folder" icon={<FolderIcon />} />
     </BottomNavigation>
   );

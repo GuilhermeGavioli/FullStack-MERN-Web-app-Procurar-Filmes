@@ -10,16 +10,17 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import { SidebarContext } from '../App';
+import { useContext } from 'react';
 
-export default function TemporaryDrawer() {
-  const [open, setOpen] = React.useState(false);
+export default function Sidebar() {
+  const { isSidebarOpen, setIsSidebarOpen } = useContext(SidebarContext)
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
-
-  const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+  return (
+    <div>
+      
+      <Drawer open={isSidebarOpen} sx={{zIndex: 20}} onClick={()=>{setIsSidebarOpen(false)}}>
+      <Box sx={{ width: 250 }} role="presentation" >
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -46,13 +47,6 @@ export default function TemporaryDrawer() {
         ))}
       </List>
     </Box>
-  );
-
-  return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>Open drawer</Button>
-      <Drawer open={open} onClose={toggleDrawer(false)}>
-        {DrawerList}
       </Drawer>
     </div>
   );

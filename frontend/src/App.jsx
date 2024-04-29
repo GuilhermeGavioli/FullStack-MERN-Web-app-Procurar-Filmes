@@ -1,35 +1,23 @@
-import './App.css';
-import { useEffect, useState } from 'react';
-
-import { lightTheme, darkTheme } from './theme'
-
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import LoginPage from './Components/Pages/LoginPage';
 import MainPage from './Components/Pages/MainPage';
-import MenuAppBar from './Components/AppBar';
-
+import TopBar from './Components/TopBar';
 import { createContext } from 'react';
 import Cookies from 'js-cookie';
-import AppBar2 from './Components/AppBar2';
 import BottomBar from './Components/BottomBar';
+import Sidebar from './Components/Sidebar';
+import SearchPage from './Components/Pages/SearchPage';
 
-
-
-export const ThemeContext = createContext();
 export const AuthContext = createContext();
+export const SidebarContext = createContext();
 
 function App() {
   
   const navigator = useNavigate()
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  function toggleThemeHandler(){
-    setIsDarkMode(!isDarkMode)
-    // Cookies.set('theme', isDarkMode, {expires: 1})
-  }
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   function logout(){
-
     Cookies.remove('token')
     setAuth({
       isAuth: false,
@@ -42,6 +30,8 @@ function App() {
     navigator('/login')
   }
 
+
+
   const [auth, setAuth] = useState({
     isAuth: false,
     token: null,
@@ -52,51 +42,30 @@ function App() {
   })
 
   useEffect(()=>{
-    const preftheme = Cookies.get('theme')
-    console.log(preftheme)
-    if (preftheme){
-      setIsDarkMode(true)    
-      } else {
-      setIsDarkMode(false)
-    }
-  }, [])
-  
-  
-  
+    console.log('running auth effect')
+  }, [auth])
 
-
-
-
-  
-  const theme = isDarkMode ? darkTheme : lightTheme
-
-
-//   code: "4/0AeaYSHBcbFw0zFsJ08Q8n40NPWEjFIU1gyHOixPVymjOndZbEKp2pmmKJuip1OtsBkl1xA", scope: "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email", authuser: "0", prompt: "consent" }
-// authuser: "0"
-// code: "4/0AeaYSHBcbFw0zFsJ08Q8n40NPWEjFIU1gyHOixPVymjOndZbEKp2pmmKJuip1OtsBkl1xA"
-// prompt: "consent"
-// scope: "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email"
+  // setTimeout(() => {
+  //   setIsSidebarOpen(true)
+  // }, 4000);
 
   return (
 
-  <AuthContext.Provider value={{auth, setAuth, logout}} style={{background: 'red'}}>
-        <ThemeContext.Provider value={{theme, toggleThemeHandler}}>
-          {/* <MenuAppBar></MenuAppBar> */}
-          <AppBar2></AppBar2>
+  <AuthContext.Provider value={{auth, setAuth, logout}} >
+  <SidebarContext.Provider value={{isSidebarOpen, setIsSidebarOpen}}>
+          <Sidebar></Sidebar>
+          <TopBar></TopBar>
           <BottomBar></BottomBar>
-  
+
               <Routes>
-                <Route path="/"       element={ <MainPage /> }></Route>
                 <Route path="/login"  element={ <LoginPage /> }></Route>
+                <Route path="/"       element={ <MainPage /> }></Route>
+                <Route path="/results"  element={ <SearchPage /> }></Route>
               </Routes>
-   
-          </ThemeContext.Provider>
+         
+          </SidebarContext.Provider>
       </AuthContext.Provider>
-
-      
-  );
-
-
+ ) 
 }
 
 

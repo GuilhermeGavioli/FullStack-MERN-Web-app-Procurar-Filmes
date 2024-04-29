@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Rating } from '@mui/material';
 import Fab from '@mui/material/Fab';
 
-import { grey, amber } from '@mui/material/colors';
+import { grey, amber, deepPurple } from '@mui/material/colors';
 import CustomizedButton from './CustomizedButton';
 import styled from 'styled-components'
 import { useState } from 'react';
@@ -22,23 +22,30 @@ export default function MovieCard({title, description, rating}) {
     onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}
     >
 
+      {/* rate */}
+      <TopRate>
+        <p style={{fontWeight: 700, fontSize: '1.1em', color: 'white'}}>8.9</p>
+      </TopRate>
+
+
+
       <MaskAround>
 
       <BottomMask>
 
      
-          <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column', padding: '5px' }}>
+          <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column', padding: '0 10px 0 10px' }}>
             <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>Django Unchained</p>
             <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>action</p>
             
           </div>
-          <div style={{padding: '0 5px 0 5px', height: '100%', width: 'fit-content', display: 'flex', alignItems: 'center'}}>
+          {/* <div style={{padding: '0 5px 0 5px', height: '100%', width: 'fit-content', display: 'flex', alignItems: 'center'}}>
           <Fab sx={{height: '20px', width: '40px', background: amber[700], color:"white"}}>
           <FavoriteIcon size="small" color="white" sx={{height: '20px', width: '20px'}}/>
 
         </Fab>
 
-          </div>
+          </div> */}
        
    
      
@@ -65,6 +72,20 @@ position: relative;
 overflow: hidden;
 `
 
+const TopRate = styled.div`
+display: flex;
+ justify-content: center; 
+ align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  height: 35px;
+  z-index: 3;
+  border-radius: 0px;
+  background: ${deepPurple[900]}; 
+)}
+`
 const MaskAround = styled.div`
   position: absolute;
   inset: 0 0 0 0;

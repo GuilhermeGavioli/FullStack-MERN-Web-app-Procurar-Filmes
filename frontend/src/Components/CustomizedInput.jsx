@@ -4,31 +4,31 @@ import { grey } from '@mui/material/colors';
 import TextField from '@mui/material/TextField';
 
 import { useContext } from 'react';
-import { ThemeContext } from '../App';
 
 
-const CustomizedInputStyle = styled(TextField)(({ theme }) => ({
-    backgroundColor: theme.palette.primary.hover,
-    color: 'yellow',
-    '&:hover': {
-      backgroundColor: 'white',
-    },
 
-    '& .MuiOutlinedInput-notchedOutline .MuiInputBase-input': {
-      color: 'red',
-    }
-}));
+// const CustomizedInputStyle = styled(TextField)(({ theme }) => ({
+//     backgroundColor: theme.palette.primary.hover,
+//     color: 'yellow',
+//     '&:hover': {
+//       backgroundColor: 'white',
+//     },
+
+//     '& .MuiOutlinedInput-notchedOutline .MuiInputBase-input': {
+//       color: 'red',
+//     }
+// }));
 
 
 export default function CustomizedInput({placeholder, password}) {
-  const { theme, toggleThemeHandler } = useContext(ThemeContext);
+  // const { theme, toggleThemeHandler } = useContext(ThemeContext);
 
 
   return (
-
-    <CustomizedInputStyle fullWidth  size="small" id={`outlined-${password ? 'password' : ''}-small`} type={password? 'password' : ''} 
-    label={placeholder} variant="outlined" 
-    />
+    <></>
+    // <CustomizedInputStyle fullWidth  size="small" id={`outlined-${password ? 'password' : ''}-small`} type={password? 'password' : ''} 
+    // label={placeholder} variant="outlined" 
+    // />
 
 
   );

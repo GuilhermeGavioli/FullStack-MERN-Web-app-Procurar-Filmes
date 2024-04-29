@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom"
 import Cookies from 'js-cookie';
 import { AuthContext } from "../../App";
 import MovieCard from "../MovieCard";
-import { grey, amber } from "@mui/material/colors";
+import { grey, amber, deepPurple } from "@mui/material/colors";
 import { TextField, Typography } from "@mui/material";
 // import { movies_mock } from "../../moviesmock";
 import styled from "styled-components";
 import banner from './banner.jpg'; // Adjust the path as needed
+import TopBarInput from "../TopBarInput";
+import BreadCrumb from "../BreadCrumb";
 
 export default function MainPage() {
+ 
+
 
   const {auth, setAuth} = useContext(AuthContext)
   const navigator = useNavigate()
@@ -76,33 +80,40 @@ export default function MainPage() {
   
 <div style={{minHeigh: '100%',height: 'fit-content', width: '100%', backgroundColor: grey[900],
 backgroundColor: '#161616', 
-paddingTop: '100px', display: 'flex', flexDirection: 'column', gap: '10px',
+paddingTop: '60px', display: 'flex', flexDirection: 'column', gap: '10px',
 msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   scrollbarWidth: 'none',
   paddingBottom: '60px'
 }}>
 
+{/* <BreadCrumb></BreadCrumb> */}
 {/* <img src={banner} style={{width: '100%'}} alt="" /> */}
+
 
   {/* <div style={{padding: '0 10px 0 10px', width: '100%'}}>
 
+  </div> 
+*/}
 
+    <div style={{width: '100%', height: 'fit-content',  padding: '0 10px 0 10px', margin: '10px 0 10px 0'}}>
 
+<TopBarInput/>
+    </div>
 
-<SearchInput placeholder="Search..." type="text" style={{marginTop: '80px', fontFamily: 'roboto', color: 'white', background: grey[800], }}/>
-  </div> */}
+{/* <SearchInput placeholder="Search..." type="text" style={{marginTop: '80px', fontFamily: 'roboto', color: 'white', background: grey[800], }}/> */}
 
   <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
-      <div style={{width: '100%', height: '100%', background: grey[900],  borderRadius: '4px', display: 'flex', alignItems: 'center', padding: '10px'}}>
+      <div style={{position: 'relative', width: '100%', height: '100%', background: grey[900],  borderRadius: '4px', display: 'flex', alignItems: 'center', padding: '10px', paddingLeft: '20px'}}>
+    <div style={{position: 'absolute', left: 0, height: '100%', width: '10px', background: deepPurple[900]}}></div>
         <p style={{fontFamily: 'roboto', color: 'white', fontWeight: '700'}}>
-        Released Movies
+        Recent Released Movies
         </p>
       </div>
   </div>
     
-      <div style={{width: 'fit-content', display: 'flex', gap: '15px',
+      <div style={{width: 'fit-content', display: 'flex', gap: '15px', 
        width: '100vw', overflowX: 'scroll', overflowY: 'hidden',
-       
+       height: '250px',
        msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   scrollbarWidth: 'none'
     }}>
@@ -121,7 +132,9 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
       </div>
 
       <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
-      <div style={{width: '100%', height: '100%', background: grey[900],  borderRadius: '4px', display: 'flex', alignItems: 'center', padding: '10px'}}>
+      <div style={{position: 'relative', width: '100%', height: '100%', background: grey[900],  borderRadius: '4px', display: 'flex', alignItems: 'center', padding: '20px'}}>
+      <div style={{position: 'absolute', left: 0, height: '100%', width: '10px', background: deepPurple[900]}}></div>
+        
         <p style={{fontFamily: 'roboto', color: 'white', fontWeight: '700'}}>
         Popular
         </p>
@@ -139,7 +152,7 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
 
         {movies.map((movie, i) => {
           return (
-     
+
             <MovieCard key={i} title={movie.name} cover={movie.cover} description={movie.description}></MovieCard>
             
           )
