@@ -9,7 +9,7 @@ import { AuthContext, SidebarContext } from '../App';
 import { Avatar, Menu, MenuItem } from '@mui/material';
 import { grey,amber } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
-
+import TopBarInput from './TopBarInput';
 
 export default function TopBar() {
   const { setIsSidebarOpen } = useContext(SidebarContext)

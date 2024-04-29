@@ -22,9 +22,9 @@ export default function BreadCrumb() {
           color="inherit"
           href="/material-ui/getting-started/installation/"
         >
-          
+          movie name
         </Link>
-        {/*<Typography color={grey[700]} sx={{fontSize: '0.8em'}}>Breadcrumbs</Typography> */}
+        <Typography color={grey[700]} sx={{fontSize: '0.8em'}}>Breadcrumbs</Typography>
       </Breadcrumbs>
     </div>
   );

@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import BottomBar from './Components/BottomBar';
 import Sidebar from './Components/Sidebar';
 import SearchPage from './Components/Pages/SearchPage';
+import MoviePage from './Components/Pages/MoviePage';
 
 export const AuthContext = createContext();
 export const SidebarContext = createContext();
@@ -51,6 +52,8 @@ function App() {
 
   return (
 
+    //logo
+    // https://as1.ftcdn.net/v2/jpg/01/85/89/64/1000_F_185896439_wCIjG0spPZakuNiL34khgrTAEZGIJei5.jpg
   <AuthContext.Provider value={{auth, setAuth, logout}} >
   <SidebarContext.Provider value={{isSidebarOpen, setIsSidebarOpen}}>
           <Sidebar></Sidebar>
@@ -61,6 +64,7 @@ function App() {
                 <Route path="/login"  element={ <LoginPage /> }></Route>
                 <Route path="/"       element={ <MainPage /> }></Route>
                 <Route path="/results"  element={ <SearchPage /> }></Route>
+                <Route path="/movie/:id"  element={ <MoviePage /> }></Route>
               </Routes>
          
           </SidebarContext.Provider>

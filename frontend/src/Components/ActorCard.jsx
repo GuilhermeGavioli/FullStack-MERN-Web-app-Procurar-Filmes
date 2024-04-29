@@ -3,83 +3,55 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, Rating, Skeleton } from '@mui/material';
+import { Button, CardActionArea, CardActions, Rating } from '@mui/material';
 import Fab from '@mui/material/Fab';
 
 import { grey, amber, deepPurple } from '@mui/material/colors';
 import CustomizedButton from './CustomizedButton';
 import styled from 'styled-components'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { StyledEngineProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function MovieCard({id, title, cover,genre, description, rate, width, height}) {
+export default function ActorCard({name, picture, role}) {
   const [isHovered, setIsHovered] = useState(false)
-  const [loading, setLoading] = useState(true)
   const navigator = useNavigate()
-  
+
   function viewMovie(){
-    navigator(`/movie/${id}`)
+    navigator(`/movie/`)
   }
-
-
-  useEffect(() =>{
-    setTimeout(() => {
-      setLoading(false)
-    }, 3000);
-  },[loading])
 
   return (
 
-<>
-    { loading ? 
-
-      <Skeleton variant="rectangular" width={'160px'} height={'230px'} />
+  <Container
+  onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
+      <MaskAround>
+      <BottomMask>
      
-     :
+          <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column', padding: '0 10px 0 10px' }}>
+            <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
+              {name}
+            </p>
+            <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
+              {role}
+            </p>
+          </div>
+      </BottomMask>
+      </MaskAround>
+<MovieImage ishovered={`${isHovered}`} src={picture} alt="" />
+  </Container>
 
-     <Container
-width={width}
-height={height}
-onClick={() => {viewMovie(id)}}
-onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
-    <RateCard>
-      <p style={{fontWeight: 700, fontSize: '1.1em', color: 'white'}}>
-        {rate}
-      </p>
-    </RateCard>
-    <MaskAround>
-    <BottomMask>
-   
-        <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column', padding: '0 10px 0 10px' }}>
-          <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
-            {title}
-          </p>
-          <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
-            {genre}
-          </p>
-          
-        </div>
-    </BottomMask>
-    </MaskAround>
-<MovieImage ishovered={`${isHovered}`} src={cover} alt="" />
-</Container>
- }
-</>
-        
-     
-      
-    
+
+
   );
 }
 
-
 const Container = styled.div`
 background-image: blue;
-width: ${({ width }) => (width ? width : 160)}px;
-height: ${({ height }) => (height ? height : 230)}px;
+width: 160px;
+height: 230px;
 position: relative;
 overflow: hidden;
 cursor: pointer;

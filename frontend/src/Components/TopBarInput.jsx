@@ -9,6 +9,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Toolbar,AppBar } from '@mui/material';
 import { deepPurple, grey } from '@mui/material/colors';
 import styled from 'styled-components';
+import { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     border-radius: 0 15px 15px 0;
@@ -78,13 +81,19 @@ outline: unset;
 
 
 export default function TopBarInput() {
+  const [searchValue, setSearchValue] = useState(null)
+  const navigate = useNavigate();
+
+  function handleSearchChange(value){
+    setSearchValue(value)
+  } 
+
+  function runSearchQuery(){
+    console.log(searchValue)
+    navigate(`/results?search_query=${searchValue}`);
+  }
+
     return (
-   
-     
-
-     
-    
-
             <Container>
               <SearchIconWrapper >
                 <SearchIcon   sx={{color: grey[900]}}/>
@@ -96,6 +105,8 @@ export default function TopBarInput() {
               }}>
 
               <StyledInput
+              value={searchValue}
+                onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Search…"
                 inputProps={{ 'aria-label': 'search' }}
                 />
@@ -103,7 +114,7 @@ export default function TopBarInput() {
 
                 <div style={{width: '60px'}}>
 
-                <GoButton>
+                <GoButton onClick={runSearchQuery}>
                     go
                     <BallEffect></BallEffect>
                     </GoButton>
