@@ -4,18 +4,26 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { useState, useContext } from 'react';
+import { useState, useContext,useEffect } from 'react';
 import { AuthContext, SidebarContext } from '../App';
-import { Avatar, Menu, MenuItem } from '@mui/material';
+import { Avatar, Menu, MenuItem, Skeleton } from '@mui/material';
 import { grey,amber } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
 import TopBarInput from './TopBarInput';
 
+
 export default function TopBar() {
+  const [loading, setLoading] = useState(true);
   const { setIsSidebarOpen } = useContext(SidebarContext)
     const {auth, setAuth, logout} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = useState(null);
   
+    useEffect(()=>{
+      setTimeout(() => {
+        setLoading(false)
+      }, 3000);
+    },[loading])
+
     const handleChange = (event) => {
       setAuth(event.target.checked);
     };
@@ -35,9 +43,9 @@ export default function TopBar() {
           <IconButton onClick={() => {setIsSidebarOpen(true)}} edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
             <MenuIcon  />
           </IconButton>
-          <Typography variant="h6" color="inherit" component="div">
+          {/* <Typography variant="h6" color="inherit" component="div">
             Movies
-          </Typography>
+          </Typography> */}
 
           {auth.isAuth && (
             <div style={{}}>
@@ -50,7 +58,12 @@ export default function TopBar() {
                 color="inherit"
      
               >
+                {
+                  loading ? 
+                  <Skeleton animation="wave" variant="circular" width={'35px'} height={'35px'} sx={{bgcolor: grey[700]}} />
+                  :
                 <Avatar alt="Gemy Sharp" src="/static/images/avatar/1.jpg"  sx={{ width: '35px', height: '35px',bgcolor: grey[800] }} />
+                }
               
               </IconButton>
               <Menu

@@ -15,7 +15,7 @@ import { StyledEngineProvider } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function MovieCard({id, title, cover,genre, description, rate, width, height}) {
+export default function MovieCardSearch({id, title, cover="https://upload.wikimedia.org/wikipedia/en/a/ae/Naruto_Shippuden_the_Movie.jpg",genre, description, rate, width, height}) {
   const [isHovered, setIsHovered] = useState(false)
   const [loading, setLoading] = useState(true)
   const navigator = useNavigate()
@@ -36,7 +36,7 @@ export default function MovieCard({id, title, cover,genre, description, rate, wi
 <>
     { loading ? 
 
-      <Skeleton animation="wave" sx={{background: grey[900]}} variant="rectangular" width={'160px'} height={'230px'} />
+      <Skeleton animation="wave" sx={{background: grey[900]}} variant="rectangular" width={'140px'} height={'220px'} />
      
      :
 
@@ -45,11 +45,7 @@ width={width}
 height={height}
 onClick={() => {viewMovie(id)}}
 onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
-    <RateCard>
-      <p style={{fontWeight: 700, fontSize: '1.1em', color: 'white'}}>
-        {rate}
-      </p>
-    </RateCard>
+
     <MaskAround>
     <BottomMask>
    
@@ -78,8 +74,8 @@ onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(fals
 
 const Container = styled.div`
 background-image: blue;
-width: ${({ width }) => (width ? width : 160)}px;
-height: ${({ height }) => (height ? height : 230)}px;
+width: 140px;
+height: 220px;
 position: relative;
 overflow: hidden;
 cursor: pointer;

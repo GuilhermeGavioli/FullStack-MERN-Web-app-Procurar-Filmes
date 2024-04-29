@@ -10,6 +10,8 @@ import { TextField, Typography } from "@mui/material";
 import styled from "styled-components";
 import TopBarInput from "../TopBarInput";
 import BreadCrumb from "../BreadCrumb";
+import CategoryBar from "../CategoryBar";
+
 
 export default function MainPage() {
  
@@ -107,12 +109,7 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
 {/* <SearchInput placeholder="Search..." type="text" style={{marginTop: '80px', fontFamily: 'roboto', color: 'white', background: grey[800], }}/> */}
 
   <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
-      <div style={{position: 'relative', width: '100%', height: '100%', background: grey[900],  borderRadius: '4px', display: 'flex', alignItems: 'center', padding: '10px', paddingLeft: '20px'}}>
-    <div style={{position: 'absolute', left: 0, height: '100%', width: '10px', background: deepPurple[900]}}></div>
-        <p style={{fontFamily: 'roboto', color: 'white', fontWeight: '700'}}>
-        Recent Released Movies
-        </p>
-      </div>
+    <CategoryBar title={'Released Movies'}></CategoryBar>
   </div>
     
       <div style={{width: 'fit-content', display: 'flex', gap: '15px', 
@@ -133,13 +130,7 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
       </div>
 
       <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
-      <div style={{position: 'relative', width: '100%', height: '100%', background: grey[900],  borderRadius: '4px', display: 'flex', alignItems: 'center', padding: '20px'}}>
-      <div style={{position: 'absolute', left: 0, height: '100%', width: '10px', background: deepPurple[900]}}></div>
-        
-        <p style={{fontFamily: 'roboto', color: 'white', fontWeight: '700'}}>
-        Popular
-        </p>
-      </div>
+      <CategoryBar title={'Popular'}></CategoryBar>
   </div>
 
   <div style={{width: 'fit-content', display: 'flex', gap: '15px',

@@ -14,7 +14,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-    border-radius: 0 15px 15px 0;
+    
     overflow: hidden;
   display: flex;
   width: 100%;
@@ -35,7 +35,7 @@ const GoButton = styled.button`
 height: 100%;
 width: 100%;
 background:  ${grey[900]};
-color:  ${grey[700]};
+color: white;
 border: none;
 font-weight: 700;
 cursor: pointer;

@@ -10,14 +10,18 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Skeleton from '@mui/material/Skeleton';
 import { grey } from '@mui/material/colors';
+import { useState, useEffect } from 'react';
 
 
-function Comment2(props) {
-  let { loading = true } = props;
+export default function Comment() {
+  const [loading, setLoading] = useState(true)
 
-  setTimeout(() => {
-    loading = false
-  }, 5000);
+
+  useEffect(()=>{
+    setTimeout(() => {
+        setLoading(false)
+    }, 2000);
+  }, [loading])
 
   return (
     <Card sx={{ maxWidth: 345, m: 2, background: '#161616', background: 'none' , padding:0}}>
@@ -83,15 +87,5 @@ function Comment2(props) {
   );
 }
 
-Comment2.propTypes = {
-  loading: PropTypes.bool,
-};
 
-export default function Comment() {
-  return (
-    <div>
-      {/* <Media loading /> */}
-      <Comment2 />
-    </div>
-  );
-}
+
