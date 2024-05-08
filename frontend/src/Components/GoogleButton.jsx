@@ -20,41 +20,17 @@ export default function GoogleButonComp() {
   const {auth, setAuth} = useContext(AuthContext)
 
   const login = useGoogleLogin({
-    onSuccess: (tokenResponse, b) => onGoogleSuccessLogin(tokenResponse),
+    onSuccess: (tokenResponse) => delegateGoogleOAuthToBackend(tokenResponse.access_token),
     
 });
 
-function onGoogleSuccessLogin(tokenResponse){
-  console.log(tokenResponse)
-  delegateGoogleOAuthToBackend()
 
-  // delegateGoogleOAuthToBackend()
-}
-
-// const onSuccess = (response) => {
-//   const d = jwtDecode(response.credential)
-//   console.log(d)
-// };
-
-// const onFailure = (error) => {
-//   console.error('Login failed:', error);
-// };
-
-async function delegateGoogleOAuthToBackend(){
-  // fetch backend
-  // return token and userinfo
-  const data = {token: 'asdckapsdck', user: {image: 'myimg', name: 'Guilherme'}}
-  setAuth({
-    isAuth: true,
-    token: data.token,
-    user: {
-      name: data.user.name,
-      image: data.user.image
-    }
-  })
-  Cookies.set('token', data.token, { expires: 7 });
+async function delegateGoogleOAuthToBackend(oauth_access_token){
+  const res = await fetch(`http://localhost:3001/googleauth?oauth_access_token=${oauth_access_token}`);
+  const { access_token } = await res.json()
+  localStorage.setItem('access_token', access_token)
+  setAuth({ isAuth: true, access_token })
   navigator('/')
-  
 }
 
 return (

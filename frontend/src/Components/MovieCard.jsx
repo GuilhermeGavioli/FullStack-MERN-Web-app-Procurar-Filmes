@@ -46,7 +46,7 @@ height={height}
 onClick={() => {viewMovie(id)}}
 onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
     <RateCard>
-      <p style={{fontWeight: 700, fontSize: '1.1em', color: 'white'}}>
+      <p style={{fontWeight: 700, fontSize: '1em', color: 'white'}}>
         {rate}
       </p>
     </RateCard>
@@ -64,7 +64,7 @@ onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(fals
         </div>
     </BottomMask>
     </MaskAround>
-<MovieImage ishovered={`${isHovered}`} src={cover} alt="" />
+<MovieImage ishovered={`${isHovered}`} src={cover+'sa'} alt="" />
 </Container>
  }
 </>

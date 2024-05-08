@@ -24,7 +24,7 @@ export default function Comment() {
   }, [loading])
 
   return (
-    <Card sx={{ maxWidth: 345, m: 2, background: '#161616', background: 'none' , padding:0}}>
+    <Card sx={{  background: '#161616', background: grey[100] , padding:'10px', borderRadius: '15px'}}>
       <CardHeader sx={{padding:0}}
         avatar={
           loading ? (
@@ -54,7 +54,7 @@ export default function Comment() {
               sx={{ width: '35px', height: '35px',  }}
             />
           ) : (
-            <p style={{color: 'white'}}>Ted</p>
+            <p style={{color: grey[800], fontWeight: 600}}>Ted</p>
             
           )
         }
@@ -62,20 +62,20 @@ export default function Comment() {
           loading ? (
             <Skeleton animation="wave" height={10} width="40%" />
           ) : (
-            <p style={{color: 'white'}}>5 Hours Ago</p>
+            <p style={{color: grey[800], fontSize: '.9em'}}>5 Hours Ago</p>
           )
         }
       />
   
 
-      <CardContent sx={{padding: 0}}>
+      <CardContent sx={{padding: 0, margin: 0}}>
         {loading ? (
           <React.Fragment>
             <Skeleton animation="wave" height={10} style={{ marginBottom: 6 }} />
             <Skeleton animation="wave" height={10} width="80%" />
           </React.Fragment>
         ) : (
-          <Typography variant="body2" color="text.secondary" component="p" sx={{color: 'white'}}>
+          <Typography variant="body2"  component="p" sx={{color: grey[700], margin: 0,mt: 1}}>
              
 
               Why First Minister of Scotland Nicola Sturgeon thinks GDP is the wrong measure of a country's success.

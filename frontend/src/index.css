@@ -44,3 +44,42 @@ body{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+
+
+
+
+
+
+.carousel-container {
+  width: fit-content; /* Adjust width as needed */
+  overflow: hidden; /* Hide overflowing content */}
+  
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out; /* Smooth transition */
+  width: calc(500% + 100px); /* Five cards + some extra space */
+}
+
+.carousel-card {
+  flex: 0 0 20%; /* Set width for each card */
+  text-align: center;
+  line-height: 200px; /* Adjust for card content */
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Center buttons vertically */
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.carousel-button.prev {
+  left: 10px; /* Left positioning for prev button */
+}
+
+.carousel-button.next {
+  right: 10px; /* Right positioning for next button */
+}

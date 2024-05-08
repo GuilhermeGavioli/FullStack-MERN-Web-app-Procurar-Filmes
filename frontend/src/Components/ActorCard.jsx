@@ -27,19 +27,19 @@ export default function ActorCard({name, picture, role}) {
 
   <Container
   onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
-      <MaskAround>
-      <BottomMask>
+      {/* <MaskAround> */}
+      
      
-          <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column', padding: '0 10px 0 10px' }}>
-            <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
+          <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column' }}>
+            {/* <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
               {name}
             </p>
             <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
               {role}
-            </p>
+            </p> */}
           </div>
-      </BottomMask>
-      </MaskAround>
+
+      {/* </MaskAround> */}
 <MovieImage ishovered={`${isHovered}`} src={picture} alt="" />
   </Container>
 
@@ -50,11 +50,12 @@ export default function ActorCard({name, picture, role}) {
 
 const Container = styled.div`
 background-image: blue;
-width: 160px;
-height: 230px;
+width: 100px;
+height: 100px;
 position: relative;
 overflow: hidden;
 cursor: pointer;
+border-radius: 10px;
 `
 
 const RateCard = styled.div`

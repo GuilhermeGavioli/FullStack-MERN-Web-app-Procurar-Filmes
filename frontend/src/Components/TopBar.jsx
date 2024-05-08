@@ -62,7 +62,7 @@ export default function TopBar() {
                   loading ? 
                   <Skeleton animation="wave" variant="circular" width={'35px'} height={'35px'} sx={{bgcolor: grey[700]}} />
                   :
-                <Avatar alt="Gemy Sharp" src="/static/images/avatar/1.jpg"  sx={{ width: '35px', height: '35px',bgcolor: grey[800] }} />
+                <Avatar alt={auth.user?.name} src="/static/images/avatar/1.jpg"  sx={{ width: '35px', height: '35px',bgcolor: grey[800] }} />
                 }
               
               </IconButton>

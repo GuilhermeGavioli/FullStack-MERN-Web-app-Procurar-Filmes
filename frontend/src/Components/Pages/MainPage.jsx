@@ -11,6 +11,7 @@ import styled from "styled-components";
 import TopBarInput from "../TopBarInput";
 import BreadCrumb from "../BreadCrumb";
 import CategoryBar from "../CategoryBar";
+import Carrocel from '../MovieCarrocel'
 
 
 export default function MainPage() {
@@ -67,7 +68,7 @@ export default function MainPage() {
     ]
     console.log('movies_mock')
     console.log(movies_mock)
-    const token = Cookies.get('token')
+    const token = localStorage.getItem('access_token')
     if (token){
       setAuth({...auth, isAuth: true})
     } else {
@@ -84,8 +85,8 @@ export default function MainPage() {
 
     return (
   
-<div style={{minHeight: '100%',height: 'fit-content', width: '100%', backgroundColor: grey[900],
-backgroundColor: '#161616', 
+<div style={{minHeight: '100%',height: 'fit-content', backgroundColor: '#161616', width: '100%',
+ 
 paddingTop: '60px', display: 'flex', flexDirection: 'column', gap: '10px',
 msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   scrollbarWidth: 'none',
@@ -101,16 +102,18 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   </div> 
 */}
 
-    <div style={{width: '100%', height: 'fit-content',  padding: '0 10px 0 10px', margin: '10px 0 10px 0'}}>
+<Carrocel></Carrocel>
+
+    {/* <div style={{width: '100%', height: 'fit-content',  padding: '0 10px 0 10px', margin: '10px 0 10px 0'}}>
 
 <TopBarInput/>
-    </div>
+    </div> */}
 
 {/* <SearchInput placeholder="Search..." type="text" style={{marginTop: '80px', fontFamily: 'roboto', color: 'white', background: grey[800], }}/> */}
 
-  <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
+  {/* <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
     <CategoryBar title={'Released Movies'}></CategoryBar>
-  </div>
+  </div> */}
     
       <div style={{width: 'fit-content', display: 'flex', gap: '15px', 
        width: '100vw', overflowX: 'scroll', overflowY: 'hidden',
@@ -129,9 +132,9 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
         </div>
       </div>
 
-      <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
+      {/* <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
       <CategoryBar title={'Popular'}></CategoryBar>
-  </div>
+  </div> */}
 
   <div style={{width: 'fit-content', display: 'flex', gap: '15px',
        width: '100vw', overflowX: 'scroll', overflowY: 'hidden',

@@ -20,42 +20,28 @@ const Container = styled.div`
   width: 100%;
     background: ${grey[900]};
   height: 40px;
+  padding: 0 0 0 10px;
 
 `
 
-const SearchIconWrapper = styled.div`
-  height: 100%;
-  width: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
+
 
 const GoButton = styled.button`
 height: 100%;
 width: 100%;
-background:  ${grey[900]};
+
 color: white;
 border: none;
 font-weight: 700;
 cursor: pointer;
 position: relative;
+
 &:hover:{
     background: red;
 }
  
 `
 
-const BallEffect = styled.div`
-top: 10px; 
-right: 15px;
-position: absolute;
-height: 5px;
-width: 5px;
-background:  ${deepPurple[900]};
-border-radius: 50%;
-
-`
 
 const StyledInput = styled.input`
   color: inherit;
@@ -95,9 +81,7 @@ export default function TopBarInput() {
 
     return (
             <Container>
-              <SearchIconWrapper >
-                <SearchIcon   sx={{color: grey[900]}}/>
-              </SearchIconWrapper>
+            
 
               <div style={{
                 flexGrow: 1,
@@ -115,8 +99,8 @@ export default function TopBarInput() {
                 <div style={{width: '60px'}}>
 
                 <GoButton onClick={runSearchQuery}>
-                    go
-                    <BallEffect></BallEffect>
+                <SearchIcon   sx={{color: grey[500]}}/>
+                    {/* <BallEffect></BallEffect> */}
                     </GoButton>
                 </div>
             </Container>

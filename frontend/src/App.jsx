@@ -23,10 +23,6 @@ function App() {
     setAuth({
       isAuth: false,
       token: null,
-      user: {
-        name: null,
-        image: null
-    }
     })
     navigator('/login')
   }
@@ -37,14 +33,30 @@ function App() {
     isAuth: false,
     token: null,
     user: {
-      name: null,
-      image: null
+      name: null
     }
   })
 
-  useEffect(()=>{
-    console.log('running auth effect')
-  }, [auth])
+  useEffect(() => {
+    async function validateToken() {
+      const access_token = localStorage.getItem('access_token')
+      if (access_token){
+        const res = await fetch('http://localhost:3001/access_token/validate', {
+          headers: {
+            Authorization: `${access_token}`
+          }
+        })
+        const {token_info} = await res.json()
+
+
+        setAuth({...auth, isAuth: true, token: token_info.access_token, user: {name: token_info.name}})
+
+      }
+    }
+    validateToken();
+
+    
+  }, [])
 
   // setTimeout(() => {
   //   setIsSidebarOpen(true)
@@ -57,8 +69,8 @@ function App() {
   <AuthContext.Provider value={{auth, setAuth, logout}} >
   <SidebarContext.Provider value={{isSidebarOpen, setIsSidebarOpen}}>
           <Sidebar></Sidebar>
-          <TopBar></TopBar>
-          <BottomBar></BottomBar>
+          {/* <TopBar></TopBar> */}
+          {/* <BottomBar></BottomBar> */}
 
               <Routes>
                 <Route path="/login"  element={ <LoginPage /> }></Route>
