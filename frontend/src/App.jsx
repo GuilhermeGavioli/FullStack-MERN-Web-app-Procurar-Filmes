@@ -11,6 +11,8 @@ import SearchPage from './Components/Pages/SearchPage';
 import MoviePage from './Components/Pages/MoviePage';
 import MyComments from './Components/Pages/MyComments';
 import A from './Components/Pages/A';
+import BarsWrapper from './Components/Layouts/BarsWrapper';
+
 
 export const AuthContext = createContext();
 export const SidebarContext = createContext();
@@ -70,18 +72,21 @@ function App() {
     // https://as1.ftcdn.net/v2/jpg/01/85/89/64/1000_F_185896439_wCIjG0spPZakuNiL34khgrTAEZGIJei5.jpg
   <AuthContext.Provider value={{auth, setAuth, logout}} >
   <SidebarContext.Provider value={{isSidebarOpen, setIsSidebarOpen}}>
-          <Sidebar></Sidebar>
-          <TopBar></TopBar>
-          <BottomBar></BottomBar>
+
 
               <Routes>
-                <Route path="/"       element={ <MainPage /> }></Route>
-                <Route path="/a"  element={ <A /> }></Route>
-                <Route path="/login"  element={ <LoginPage /> }></Route>
-                <Route path="/mycomments"       element={ <MyComments /> }></Route>
-                <Route path="/results"  element={ <SearchPage /> }></Route>
-                <Route path="/movie/:id"  element={ <MoviePage /> }></Route>
+                <Route element={<BarsWrapper />}>
+                  <Route path="/"       element={ <MainPage /> }></Route>
+                  <Route path="/a"  element={ <A /> }></Route>
+                  <Route path="/mycomments"       element={ <MyComments /> }></Route>
+                  <Route path="/results"  element={ <SearchPage /> }></Route>
+                </Route>
+                <Route>
+                  <Route path="/movie/:id"  element={ <MoviePage /> }></Route>
+                  <Route path="/login"  element={ <LoginPage /> }></Route>
+                </Route>
               </Routes>
+
          
           </SidebarContext.Provider>
       </AuthContext.Provider>
