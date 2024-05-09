@@ -9,6 +9,8 @@ import BottomBar from './Components/BottomBar';
 import Sidebar from './Components/Sidebar';
 import SearchPage from './Components/Pages/SearchPage';
 import MoviePage from './Components/Pages/MoviePage';
+import MyComments from './Components/Pages/MyComments';
+import A from './Components/Pages/A';
 
 export const AuthContext = createContext();
 export const SidebarContext = createContext();
@@ -38,22 +40,22 @@ function App() {
   })
 
   useEffect(() => {
-    async function validateToken() {
-      const access_token = localStorage.getItem('access_token')
-      if (access_token){
-        const res = await fetch('http://localhost:3001/access_token/validate', {
-          headers: {
-            Authorization: `${access_token}`
-          }
-        })
-        const {token_info} = await res.json()
+    // async function validateToken() {
+    //   const access_token = localStorage.getItem('access_token')
+    //   if (access_token){
+    //     const res = await fetch('http://localhost:3001/access_token/validate', {
+    //       headers: {
+    //         Authorization: `${access_token}`
+    //       }
+    //     })
+    //     const {token_info} = await res.json()
 
 
-        setAuth({...auth, isAuth: true, token: token_info.access_token, user: {name: token_info.name}})
+    //     setAuth({...auth, isAuth: true, token: token_info.access_token, user: {name: token_info.name}})
 
-      }
-    }
-    validateToken();
+    //   }
+    // }
+    // validateToken();
 
     
   }, [])
@@ -70,11 +72,13 @@ function App() {
   <SidebarContext.Provider value={{isSidebarOpen, setIsSidebarOpen}}>
           <Sidebar></Sidebar>
           <TopBar></TopBar>
-          {/* <BottomBar></BottomBar> */}
+          <BottomBar></BottomBar>
 
               <Routes>
-                <Route path="/login"  element={ <LoginPage /> }></Route>
                 <Route path="/"       element={ <MainPage /> }></Route>
+                <Route path="/a"  element={ <A /> }></Route>
+                <Route path="/login"  element={ <LoginPage /> }></Route>
+                <Route path="/mycomments"       element={ <MyComments /> }></Route>
                 <Route path="/results"  element={ <SearchPage /> }></Route>
                 <Route path="/movie/:id"  element={ <MoviePage /> }></Route>
               </Routes>
@@ -85,5 +89,7 @@ function App() {
 }
 
 
+//Snack bar for notification after creating / deleting comment
+// dialog for conforming deletion of comment
 
 export default App;

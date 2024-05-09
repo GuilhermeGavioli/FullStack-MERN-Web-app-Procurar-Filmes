@@ -13,7 +13,61 @@ import { grey } from '@mui/material/colors';
 import { useState, useEffect } from 'react';
 
 
-export default function Comment() {
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+
+
+
+
+
+function ThreeDotsPainel({handleClickOpenDialog}){
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    function both(){
+      handleClose()
+      handleClickOpenDialog()
+    } 
+
+    return (
+
+        <div>
+
+<IconButton id="basic-button"
+aria-label="settings" aria-controls={open ? 'basic-menu' : undefined}  aria-haspopup="true"  aria-expanded={open ? 'true' : undefined}
+onClick={handleClick}
+>
+              <MoreVertIcon />
+            </IconButton>
+
+
+    <Menu
+      id="basic-menu"
+      anchorEl={anchorEl}
+      open={open}
+      onClose={handleClose}
+      MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+        >
+      <MenuItem onClick={() => both()}>Delete</MenuItem>
+
+    </Menu>
+  </div>
+    )
+}
+
+
+
+
+export default function Comment({handleClickOpenDialog}) {
   const [loading, setLoading] = useState(true)
 
 
@@ -39,9 +93,10 @@ export default function Comment() {
         }
         action={
           loading ? null : (
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
+            // <IconButton aria-label="settings">
+            //   <MoreVertIcon />
+            // </IconButton>
+         <ThreeDotsPainel handleClickOpenDialog={handleClickOpenDialog}></ThreeDotsPainel>
           )
         }
         title={

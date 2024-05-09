@@ -3,6 +3,7 @@ import TheaterComedyRoundedIcon from '@mui/icons-material/TheaterComedyRounded';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import { grey } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     background: red;
@@ -115,6 +116,10 @@ const Item3 = styled.img`
 
 
 export default function Carrocel(){
+    const navigator = useNavigate()
+    function goToMovie(){
+        navigator('/movie/id')
+    }
 
     return (
 
@@ -155,7 +160,7 @@ export default function Carrocel(){
 
         
 <Wrapper2>
-<CardsWrapper2>
+<CardsWrapper2 onClick={() => goToMovie()}>
     <Item2 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
     <Item2 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
     <Item2 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
@@ -176,7 +181,7 @@ export default function Carrocel(){
         </Box>
 
         <Wrapper2>
-<CardsWrapper2>
+<CardsWrapper2 onClick={() => goToMovie()}>
     <Item2 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
     <Item2 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
     <Item2 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />

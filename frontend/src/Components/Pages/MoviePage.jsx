@@ -22,6 +22,9 @@ import SwipeableEdgeDrawer from "../SwipeableEdgeDrawer";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 
+
+
+
 const Wrapper = styled.div`
     background: red;
     width: 100vw;
@@ -57,6 +60,7 @@ const Item = styled.div`
 `
 
 export default function MoviePage() {
+
 const { id } = useParams();
   const navigator = useNavigate()
   const [movie, setMovie] = useState({actors: []})
@@ -98,6 +102,10 @@ const { id } = useParams();
     console.log(id)
     setMovie({...movie_mock})
   }, [])
+
+  function goToMain(){
+    navigator('/')
+  }
 
 
     return (
@@ -162,7 +170,7 @@ Released November 25, 2021
           
 
 
-<Fab aria-label="add" style={{background: 'none',
+<Fab  onClick={() => goToMain()}  aria-label="add" style={{background: 'none',
  position: 'absolute', top: 10, left: 10, width: '40px', height: '30px', backdropFilter: 'blur(7px)',
  WebkitBackdropFilter: 'blur(7px)', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '10px'
  }}>
