@@ -1,53 +1,40 @@
 require('dotenv/config')
 const express = require('express')
-// const fetch = require('node-fetch');
 const mongodb = require('mongodb')
 const {OAuth2Client} = require('google-auth-library')
 
-const app = express()
+const Auth = require('./Services/Auth')
+const Validator = require('./Services/Validator')
 
+const app = express()
+var cors = require('cors')
+app.use(cors({origin: '*', allowedHeaders: '*'}))
 
 const client = new OAuth2Client(process.env.GOOGLE_OAUTH_CLIENT_ID, process.env.GOOGLE_OAUTH_SECRET_KEY)
 
 app.get('/googleauth',async (req,res) => {
-    const access_token = req.headers['Authorization']
-    const user = getUserInfoFromOAuthAccessToken(access_token)
+    const oauth_access_token = req.query.oauth_access_token
+    //Validator.validate()
+    const user = await Auth.getUserInfoFromOAuthAccessToken(oauth_access_token)
     if (!user){
-        res.statusCode = 400
-        res.end()
+        return res.status(400); res.end()
     }
-    
-    user.name
+    const access_token = Auth.generateToken(user)
+    return res.json({ access_token })
 })
 
 
 
-async function getUserInfoFromOAuthAccessToken(accessToken){
-    try{
-
-    const response = await fetch(process.env.GOOGLE_PROFILE_URL, {
-        headers: {'Authorization': `Bearer ${accessToken}`}
-    })
-    const user = await response.json()
-    return user;
-    // {
-    //     sub: '101676363529690080238',
-    //     name: 'Guilherme Gavioli',
-    //     given_name: 'Guilherme',
-    //     family_name: 'Gavioli',
-    //     picture: 'https://lh3.googleusercontent.com/a/ACg8ocJjpHbcYUEKrNJGVwblzq-PjhXLJJ8TqrFpVuIUdaypN8TULvE=s96-c',
-    //     email: 'xiiguilhermeiix@gmail.com',
-    //     email_verified: true,
-    //     locale: 'pt-BR'
-    //   }
-    } catch(err) {
-    console.error('Error fetching data:', err);
-  }
-}
-
-(async()=>{
-    await getUserInfoFromOAuthAccessToken()
-})()
+app.get('/access_token/validate', (req,res) => {
+    console.log(req.headers)
+    const access_token = req.headers['authorization']
+    console.log(access_token)
+    const is_valid = Auth.verify(access_token)
+    console.log(is_valid)
+    if (!is_valid)return res.status(400).end()
+    return res.json({ token_info: is_valid })
+    
+})
 
 
 app.listen(3001, () => {

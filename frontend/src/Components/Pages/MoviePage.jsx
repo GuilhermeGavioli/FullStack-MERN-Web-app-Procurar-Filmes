@@ -162,15 +162,15 @@ Released November 25, 2021
           
 
 
-<div style={{background: 'none',
- position: 'absolute', top: 0, left: 0, width: '50px', height: '50px', backdropFilter: 'blur(7px)',
- WebkitBackdropFilter: 'blur(7px)', background: 'rgba(255, 255, 255, 0.1)',
+<Fab aria-label="add" style={{background: 'none',
+ position: 'absolute', top: 10, left: 10, width: '40px', height: '30px', backdropFilter: 'blur(7px)',
+ WebkitBackdropFilter: 'blur(7px)', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '10px'
  }}>
-        <p>oi</p>
-      </div>
+      
+      <ArrowBackIcon sx={{color: 'white', fontWeight: '700', fontSize: '1.4em'}}/>
+      </Fab>
 
   {/* <Fab color="primary" aria-label="add" sx={{background: 'none', position: 'absolute', top: 0, left: 0}}>
-        <ArrowBackIcon />
       </Fab> */}
 
 {/* <SearchInput placeholder="Search..." type="text" style={{marginTop: '80px', fontFamily: 'roboto', color: 'white', background: grey[800], }}/> */}

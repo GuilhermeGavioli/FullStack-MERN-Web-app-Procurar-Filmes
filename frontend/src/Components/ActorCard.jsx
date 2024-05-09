@@ -5,6 +5,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions, Rating } from '@mui/material';
 import Fab from '@mui/material/Fab';
+import Stack from '@mui/material/Stack';
 
 import { grey, amber, deepPurple } from '@mui/material/colors';
 import CustomizedButton from './CustomizedButton';
@@ -29,18 +30,14 @@ export default function ActorCard({name, picture, role}) {
   onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
       {/* <MaskAround> */}
       
-     
-          <div style={{color: 'white', height: '100%', flexGrow: '1', overflow: 'hidden',display: 'flex', flexDirection: 'column' }}>
-            {/* <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
-              {name}
-            </p>
-            <p style={{textOverflow: 'ellipsis', whiteSpace: 'noWrap', overflow: 'hidden', fontFamily: 'roboto', fontWeight: '700'}}>
-              {role}
-            </p> */}
-          </div>
+
 
       {/* </MaskAround> */}
-<MovieImage ishovered={`${isHovered}`} src={picture} alt="" />
+<MovieImage src={picture} alt="" />
+<Stack spacing={.1} sx={{flexGrow: 1, padding: '10px' }}> 
+  <p style={{fontSize: '.9em', fontWeight: 600, color: grey[400]}}>Diretor</p>
+    <p style={{color: grey[200], fontSize: '.8em'}}>Paul Lyan</p>
+</Stack>
   </Container>
 
 
@@ -51,9 +48,13 @@ export default function ActorCard({name, picture, role}) {
 const Container = styled.div`
 background-image: blue;
 width: 100px;
-height: 100px;
-position: relative;
+height: fit-content;
+display: flex;
+flex-direction: column;
+gap: 5px;
 overflow: hidden;
+background: ${grey[900]};
+background: none;
 cursor: pointer;
 border-radius: 10px;
 `
@@ -72,46 +73,10 @@ display: flex;
   background: ${deepPurple[900]}; 
 )}
 `
-const MaskAround = styled.div`
-  position: absolute;
-  inset: 0 0 0 0;
-  margin: auto;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  transition: ease-in-out 0.4s;
-  background: radial-gradient(circle, rgba(0,0,0,0.17689073920583853) 0%, rgba(0,0,0,0.5326330361246061) 53%, rgba(0,0,0,0.8939775739397321) 100%); 
-)}
-`
-
-const BottomMask = styled.div`
-display: flex;
-position: absolute;
-justify-content: space-between;
-bottom: 0;
-width: 100%;
-height: 50px;
-z-index: 2;
-
-background: linear-gradient(360deg, rgba(0,0,0,0.9079831761806285) 0%, rgba(0,0,0,0.4722128680573792) 53%, rgba(0,0,0,0) 100%); 
-`
-
-const ButtonContainer = styled(Fab)`
-  width: 50px;
-  height: 100%;
-`
 
 const MovieImage = styled.img`
-position: absolute;
-width: ${({ ishovered }) => (ishovered == "false" ? '100%' : '101%')};
-height: ${({ ishovered }) => (ishovered == "false" ? '100%' : '101%')};
-top: 50%;
-left: 50%;
-transform: ${({ ishovered }) => (ishovered == "false" ? 'translate(-50%, -50%)' : 'translate(-50%, -50%) scale(1.05)')};
-
-transition: ease-in-out 0.3s;
-
-filter: ${({ ishovered }) => (ishovered == "false" ? 'brightness(0.5)' : 'brightness(1)')};
+width: 100%;
+height: 120px;
 `
 
 

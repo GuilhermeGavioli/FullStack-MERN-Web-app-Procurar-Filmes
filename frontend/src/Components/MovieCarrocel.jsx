@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import TheaterComedyRoundedIcon from '@mui/icons-material/TheaterComedyRounded';
 import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
+import { grey } from '@mui/material/colors';
 
 const Wrapper = styled.div`
     background: red;
@@ -32,6 +33,26 @@ const Item = styled.div`
     gap: 8px;
     padding: 5px 10px 5px 10px;
     border-radius: 15px;
+    font-weight: 600;
+    color: white;
+    font-family: roboto;
+    font-size: 0.9em;
+`
+
+const SelectedItem = styled.div`
+    width: fit-content;
+    height: 100%;
+    background: blue;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 15px;
+    background: linear-gradient(0deg, rgba(136,20,161,1) 0%, rgba(195,24,232,0.8939775739397321) 100%);
+    font-weight: 600;
+    color: white;
+    font-family: roboto;
+    font-size: 0.9em;
 `
 
 
@@ -114,9 +135,9 @@ export default function Carrocel(){
 
         <Wrapper>
             <CardsWrapper>
-        <Item>
+        <SelectedItem>
             <p>All</p>
-        </Item> 
+        </SelectedItem> 
         <Item>
             <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
             <p>Movies</p>
@@ -143,13 +164,13 @@ export default function Carrocel(){
 </CardsWrapper2>
         </Wrapper2> 
 
-        <Box sx={{ width: '100%', maxWidth: 500, padding: '0 10px 0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{background: 'red', mt: 3, width: '100%', maxWidth: 500, padding: '0 10px 0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 
-        <Typography sx={{color: 'white', fontWeight: '500', fontSize: '1.5em'}} variant="h4" gutterBottom>
+        <Typography sx={{p:0,m:0,color: grey[200], fontWeight: '500', fontSize: '1.5em'}} variant="h4" gutterBottom>
         Trending Now
       </Typography>
 
-      <Typography sx={{color: 'white', fontWeight: '400', fontSize: '.9em'}} variant="subtitle1" gutterBottom>
+      <Typography sx={{p:0,m:0,color: grey[300], fontWeight: '500', fontSize: '.9em', textDecoration: 'underline'}} variant="subtitle1" gutterBottom>
         See all
       </Typography>
         </Box>

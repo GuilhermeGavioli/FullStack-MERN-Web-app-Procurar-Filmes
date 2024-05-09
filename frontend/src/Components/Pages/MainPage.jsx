@@ -93,68 +93,12 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   paddingBottom: '60px'
 }}>
 
-{/* <BreadCrumb></BreadCrumb> */}
 
-
-
-  {/* <div style={{padding: '0 10px 0 10px', width: '100%'}}>
-
-  </div> 
-*/}
 
 <Carrocel></Carrocel>
 
-    {/* <div style={{width: '100%', height: 'fit-content',  padding: '0 10px 0 10px', margin: '10px 0 10px 0'}}>
-
-<TopBarInput/>
-    </div> */}
-
-{/* <SearchInput placeholder="Search..." type="text" style={{marginTop: '80px', fontFamily: 'roboto', color: 'white', background: grey[800], }}/> */}
-
-  {/* <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
-    <CategoryBar title={'Released Movies'}></CategoryBar>
-  </div> */}
-    
-      <div style={{width: 'fit-content', display: 'flex', gap: '15px', 
-       width: '100vw', overflowX: 'scroll', overflowY: 'hidden',
-       height: '250px',
-       msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
-  scrollbarWidth: 'none'
-    }}>
-      <div style={{width: 'fit-content', height: 'fit-content', display: 'flex', padding: '0 10px 15px 10px', gap: '10px'}}>
-        {movies.map((movie, i) => {
-          return (
-     
-            <MovieCard key={i} id={movie.id} title={movie.name} cover={movie.cover} rate={movie.rate} genre={movie.genre} description={movie.description}></MovieCard>
-            
-          )
-        }) }
-        </div>
-      </div>
-
-      {/* <div style={{height: '45px', width: '100%', padding: '0 10px 0 10px'}}>
-      <CategoryBar title={'Popular'}></CategoryBar>
-  </div> */}
-
-  <div style={{width: 'fit-content', display: 'flex', gap: '15px',
-       width: '100vw', overflowX: 'scroll', overflowY: 'hidden',
-       
-       msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
-  scrollbarWidth: 'none'
-    }}>
-      <div style={{width: 'fit-content', height: 'fit-content', display: 'flex', padding: '0 10px 15px 10px', gap: '10px'}}>
 
 
-        {movies.map((movie, i) => {
-          return (
-
-            <MovieCard key={i} id={movie.id} title={movie.name} cover={movie.cover} description={movie.description}></MovieCard>
-            
-          )
-        }) }
-        </div>
-
-      </div>
 
       
 

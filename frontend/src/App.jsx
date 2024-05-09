@@ -69,7 +69,7 @@ function App() {
   <AuthContext.Provider value={{auth, setAuth, logout}} >
   <SidebarContext.Provider value={{isSidebarOpen, setIsSidebarOpen}}>
           <Sidebar></Sidebar>
-          {/* <TopBar></TopBar> */}
+          <TopBar></TopBar>
           {/* <BottomBar></BottomBar> */}
 
               <Routes>

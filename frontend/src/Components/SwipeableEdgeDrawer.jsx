@@ -13,6 +13,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Comment from './Comment';
 import Fab from "@mui/material/Fab";
 import AddIcon from '@mui/icons-material/Add';
+import InsertCommentIcon from '@mui/icons-material/InsertComment';
 
 const drawerBleeding = 56;
 
@@ -90,7 +91,9 @@ function SwipeableEdgeDrawer(props) {
           }}
         >
           <Puller onClick={() => toggleDrawerAlternativly(true)}/>
-          <Typography sx={{ p: 2, color: grey[200] }}>Comments</Typography>
+          <Typography sx={{ p: 2, color: grey[200] }}>
+
+            Comments</Typography>
         </StyledBox>
         <StyledBox
           sx={{
@@ -101,6 +104,11 @@ function SwipeableEdgeDrawer(props) {
           }}
         >
           <Stack spacing={1}>
+
+            <div style={{width: '100%', height: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+            <InsertCommentIcon sx={{fontSize: '1.8em', color: grey[500]}}></InsertCommentIcon>
+            <Typography sx={{ p: 1, color: grey[500], fontWeight: 600, fontSize: '0.9em' }}>No Comments Yet...</Typography>
+            </div>
             
           <Comment></Comment>
           <Comment></Comment>
