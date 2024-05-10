@@ -1,14 +1,15 @@
-require('dotenv/config')
-const express = require('express')
-const mongodb = require('mongodb')
-const {OAuth2Client} = require('google-auth-library')
+import express  from 'express'
+import mongodb  from 'mongodb'
+import {OAuth2Client}  from 'google-auth-library'
+import cors from 'cors'
 
-const Auth = require('./Services/Auth')
-const Validator = require('./Services/Validator')
+import Auth  from './Services/Auth'
+import Validator  from './Services/Validator'
 
-const app = express()
-var cors = require('cors')
+const app = express();
 app.use(cors({origin: '*', allowedHeaders: '*'}))
+
+
 
 const client = new OAuth2Client(process.env.GOOGLE_OAUTH_CLIENT_ID, process.env.GOOGLE_OAUTH_SECRET_KEY)
 
