@@ -10,51 +10,21 @@ import { Avatar, Menu, MenuItem, Skeleton } from '@mui/material';
 import { grey,amber } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
 import TopBarInput from './TopBarInput';
-import { styled, alpha } from '@mui/material/styles';
+// import { styled as MUIStyled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: 1,
-    width: 'auto',
-  },
-}));
+import styled from 'styled-components';
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  width: '100%',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    [theme.breakpoints.up('sm')]: {
-      width: '0ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
-}));
+const MySearchInput = styled.input`
+  background: ${grey[50]};
+  display: ${(props) => (props.isInputOpen ? 'hidden' : 'none')};
+  border: none;
+  height: 30px;
+  outline: none;
+  border-radius: 4px;
+  padding-left: 5px;
+`
 
 
 export default function TopBar() {
@@ -62,6 +32,8 @@ export default function TopBar() {
   const { setIsSidebarOpen } = useContext(SidebarContext)
     const {auth, setAuth, logout} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = useState(null);
+  const [isInputOpen, setIsInputOpen] = useState(false)
+ 
   
     useEffect(()=>{
       setTimeout(() => {
@@ -132,9 +104,16 @@ export default function TopBar() {
             </div>
           )}
 
-<IconButton size="large" aria-label="search" color="inherit" sx={{m:0, p:0}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: '5px', justifyContent: 'space-between'}}>
+      
+            <MySearchInput isInputOpen={isInputOpen}
+              placeholder="Search…"
+          
+              />
+<IconButton size="large" aria-label="search" color="inherit" sx={{m:0, p:0}} onClick={() => setIsInputOpen(!isInputOpen)}>
             <SearchIcon sx={{fontSize: '.9em'}} />
           </IconButton>
+        </div>
 
 
         </Toolbar>
@@ -142,3 +121,17 @@ export default function TopBar() {
     </Box>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

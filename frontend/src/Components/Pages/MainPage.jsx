@@ -5,13 +5,18 @@ import Cookies from 'js-cookie';
 import { AuthContext } from "../../App";
 import MovieCard from "../MovieCard";
 import { grey, amber, deepPurple } from "@mui/material/colors";
-import { TextField, Typography } from "@mui/material";
+import { TextField, Typography, Box } from "@mui/material";
 // import { movies_mock } from "../../moviesmock";
 import styled from "styled-components";
 import TopBarInput from "../TopBarInput";
 import BreadCrumb from "../BreadCrumb";
 import CategoryBar from "../CategoryBar";
 import Carrocel from '../MovieCarrocel'
+import MovieCarrocel from "../MovieCarrocel";
+import GenreCarrocel from "../GenreCarrocel";
+import MainCarrocel from "../MainCarrocel";
+
+
 
 
 export default function MainPage() {
@@ -93,9 +98,22 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   paddingBottom: '60px'
 }}>
 
+<MainCarrocel></MainCarrocel>
+<GenreCarrocel></GenreCarrocel>
+<MovieCarrocel></MovieCarrocel>
+
+<Box sx={{background: 'red', mt: 3, width: '100%', maxWidth: 500, padding: '0 10px 0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+<Typography sx={{p:0,m:0,color: grey[200], fontWeight: '500', fontSize: '1.5em'}} variant="h4" gutterBottom>
+Trending Now
+</Typography>
+<Typography sx={{p:0,m:0,color: grey[300], fontWeight: '500', fontSize: '.9em', textDecoration: 'underline'}} variant="subtitle1" gutterBottom>
+See all
+</Typography>
+</Box>
 
 
-<Carrocel></Carrocel>
+
+<MovieCarrocel></MovieCarrocel>
 
 
 

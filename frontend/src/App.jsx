@@ -79,9 +79,9 @@ function App() {
                   <Route path="/"       element={ <MainPage /> }></Route>
                   <Route path="/a"  element={ <A /> }></Route>
                   <Route path="/mycomments"       element={ <MyComments /> }></Route>
-                  <Route path="/results"  element={ <SearchPage /> }></Route>
                 </Route>
                 <Route>
+                  <Route path="/results"  element={ <SearchPage /> }></Route>
                   <Route path="/movie/:id"  element={ <MoviePage /> }></Route>
                   <Route path="/login"  element={ <LoginPage /> }></Route>
                 </Route>

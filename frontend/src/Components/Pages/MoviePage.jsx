@@ -11,7 +11,7 @@ import styled from "styled-components";
 import TopBarInput from "../TopBarInput";
 import BreadCrumb from "../BreadCrumb";
 import { useParams } from 'react-router-dom';
-import MovieImage from "../MovieImage";
+
 import Comment from '../Comment'
 import ActorCard from "../ActorCard";
 import Box from "@mui/material/Box";
