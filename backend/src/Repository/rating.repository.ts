@@ -1,7 +1,7 @@
 import { UserRepository } from './user.repository';
 import { MovieRepository } from './movie.repository';
 import { ObjectId } from 'mongodb';
-import {db} from '../index'
+import {db} from '../main'
 import { Rating } from './../DTOS/rating.dto';
 
 
@@ -9,6 +9,7 @@ export interface RatingRepository {
     insertOneRating(rating: Rating): Promise<ObjectId | undefined>
     getOneRatingById(id: string): Promise<Rating | undefined>
     deleteOneRating(id: string): Promise<boolean | undefined>
+    getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>
 }
 
 export class RatingRepositoryImpl implements RatingRepository{
@@ -27,6 +28,13 @@ export class RatingRepositoryImpl implements RatingRepository{
 
     public async deleteOneRating(id: string): Promise<boolean | undefined>{
         return (await db?.db?.collection('Rating').deleteOne({  _id: new ObjectId(id)}))?.acknowledged
+    }
+
+    public async getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>{
+        const PAGE_SIZE = 10
+        const skip = (page - 1) * PAGE_SIZE
+        const data = await db?.db?.collection('Rating').find({movie_id: new ObjectId(id)}).skip(skip).limit(PAGE_SIZE).toArray()
+        return data as Rating[] | [];
     }
 
 }

@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { User } from "../DTOS/user.dto";
-import {db} from '../index'
+import {db} from '../main'
 
 
 export interface UserRepository {

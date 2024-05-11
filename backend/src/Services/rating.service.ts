@@ -8,13 +8,14 @@ import { UserRepository } from '../Repository/user.repository';
 export interface RatingService{
     createRating(rating: Rating): Promise<ObjectId | undefined>
     deleteRating(id: string, rating_id: string): Promise<boolean>
+    getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>
 }
 
 export class RatingServiceImpl {
   constructor(
     private readonly ratingRepository: RatingRepository,
-    private movieRepository: MovieRepository,
     private userRepository: UserRepository,
+    private movieRepository: MovieRepository,
   ) {}
 
   async createRating(rating: Rating): Promise<ObjectId | undefined> {
@@ -33,4 +34,11 @@ export class RatingServiceImpl {
     if (!was_deleted) return false
     return true
   }
+
+  async getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>{
+    return await this.ratingRepository.getRatingsBatchByMovieId(id, page)
+  }
+
+  
+  // check if movie exists
 }

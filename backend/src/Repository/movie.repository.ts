@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb';
-import {db} from '../index'
+import {db} from '../main'
 import { Movie } from '../DTOS/movie.dto';
 
 

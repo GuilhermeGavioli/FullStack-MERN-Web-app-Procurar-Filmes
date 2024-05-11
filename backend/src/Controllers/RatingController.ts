@@ -7,6 +7,7 @@ import { Rating } from '../DTOS/rating.dto';
 export interface RatingController{
     createRating(request: Request, response: Response): Promise<any>;
     deleteRating(request: Request, response: Response): Promise<any>;
+    getRatingsBatchByMovieId(request: Request, response: Response): Promise<any>;
 }
 
 
@@ -31,6 +32,12 @@ export class RatingControllerImpl implements RatingController{
         const { user_id } = request.res?.locals.id
         const was_deleted = await this.ratingService.deleteRating(user_id, id)
         return response.status(was_deleted ? 200 : 404).end()
+    }
+
+    public async getRatingsBatchByMovieId(request: Request, response: Response): Promise<any>{
+        const { page, movie_id } = request.params
+        const ratings = await this.ratingService.getRatingsBatchByMovieId(movie_id, Number(page))
+        return response.json(ratings)
     }
 
    

@@ -4,11 +4,11 @@
   },
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --env-file=.env --watch -r ts-node/register src/index.ts"
+    "dev": "node --env-file=.env --watch -r ts-node/register src/main.ts"
   },
   "keywords": [],
   "author": "Guilherme Gavioli",
