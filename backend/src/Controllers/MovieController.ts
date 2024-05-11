@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import { Authentication } from '../Services/authentication.service';
 import { Validator } from '../Services/validator.service';
+import { MovieService } from '../Services/movie.service';
 
 
 export interface MovieController{
-    getMovie(request: Request, response: Response): any;
+    getOneMovieById(request: Request, response: Response): any;
 }
 
 
@@ -16,7 +17,7 @@ export class MovieControllerImpl implements MovieController{
         private validator: Validator
     ){}
 
-    public getMovie(request: Request, response: Response): any{
+    public getOneMovieById(request: Request, response: Response): any{
         response.json({movie: 'blocked movie'})
         
     }

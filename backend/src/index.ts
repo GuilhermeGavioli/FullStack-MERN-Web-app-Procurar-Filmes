@@ -1,19 +1,9 @@
-import { MovieRepository, MovieRepository, MovieRepositoryImpl } from './Repository/movie.repository';
+
 import swaggerUi from 'swagger-ui-express'
-import express, {Request, Response}  from 'express'
+import express, {NextFunction, Request, Response}  from 'express'
 
 // import cors from 'cors'
 
-
-
-// import { conn } from './Services/Connection'
-// import { User } from './Entities/User'
-// setTimeout(async() => {
-//     const user = new User('John', 'none', 'me@gmail')
-//     console.log(user);
-//     const db = conn.getDatabase()
-//     await db.collection('User').insertOne(user);
-// }, 3000);
 
 
 const app = express();
@@ -38,26 +28,23 @@ Connect();
 export { db };
 
 
-// ConnectToMongoDB()
-
 
 
 
 
 import { specs } from './swagger.jsdoc'
-// app.get('/googleauth',async (req,res) => {
 
-// })
 import { UserControllerImpl, UserController } from './Controllers/UserController'
 import { MovieControllerImpl, MovieController } from './Controllers/MovieController'
 
 import { Authentication, JWTAuthImpl } from './Services/authentication.service';
 import { Validator, ValidatorImpl } from './Services/validator.service';
 import { UserService, UserServiceImpl } from './Services/user.service';
-
-
-import { UserRepository, UserRepositoryImpl } from './Repository/user.repository';
 import { MovieService, MovieServiceImpl } from './Services/movie.service';
+
+import { MovieRepository, MovieRepositoryImpl } from './Repository/movie.repository';
+import { UserRepository, UserRepositoryImpl } from './Repository/user.repository';
+
 
 const movieRepository: MovieRepository = new MovieRepositoryImpl()
 const userRepository: UserRepository = new UserRepositoryImpl()
@@ -71,15 +58,15 @@ const userController: UserController = new UserControllerImpl(userService, authe
 const movieController: MovieController = new MovieControllerImpl(movieService, authentication, validator)
 
 
-
 app.use(router)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 // routes
 
 
-router.get('/auth/google/:oauth_access_token', async (request: Request, response: Response) => await userController.authGoogle(request, response))
+import { AuthGuard } from './auth.guard';
 
-
+router.get('/auth/google/:oauth_access_token', userController.authGoogle)
+router.get('/movie/:id', AuthGuard.verifyToken, movieController.getOneMovieById)
 
 
 // app.get('/access_token/validate', (req,res) => {

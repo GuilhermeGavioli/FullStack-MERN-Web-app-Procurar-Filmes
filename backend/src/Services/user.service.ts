@@ -1,6 +1,6 @@
 
 import { User } from '../DTOS/user.dto';
-import { UserRepository, userRepository} from '../Repository/user.repository';
+import { UserRepository } from '../Repository/user.repository';
 
 export interface UserService{
   createUserIfNecessary(user: User): Promise<void> 

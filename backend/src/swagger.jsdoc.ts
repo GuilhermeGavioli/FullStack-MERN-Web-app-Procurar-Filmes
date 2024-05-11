@@ -23,8 +23,20 @@ const options = {
             type: "string",
           }
         ],
-            
-            
+        }
+      },
+      '/movie/{id}': {
+        get: {
+          summary: 'Returns a list of users',
+          description: 'Optional extended description in CommonMark or HTML',
+          parameters: [
+            {
+            in: 'path',
+            name: "oauth_access_token",
+            required: true,
+            type: "string",
+          }
+        ],
         }
       }
     }
