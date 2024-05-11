@@ -1,17 +1,21 @@
-import { MongoClient }  from 'mongodb'
+import { Db, MongoClient }  from 'mongodb'
 
 
 
 
-  class Connection {
-    private db: any;
+  export class Database {
+    public db: null | Db = null;
+    private client: MongoClient | null = null;
+
+    constructor(){
+    }
 
 
-    public async create(){
+    public async createConnection(): Promise<MongoClient | undefined>{
         try {
         const client = await MongoClient.connect(process.env.MONGODB_CONNECTION_URI as string);
-        // listen for fail events
-        this.db = client.db(process.env.MONGODB_DB);
+        return client
+  
         console.log('Connected to MongoDB')
         } catch (error) {
             console.error("Error connecting to MongoDB:", error);
@@ -22,19 +26,13 @@ import { MongoClient }  from 'mongodb'
         // retry
     }
 
-    public getDatabase(): any{
+    public getDatabase(): Db | null{
         return this.db
     }
   }
 
   // Should be a SingleTon
   
-  const conn = new Connection();
-  (async()=>{
-    await conn.create()
-})()
-const db = conn.getDatabase()
 
-export { conn };
 
 //   

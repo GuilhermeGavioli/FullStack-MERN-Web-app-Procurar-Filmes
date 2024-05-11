@@ -26,8 +26,9 @@ export default function GoogleButonComp() {
 
 
 async function delegateGoogleOAuthToBackend(oauth_access_token){
-  const res = await fetch(`http://localhost:3001/googleauth?oauth_access_token=${oauth_access_token}`);
+  const res = await fetch(`http://localhost:3001/auth/google/${oauth_access_token}`);
   const { access_token } = await res.json()
+  console.log(access_token)
   localStorage.setItem('access_token', access_token)
   setAuth({ isAuth: true, access_token })
   navigator('/')

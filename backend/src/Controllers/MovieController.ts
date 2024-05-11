@@ -1,19 +1,25 @@
 import { Request, Response } from 'express';
+import { Authentication } from '../Services/authentication.service';
+import { Validator } from '../Services/validator.service';
 
 
-interface MovieController{
+export interface MovieController{
     getMovie(request: Request, response: Response): any;
 }
 
 
-class MovieControllerImpl implements MovieController{
+export class MovieControllerImpl implements MovieController{
 
+    constructor(
+        private movieService: MovieService,
+        private authentication: Authentication,
+        private validator: Validator
+    ){}
 
     public getMovie(request: Request, response: Response): any{
-        response.send('ok')
+        response.json({movie: 'blocked movie'})
+        
     }
 
 }
 
-const movieController: MovieControllerImpl = new MovieControllerImpl()
-export { movieController }

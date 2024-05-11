@@ -1,9 +1,9 @@
-interface Validator{
+export interface Validator{
     validateOAuthToken(oauth_access_token: string): boolean;
 }
 
 
-class ValidatorImpl{
+export class ValidatorImpl{
     constructor(){}
 
 
@@ -12,5 +12,3 @@ class ValidatorImpl{
     }
 }
 
-const validator: Validator = new ValidatorImpl()
-export { Validator, validator }

@@ -1,26 +1,41 @@
+import { MovieRepository, MovieRepository, MovieRepositoryImpl } from './Repository/movie.repository';
+import swaggerUi from 'swagger-ui-express'
 import express, {Request, Response}  from 'express'
-
 
 // import cors from 'cors'
 
 
-import { conn } from './Services/Connection'
 
-import { User } from './Entities/User'
-const user = new User('John', 'none', 'me@gmail')
-console.log(user);
-
-setTimeout(async() => {
-    const db = conn.getDatabase()
-    await db.collection('User').insertOne(user);
-}, 3000);
+// import { conn } from './Services/Connection'
+// import { User } from './Entities/User'
+// setTimeout(async() => {
+//     const user = new User('John', 'none', 'me@gmail')
+//     console.log(user);
+//     const db = conn.getDatabase()
+//     await db.collection('User').insertOne(user);
+// }, 3000);
 
 
 const app = express();
 // app.use(cors({origin: '*', allowedHeaders: '*'}))
+const router = express.Router();
+
+import { Database } from './database';
+
+const db: Database = new Database();
+async function Connect(){
+    const client = await db.createConnection()
+    if (client){
+        db.db = client.db(process.env.MONGODB_DB);
+    } else {
+        Connect()
+    }
+}
 
 
+Connect();
 
+export { db };
 
 
 // ConnectToMongoDB()
@@ -29,15 +44,40 @@ const app = express();
 
 
 
-
+import { specs } from './swagger.jsdoc'
 // app.get('/googleauth',async (req,res) => {
 
 // })
-import { userController } from './Controllers/UserController'
-import { movieController } from './Controllers/MovieController'
+import { UserControllerImpl, UserController } from './Controllers/UserController'
+import { MovieControllerImpl, MovieController } from './Controllers/MovieController'
+
+import { Authentication, JWTAuthImpl } from './Services/authentication.service';
+import { Validator, ValidatorImpl } from './Services/validator.service';
+import { UserService, UserServiceImpl } from './Services/user.service';
 
 
-app.get('/auth/google', async (request: Request, response: Response) => await userController.authGoogle(request, response))
+import { UserRepository, UserRepositoryImpl } from './Repository/user.repository';
+import { MovieService, MovieServiceImpl } from './Services/movie.service';
+
+const movieRepository: MovieRepository = new MovieRepositoryImpl()
+const userRepository: UserRepository = new UserRepositoryImpl()
+
+const validator: Validator = new ValidatorImpl()
+const authentication: Authentication = new JWTAuthImpl()
+const userService: UserService = new UserServiceImpl(userRepository)
+const movieService: MovieService = new MovieServiceImpl(movieRepository) 
+
+const userController: UserController = new UserControllerImpl(userService, authentication, validator)
+const movieController: MovieController = new MovieControllerImpl(movieService, authentication, validator)
+
+
+
+app.use(router)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+// routes
+
+
+router.get('/auth/google/:oauth_access_token', async (request: Request, response: Response) => await userController.authGoogle(request, response))
 
 
 
