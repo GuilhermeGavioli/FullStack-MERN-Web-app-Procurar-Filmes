@@ -1,7 +1,5 @@
-import { MongoClient }  from 'mongodb'
 import { User } from "../DTOS/user.dto";
 import {db} from '../index'
-import { Db }  from 'mongodb'
 
 
 export interface UserRepository {

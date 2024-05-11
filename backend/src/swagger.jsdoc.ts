@@ -25,20 +25,38 @@ const options = {
         ],
         }
       },
-      '/movie/{id}': {
+      '/movies/{page}/{genre}': {
         get: {
-          summary: 'Returns a list of users',
+          summary: 'Returns a list of movies',
           description: 'Optional extended description in CommonMark or HTML',
           parameters: [
             {
             in: 'path',
-            name: "oauth_access_token",
+            name: "genre",
             required: true,
             type: "string",
-          }
-        ],
-        }
-      }
+          },
+            {
+            in: 'path',
+            name: "page",
+            required: true,
+            type: "number",
+          },
+        ]}},
+
+        '/movie/{id}': {
+          get: {
+            summary: 'Returns a list of movies',
+            description: 'Optional extended description in CommonMark or HTML',
+            parameters: [
+              {
+              in: 'path',
+              name: "id",
+              required: true,
+              type: "string",
+            },
+          ]}},
+
     }
   },
   apis: ['./*.ts'], // Adjust the path to your route definitions

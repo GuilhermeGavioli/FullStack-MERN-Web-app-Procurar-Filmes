@@ -1,10 +1,8 @@
-import { UserService } from './../Services/user.service';
+import { UserService } from '../Services/user.service'
 import { Request, Response } from 'express';
 import { Authentication } from '../Services/authentication.service';
 import { Validator } from '../Services/validator.service';
-import {OAuth2Client}  from 'google-auth-library'
 
-const client = new OAuth2Client(process.env.GOOGLE_OAUTH_CLIENT_ID, process.env.GOOGLE_OAUTH_SECRET_KEY)
 
 export interface UserController{
     authGoogle(request: Request, response: Response): Promise<any>;
@@ -23,7 +21,7 @@ export class UserControllerImpl implements UserController{
         console.log(oauth_access_token)
         const is_oauth_token_valid = this.validator.validateOAuthToken(oauth_access_token)
         if (!is_oauth_token_valid) {
-            response.status(404).end()
+            return response.status(404).end()
         } else {
             const user = await this.authentication.getUserInfoFromOAuthAccessToken(oauth_access_token)
             if (!user){
