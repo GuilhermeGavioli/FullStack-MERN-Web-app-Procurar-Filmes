@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { Authentication } from '../Services/authentication.service';
 import { Validator } from '../Services/validator.service';
 import { MovieService } from '../Services/movie.service'
 
@@ -14,7 +13,6 @@ export class MovieControllerImpl implements MovieController{
 
     constructor(
         private movieService: MovieService,
-        private authentication: Authentication,
         private validator: Validator
     ){}
 

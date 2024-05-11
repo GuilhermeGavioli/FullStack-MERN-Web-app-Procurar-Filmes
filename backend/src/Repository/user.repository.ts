@@ -1,26 +1,27 @@
+import { ObjectId } from "mongodb";
 import { User } from "../DTOS/user.dto";
 import {db} from '../index'
 
 
 export interface UserRepository {
     insertUser(user: User): Promise<void>
-    findOne(email: string): Promise<User | null>
+    findOneByEmail(email: string): Promise<User | undefined>
+    findUserById(id: string): Promise<User | undefined>
 }
 
 export class UserRepositoryImpl implements UserRepository{
 
     public async insertUser(user: User): Promise<void>{
-        console.log(user)
-        console.log('db')
-        console.log(db)
         await db?.db?.collection('User').insertOne({name: user.name, email: user.email, picture: user.picture})
     }
 
-    public async findOne(email: string): Promise<User | null>{
-        const user = await db?.db?.collection('User').findOne({email}) as User | null
-        console.log('found')
-        console.log(user)
+    public async findOneByEmail(email: string): Promise<User | undefined>{
+        const user = await db?.db?.collection('User').findOne({email}) as User | undefined
         return user;
+    }
+
+    public async findUserById(id: string): Promise<User | undefined>{
+        return await db?.db?.collection('Movie').findOne({  _id: new ObjectId(id)}) as User | undefined
     }
 }
 

@@ -51,7 +51,7 @@ const movieService: MovieService = new MovieServiceImpl(movieRepository)
 const validator: Validator = new ValidatorImpl()
 const authentication: Authentication = new JWTAuthImpl()
 const userController: UserController = new UserControllerImpl(userService, authentication, validator)
-const movieController: MovieController = new MovieControllerImpl(movieService, authentication, validator)
+const movieController: MovieController = new MovieControllerImpl(movieService, validator)
 
 const app = express()
 const router = express.Router()

@@ -14,7 +14,7 @@ export class UserServiceImpl {
   async createUserIfNecessary(user: User): Promise<void> {
     console.log('user')
     console.log(user)
-    const found_user = await this.userRepository.findOne(user.email)
+    const found_user = await this.userRepository.findOneByEmail(user.email)
     if (!found_user){
       await this.userRepository.insertUser(user)
       console.log('inserted')
