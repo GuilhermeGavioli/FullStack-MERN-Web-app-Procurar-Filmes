@@ -35,12 +35,10 @@ export class RatingControllerImpl implements RatingController{
     }
 
     public async getRatingsBatchByMovieId(request: Request, response: Response): Promise<any>{
-        const { page, movie_id } = request.params
+        const { movie_id, page } = request.params
         const ratings = await this.ratingService.getRatingsBatchByMovieId(movie_id, Number(page))
         return response.json(ratings)
     }
-
    
-
 }
 

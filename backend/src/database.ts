@@ -1,15 +1,11 @@
 import { Db, MongoClient }  from 'mongodb'
 
-
-
-
   export class Database {
     public db: null | Db = null;
     private client: MongoClient | null = null;
 
     constructor(){
     }
-
 
     public async createConnection(): Promise<MongoClient | undefined>{
         try {

@@ -14,8 +14,6 @@ export interface RatingRepository {
 
 export class RatingRepositoryImpl implements RatingRepository{
 
-
-
     public async insertOneRating(rating: Rating): Promise<ObjectId | undefined>{
         const query = { user_id: rating.user_id, movie_id: rating.movie_id, comment: rating.comment};
         const data = await db?.db?.collection('Rating').insertOne(query)
