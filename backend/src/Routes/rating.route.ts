@@ -1,4 +1,4 @@
-import { ratingController } from "../Objects";
+import { ratingController } from "../objects.instances";
 import { AuthGuard } from "../Middlewares/authguard.middleware";
 import express from 'express'
 export const router = express.Router()

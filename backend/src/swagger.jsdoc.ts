@@ -1,5 +1,8 @@
 import swaggerJsdoc from 'swagger-jsdoc';
-import { Test } from './SwaggerComponents/Test';
+
+import { movie_response } from './Swagger/movie.swagger';
+import { returned_rating } from './Swagger/rating.swagger';
+
 
 const headerFormat = {
   in: 'header',
@@ -24,7 +27,7 @@ const options = {
           required: [
             "comment"
           ]
-        }
+        },
       },
       AuthorizationHeader: {
         type: "object",
@@ -61,6 +64,23 @@ const options = {
             type: "string",
           }
         ],
+        responses:{
+          200: {
+            content: {
+              'application/json': {
+                schema: {
+                  type: "object",
+                  properties: {
+                    access_token: {
+                      description: "",
+                      type: "string"
+                    }
+                  },
+                }
+              }
+            }
+          }
+        }
       }},
 
       '/movies/{page}/{genre}': {
@@ -78,11 +98,32 @@ const options = {
             name: "page",
             required: true,
             type: "number",
-          }]
+          }],
+          responses: {
+            200: {
+              content: {
+                'application/json': {
+                  schema: {
+                    type: "array",
+                    items: movie_response
+                  }
+                }
+              }
+            }
+          }
       }},
 
       '/movie/{id}': {
         get: {
+          responses: {
+            200: {
+              content: {
+                'application/json': {
+                  schema: movie_response
+                }
+              }
+            }
+          },
           parameters: [
             headerFormat,
             {
@@ -95,6 +136,17 @@ const options = {
 
       '/ratings/create/for_movie/{movie_id}': {
         post: {
+          responses: {
+            200: {
+              content: {
+                'application/json': {
+                  schema: {
+                    type: "string"
+                  }
+                }
+              }
+            }
+          },
           parameters: [
             headerFormat,
           {
@@ -119,6 +171,15 @@ const options = {
 
       '/ratings/{movie_id}/{page}': {
         get: {
+          responses:{
+            200: {
+              content: {
+                'application/json': {
+                  schema: returned_rating
+                }
+              }
+            }
+          },
           parameters: [
             headerFormat,
             {
@@ -151,6 +212,10 @@ const options = {
 
       '/ratings/delete/{id}': {
         delete: {
+          responses: {
+            200: {},
+            404: {}
+          },
           parameters: [
             headerFormat,
             {

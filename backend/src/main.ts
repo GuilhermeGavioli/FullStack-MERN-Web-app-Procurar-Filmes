@@ -33,6 +33,8 @@ app.use(ratingRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use(cors({origin: '*', allowedHeaders: '*'}))
 
+
+
 app.listen(3001, () => {
     console.log('Server is Up and Running')
 })

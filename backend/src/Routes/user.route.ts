@@ -1,4 +1,4 @@
-import { userController } from "../Objects";
+import { userController } from "../objects.instances";
 import express from 'express'
 export const router = express.Router()
 

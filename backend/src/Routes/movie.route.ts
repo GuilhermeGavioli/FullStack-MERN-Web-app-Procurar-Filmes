@@ -1,4 +1,4 @@
-import { movieController } from "../Objects";
+import { movieController } from "../objects.instances";
 import { AuthGuard } from "../Middlewares/authguard.middleware";
 import express from 'express'
 export const router = express.Router()
