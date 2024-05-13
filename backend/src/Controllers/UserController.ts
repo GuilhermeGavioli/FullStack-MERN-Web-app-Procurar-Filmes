@@ -12,7 +12,7 @@ export class UserControllerImpl implements UserController{
 
     constructor(
         private userService: UserService,
-        private authentication: Authentication,
+        private authenticator: Authentication,
         private validator: Validator
     ){}
 
@@ -23,13 +23,13 @@ export class UserControllerImpl implements UserController{
         if (!is_oauth_token_valid) {
             return response.status(404).end()
         } else {
-            const user = await this.authentication.getUserInfoFromOAuthAccessToken(oauth_access_token)
+            const user = await this.authenticator.getUserInfoFromOAuthAccessToken(oauth_access_token)
             if (!user){
                 console.log('invalid oauth')
                 return response.status(404).end()
             }
             await this.userService.createUserIfNecessary(user)
-            const access_token = this.authentication.generateToken(user)
+            const access_token = this.authenticator.generateToken(user)
             response.json({ access_token })
         }
     }

@@ -5,16 +5,20 @@ import { returned_rating } from './Swagger/rating.swagger';
 
 
 const headerFormat = {
-  in: 'header',
-  name: 'Authorization',
-  required: true,
-  scheme: '#/components/schemas/AuthorizationHeader',
-  description: 'auth token returned from /auth/google/{oauth_access_token}'
+ 
 }
 
 const options = {
   swaggerDefinition: {
     components: {
+
+      securitySchemes: {
+        myAuth: { // Name for the security scheme
+          type: 'http',
+          scheme: 'bearer',
+        },
+      },
+
       schemas:{
         Rating:{
           type: "object",
@@ -42,6 +46,8 @@ const options = {
           ]
       }
     },
+
+
 
     openapi: '3.0.0',
     info: {
@@ -136,6 +142,9 @@ const options = {
 
       '/ratings/create/for_movie/{movie_id}': {
         post: {
+          security: [{ 
+            myAuth: []
+           }],
           responses: {
             200: {
               content: {
@@ -148,7 +157,15 @@ const options = {
             }
           },
           parameters: [
-            headerFormat,
+            // {
+            // in: 'header',
+            // name: 'Authorization',
+            // required: true,
+            // scheme: {
+            //   type: "string"
+            // },
+            // description: 'auth token returned from /auth/google/{oauth_access_token}'
+            // },
           {
             in: 'path',
             name: "movie_id",

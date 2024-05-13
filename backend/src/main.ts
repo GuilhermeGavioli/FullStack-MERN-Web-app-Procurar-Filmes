@@ -21,19 +21,23 @@ import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
 import { specs } from './swagger.jsdoc'
 import express from 'express'
+import bodyParser from 'body-parser';
 
 import { router as movieRouter } from './Routes/movie.route';
 import { router as userRouter } from './Routes/user.route';
 import { router as ratingRouter } from './Routes/rating.route';
 
 const app = express()
+app.use(bodyParser.json())
+app.use(cors({origin: '*', allowedHeaders: '*'}))
+
+import { AuthGuard, AuthGuardImpl } from './Middlewares/authguard.middleware';
+export const authGuard: AuthGuard = new AuthGuardImpl()
+
 app.use(movieRouter)
 app.use(userRouter)
 app.use(ratingRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
-app.use(cors({origin: '*', allowedHeaders: '*'}))
-
-
 
 app.listen(3001, () => {
     console.log('Server is Up and Running')

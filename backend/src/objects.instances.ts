@@ -9,7 +9,8 @@ import { MovieControllerImpl, MovieController } from './Controllers/MovieControl
 import { RatingControllerImpl, RatingController } from './Controllers/RatingController'
 import { RatingRepository, RatingRepositoryImpl } from './Repository/rating.repository';
 import { RatingService, RatingServiceImpl } from './Services/rating.service';
-
+// import { AuthGuard, AuthGuardImpl } from './Middlewares/authguard.middleware';
+// export const authGuard: AuthGuard = new AuthGuardImpl()
 const movieRepository: MovieRepository = new MovieRepositoryImpl()
 const userRepository: UserRepository = new UserRepositoryImpl()
 const ratingRepository: RatingRepository = new RatingRepositoryImpl()
@@ -17,8 +18,9 @@ const userService: UserService = new UserServiceImpl(userRepository)
 const movieService: MovieService = new MovieServiceImpl(movieRepository)
 const ratingService: RatingService = new RatingServiceImpl(ratingRepository, userRepository, movieRepository)
 const validator: Validator = new ValidatorImpl()
-const authentication: Authentication = new JWTAuthImpl()
+const authenticator: Authentication = new JWTAuthImpl()
 
-export const userController: UserController = new UserControllerImpl(userService, authentication, validator)
+
+export const userController: UserController = new UserControllerImpl(userService, authenticator, validator)
 export const movieController: MovieController = new MovieControllerImpl(movieService, validator)
 export const ratingController: RatingController = new RatingControllerImpl(ratingService, validator)

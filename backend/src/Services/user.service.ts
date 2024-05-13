@@ -16,6 +16,7 @@ export class UserServiceImpl {
     console.log(user)
     const found_user = await this.userRepository.findOneByEmail(user.email)
     if (!found_user){
+      // return id
       await this.userRepository.insertUser(user)
       console.log('inserted')
     }
