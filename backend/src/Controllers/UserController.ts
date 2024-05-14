@@ -28,8 +28,8 @@ export class UserControllerImpl implements UserController{
                 console.log('invalid oauth')
                 return response.status(404).end()
             }
-            await this.userService.createUserIfNecessary(user)
-            const access_token = this.authenticator.generateToken(user)
+            const user_id = await this.userService.createUserIfNecessary(user)
+            const access_token = this.authenticator.generateToken({...user, id: user_id})
             response.json({ access_token })
         }
     }

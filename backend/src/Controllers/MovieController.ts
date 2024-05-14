@@ -17,9 +17,11 @@ export class MovieControllerImpl implements MovieController{
     ){}
 
     public async getMoviesBatchByGenre(request: Request, response: Response): Promise<any>{
-        const { page, genre } = request.params
-        const movies = await this.movieService.getMoviesBatchByGenre(genre, Number(page))
-        console.log(movies)
+        console.log(request.params)
+        const { page } = request.params
+        const { genre } = request.query
+        if (!genre) return
+        const movies = await this.movieService.getMoviesBatchByGenre(genre.toString(), Number(page))
         response.json(movies)
     }
 

@@ -1,9 +1,10 @@
 
+import { ObjectId } from 'mongodb';
 import { User } from '../DTOS/user.dto';
 import { UserRepository } from '../Repository/user.repository';
 
 export interface UserService{
-  createUserIfNecessary(user: User): Promise<void> 
+  createUserIfNecessary(user: User): Promise<string | undefined>
 }
 
 export class UserServiceImpl {
@@ -11,14 +12,13 @@ export class UserServiceImpl {
     private readonly userRepository: UserRepository,
   ) {}
 
-  async createUserIfNecessary(user: User): Promise<void> {
-    console.log('user')
-    console.log(user)
+  async createUserIfNecessary(user: User): Promise<string | undefined>{
     const found_user = await this.userRepository.findOneByEmail(user.email)
-    if (!found_user){
-      // return id
-      await this.userRepository.insertUser(user)
-      console.log('inserted')
+    if (found_user){
+      return found_user._id
+    } else {
+      const inserted_user_id = await this.userRepository.insertUser(user)
+      return inserted_user_id;
     }
   }
 }

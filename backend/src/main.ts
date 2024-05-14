@@ -19,6 +19,8 @@ export { db };
 
 import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
+import swaggerui from 'swagger-ui'
+
 import { specs } from './swagger.jsdoc'
 import express from 'express'
 import bodyParser from 'body-parser';
@@ -27,12 +29,12 @@ import { router as movieRouter } from './Routes/movie.route';
 import { router as userRouter } from './Routes/user.route';
 import { router as ratingRouter } from './Routes/rating.route';
 
+
 const app = express()
+
+
 app.use(bodyParser.json())
 app.use(cors({origin: '*', allowedHeaders: '*'}))
-
-import { AuthGuard, AuthGuardImpl } from './Middlewares/authguard.middleware';
-export const authGuard: AuthGuard = new AuthGuardImpl()
 
 app.use(movieRouter)
 app.use(userRouter)

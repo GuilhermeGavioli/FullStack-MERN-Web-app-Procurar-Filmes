@@ -15,7 +15,7 @@ export interface RatingRepository {
 export class RatingRepositoryImpl implements RatingRepository{
 
     public async insertOneRating(rating: Rating): Promise<ObjectId | undefined>{
-        const query = { user_id: rating.user_id, movie_id: rating.movie_id, comment: rating.comment};
+        const query = { user_id: new ObjectId(rating.user_id), movie_id: new ObjectId(rating.movie_id), comment: rating.comment};
         const data = await db?.db?.collection('Rating').insertOne(query)
         return data?.insertedId
     }
@@ -31,7 +31,8 @@ export class RatingRepositoryImpl implements RatingRepository{
     public async getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>{
         const PAGE_SIZE = 10
         const skip = (page - 1) * PAGE_SIZE
-        const data = await db?.db?.collection('Rating').find({movie_id: new ObjectId(id)}).skip(skip).limit(PAGE_SIZE).toArray()
+        const query = {movie_id: new ObjectId(id)}
+        const data = await db?.db?.collection('Rating').find(query).skip(skip).limit(PAGE_SIZE).toArray()
         return data as Rating[] | [];
     }
 

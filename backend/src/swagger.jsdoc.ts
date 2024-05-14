@@ -4,9 +4,7 @@ import { movie_response } from './Swagger/movie.swagger';
 import { returned_rating } from './Swagger/rating.swagger';
 
 
-const headerFormat = {
- 
-}
+
 
 const options = {
   swaggerDefinition: {
@@ -67,7 +65,9 @@ const options = {
             in: 'path',
             name: "oauth_access_token",
             required: true,
-            type: "string",
+            schema:{
+              type: "string"     
+            },
           }
         ],
         responses:{
@@ -89,22 +89,30 @@ const options = {
         }
       }},
 
-      '/movies/{page}/{genre}': {
+      
+      '/movies/{page}/genres': {
         get: {
+          security: [{
+            myAuth: []
+           }],
           parameters: [
-          headerFormat,
-          {
-            in: 'path',
-            name: "genre",
-            required: true,
-            type: "string",
-          },
             {
-            in: 'path',
-            name: "page",
-            required: true,
-            type: "number",
-          }],
+              in: 'path',
+              name: "page",
+              required: true,
+               schema: {
+                type: "string"
+               },
+            },
+            {
+              in: 'query',
+              name: "genre",
+              required: true,
+              schema: {
+                type: "string"
+              },
+            },
+        ],
           responses: {
             200: {
               content: {
@@ -115,12 +123,19 @@ const options = {
                   }
                 }
               }
+            },
+            403: {
+              
             }
           }
       }},
 
+
       '/movie/{id}': {
         get: {
+          security: [{ 
+            myAuth: []
+           }],
           responses: {
             200: {
               content: {
@@ -131,12 +146,13 @@ const options = {
             }
           },
           parameters: [
-            headerFormat,
             {
             in: 'path',
             name: "id",
             required: true,
-            type: "string",
+            schema:{
+              type: "string"     
+            },
           }]
       }},
 
@@ -157,20 +173,13 @@ const options = {
             }
           },
           parameters: [
-            // {
-            // in: 'header',
-            // name: 'Authorization',
-            // required: true,
-            // scheme: {
-            //   type: "string"
-            // },
-            // description: 'auth token returned from /auth/google/{oauth_access_token}'
-            // },
           {
             in: 'path',
             name: "movie_id",
             required: true,
-            type: "string",
+            schema:{
+              type: "string"     
+            },
           }],
           requestBody: {
             content: {
@@ -186,60 +195,75 @@ const options = {
         }
       },
 
-      '/ratings/{movie_id}/{page}': {
+      '/ratings/{movie_id}': {
         get: {
+          security: [{ 
+            myAuth: []
+           }],
           responses:{
             200: {
               content: {
                 'application/json': {
-                  schema: returned_rating
+                  // schema: returned_rating
                 }
               }
             }
           },
           parameters: [
-            headerFormat,
             {
             in: 'path',
             name: "movie_id",
             required: true,
-            type: "string",
+            schema:{
+              type: "string"     
+            },
           }, 
           {
-            in: 'path',
+            in: 'query',
             name: "page",
             required: true,
-            type: "string",
+            schema:{
+              type: "string"     
+            },
           }],
         }
       },
 
       '/ratings/update/{id}': {
         put: {
+          security: [{ 
+            myAuth: []
+           }],
           parameters: [
-            headerFormat,
             {
             in: 'path',
             name: "id",
             required: true,
-            type: "string",
+            schema: {
+              type: "string"
+            }
           }],
         }
       },
 
       '/ratings/delete/{id}': {
         delete: {
+          security: [{ 
+            myAuth: []
+           }],
           responses: {
             200: {},
             404: {}
           },
           parameters: [
-            headerFormat,
+        
             {
             in: 'path',
             name: "id",
             required: true,
-            type: "string",
+            schema: {
+              type: "string"
+            }
           }],
         }
       },

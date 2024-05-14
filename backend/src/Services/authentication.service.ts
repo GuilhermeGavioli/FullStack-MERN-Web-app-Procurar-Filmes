@@ -33,7 +33,7 @@ export class JWTAuthImpl implements Authentication{
     }
 
     public generateToken(user: User): string{
-        return jwt.sign({user}, process.env.JWT as string, {expiresIn: '1h'})
+        return jwt.sign({user}, process.env.JWT as string, {expiresIn: '24h'})
     }
 
     public async getUserInfoFromOAuthAccessToken(accessToken: string): Promise<User | null>{

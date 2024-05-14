@@ -21,7 +21,7 @@ export class RatingControllerImpl implements RatingController{
     public async createRating(request: Request, response: Response): Promise<any>{
         const { movie_id } = request.params
         const {  comment  } = request.body
-        const {  user_id  } = request.res?.locals.id
+        const   user_id   = request.res?.locals.user_id
         const rating = new Rating(user_id, movie_id, comment)
         const rating_id = await this.ratingService.createRating(rating)
         return response.status(rating_id ? 200 : 404).json(rating_id?.toString())
@@ -35,7 +35,8 @@ export class RatingControllerImpl implements RatingController{
     }
 
     public async getRatingsBatchByMovieId(request: Request, response: Response): Promise<any>{
-        const { movie_id, page } = request.params
+        const { movie_id } = request.params
+        const { page } = request.query
         const ratings = await this.ratingService.getRatingsBatchByMovieId(movie_id, Number(page))
         return response.json(ratings)
     }
