@@ -1,38 +1,37 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+
 import { useState, useContext,useEffect } from 'react';
-import { AuthContext, SidebarContext } from '../App';
+import { AuthContext } from '../App';
 import { Avatar, Menu, MenuItem, Skeleton } from '@mui/material';
-import { grey,amber } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
-import TopBarInput from './TopBarInput';
-// import { styled as MUIStyled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
+
+
 import SearchIcon from '@mui/icons-material/Search';
 
 import styled from 'styled-components';
 
-const MySearchInput = styled.input`
-  background: ${grey[50]};
-  display: ${(props) => (props.isInputOpen ? 'hidden' : 'none')};
-  border: none;
-  height: 30px;
-  outline: none;
-  border-radius: 4px;
-  padding-left: 5px;
-`
+// const MySearchInput = styled.input`
+//   background: ${grey[50]};
+//   display: ${(props) => (props.isInputOpen ? 'hidden' : 'none')};
+//   border: none;
+//   height: 30px;
+//   outline: none;
+//   border-radius: 4px;
+//   padding-left: 5px;
+// `
 
 
 export default function TopBar() {
   const [loading, setLoading] = useState(true);
-  const { setIsSidebarOpen } = useContext(SidebarContext)
+
     const {auth, setAuth, logout} = useContext(AuthContext);
     const [anchorEl, setAnchorEl] = useState(null);
-  const [isInputOpen, setIsInputOpen] = useState(false)
+  // const [isInputOpen, setIsInputOpen] = useState(false)
  
   
     useEffect(()=>{
@@ -106,11 +105,10 @@ export default function TopBar() {
 
         <div style={{display: 'flex', alignItems: 'center', gap: '5px', justifyContent: 'space-between'}}>
       
-            <MySearchInput isInputOpen={isInputOpen}
-              placeholder="Search…"
-          
-              />
-<IconButton size="large" aria-label="search" color="inherit" sx={{m:0, p:0}} onClick={() => setIsInputOpen(!isInputOpen)}>
+            {/* <MySearchInput isInputOpen={isInputOpen} placeholder="Search…"/> */}
+
+{/* <IconButton size="large" aria-label="search" color="inherit" sx={{m:0, p:0}} onClick={() => setIsInputOpen(!isInputOpen)}> */}
+<IconButton size="large" aria-label="search" color="inherit" sx={{m:0, p:0}}>
             <SearchIcon sx={{fontSize: '.9em'}} />
           </IconButton>
         </div>

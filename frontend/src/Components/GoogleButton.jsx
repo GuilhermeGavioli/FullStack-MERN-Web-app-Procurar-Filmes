@@ -1,15 +1,15 @@
 
 import Button from '@mui/material/Button';
-import { useGoogleLogin, GoogleLogin  } from '@react-oauth/google';
-import Cookies from 'js-cookie';
+import { useGoogleLogin  } from '@react-oauth/google';
+
 import { useContext } from 'react';
 import { AuthContext } from '../App';
 import { useNavigate } from 'react-router-dom';
-// import { ThemeContext } from '../App';
+
 import { grey } from '@mui/material/colors';
 
 
-import {jwtDecode} from "jwt-decode";
+
 
 
 
@@ -27,12 +27,13 @@ export default function GoogleButonComp() {
 
 async function delegateGoogleOAuthToBackend(oauth_access_token){
   console.log(oauth_access_token)
-  // const res = await fetch(`http://localhost:3001/auth/google/${oauth_access_token}`);
-  // const { access_token } = await res.json()
-  // console.log(access_token)
-  // localStorage.setItem('access_token', access_token)
-  // setAuth({ isAuth: true, access_token })
-  // navigator('/')
+  const res = await fetch(`http://localhost:3001/auth/google/${oauth_access_token}`);
+  if (res.status == 200){
+    const { access_token } = await res.json()
+    localStorage.setItem('access_token', access_token)
+    setAuth({ isAuth: true, access_token })
+    navigator('/')
+  }
 }
 
 return (

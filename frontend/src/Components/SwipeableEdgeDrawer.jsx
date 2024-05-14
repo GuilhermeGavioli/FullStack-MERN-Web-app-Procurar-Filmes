@@ -4,14 +4,11 @@ import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { deepPurple, grey } from '@mui/material/colors';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import { Fab, SwipeableDrawer, Typography, Stack } from '@mui/material';
+
+
 import Comment from './Comment';
-import Fab from "@mui/material/Fab";
+
 import AddIcon from '@mui/icons-material/Add';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
 

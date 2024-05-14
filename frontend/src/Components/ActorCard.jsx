@@ -1,18 +1,13 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions, Rating } from '@mui/material';
-import Fab from '@mui/material/Fab';
+
+
 import Stack from '@mui/material/Stack';
 
 import { grey, amber, deepPurple } from '@mui/material/colors';
-import CustomizedButton from './CustomizedButton';
+
 import styled from 'styled-components'
 import { useState } from 'react';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import { StyledEngineProvider } from '@mui/material';
+
 import { useNavigate } from 'react-router-dom';
 
 
@@ -80,9 +75,3 @@ height: 120px;
 `
 
 
-      {/* <Typography sx={{color: 'white', fontWeight: '700'}} variant="subtitle1" gutterBottom noWrap={true}>
-        Spider Man And The Spider Verse
-        </Typography>
-      <Typography sx={{color: 'white', fontWeight: '700'}} variant="subtitle2" gutterBottom noWrap={true}>
-        Suspense / Action
-      </Typography> */}

@@ -1,17 +1,14 @@
 
 import { useEffect, useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
-import Cookies from 'js-cookie';
+
 import { AuthContext } from "../../App";
-import MovieCard from "../MovieCard";
-import { grey, amber, deepPurple } from "@mui/material/colors";
-import { TextField, Typography, Box } from "@mui/material";
+
+import { grey,  } from "@mui/material/colors";
+import {  Typography, Box } from "@mui/material";
 // import { movies_mock } from "../../moviesmock";
 import styled from "styled-components";
-import TopBarInput from "../TopBarInput";
-import BreadCrumb from "../BreadCrumb";
-import CategoryBar from "../CategoryBar";
-import Carrocel from '../MovieCarrocel'
+
 import MovieCarrocel from "../MovieCarrocel";
 import GenreCarrocel from "../GenreCarrocel";
 import MainCarrocel from "../MainCarrocel";
