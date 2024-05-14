@@ -29,6 +29,7 @@ export class UserControllerImpl implements UserController{
                 return response.status(404).end()
             }
             const user_id = await this.userService.createUserIfNecessary(user)
+            if (!user_id) return response.status(404).end()
             const access_token = this.authenticator.generateToken({...user, id: user_id})
             response.json({ access_token })
         }

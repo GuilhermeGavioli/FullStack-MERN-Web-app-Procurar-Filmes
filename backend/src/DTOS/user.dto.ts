@@ -9,7 +9,7 @@ export class User{
 }
 
 export interface MongoUser {
-    _id: string,
+    _id: ObjectId,
     name: string,
     picture: string,
     email: string,

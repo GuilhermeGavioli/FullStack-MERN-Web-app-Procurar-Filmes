@@ -15,10 +15,11 @@ export class UserServiceImpl {
   async createUserIfNecessary(user: User): Promise<string | undefined>{
     const found_user = await this.userRepository.findOneByEmail(user.email)
     if (found_user){
-      return found_user._id
+      return found_user._id.toString()
     } else {
       const inserted_user_id = await this.userRepository.insertUser(user)
-      return inserted_user_id;
+      if (inserted_user_id) return inserted_user_id.toString()
+      return undefined
     }
   }
 }
