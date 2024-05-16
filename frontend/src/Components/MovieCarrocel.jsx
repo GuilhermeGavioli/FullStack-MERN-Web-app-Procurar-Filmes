@@ -1,6 +1,9 @@
 import styled from 'styled-components'
-import { useNavigate } from 'react-router-dom';
 import MovieCard from './MovieCard';
+import { useContext } from 'react';
+import { Loadingtctx } from './Pages/MainPage';
+import { Skeleton } from '@mui/material';
+import { grey } from '@mui/material/colors';
 
 
 const Wrapper = styled.div`
@@ -23,21 +26,24 @@ const CardsWrapper = styled.div`
     gap: 8px;
 `
 
-export default function MovieCarrocel(){
-    const navigator = useNavigate()
-    function goToMovie(){
-        navigator('/movie/id')
-    }
+export default function MovieCarrocel({movies}){
+    const { loadingt } = useContext(Loadingtctx)
 
     return (
  
 <Wrapper>
-<CardsWrapper onClick={() => goToMovie()}>
-    <MovieCard cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
-    <MovieCard cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
-    <MovieCard cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
-    <MovieCard cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
-    <MovieCard cover="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKMvgrMj1e_mm4mamPM2XwWyzSA-wGmg624oe9nLFBHw&s" alt="" />
+<CardsWrapper>
+        {
+          movies?.map((movie) => {
+            return(
+              loadingt
+                ? 
+              <Skeleton animation="wave" sx={{background: grey[900], borderRadius: '15px'}} variant="rectangular" width={'115px'} height={'135px'} /> 
+                : 
+              <MovieCard key={movie?._id} movie={movie} alt="" />
+            )
+          })
+        }
 </CardsWrapper>
         </Wrapper> 
 

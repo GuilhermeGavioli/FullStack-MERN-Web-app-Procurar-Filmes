@@ -1,10 +1,11 @@
 
 import { ObjectId } from 'mongodb';
-import { User } from '../DTOS/user.dto';
+import { MongoUser, User } from '../DTOS/user.dto';
 import { UserRepository } from '../Repository/user.repository';
 
 export interface UserService{
   createUserIfNecessary(user: User): Promise<string | undefined>
+  getUser(id: string): Promise<MongoUser | undefined>
 }
 
 export class UserServiceImpl {
@@ -21,5 +22,10 @@ export class UserServiceImpl {
       if (inserted_user_id) return inserted_user_id.toString()
       return undefined
     }
+  }
+
+  async getUser(id: string): Promise<MongoUser | undefined>{
+    const found_user = await this.userRepository.findUserById(id)
+    return found_user as MongoUser | undefined
   }
 }

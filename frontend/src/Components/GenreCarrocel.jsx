@@ -53,24 +53,64 @@ const SelectedItem = styled.div`
 `
 
 
-export default function GenreCarrocel(){
+export default function GenreCarrocel({setGenre,genre}){
+
+    const genres = [
+        'Comedy','Animation', 'Horror', 'Action', 'Epic', 'Sci-fi', 'Romance', 'Drama'
+    ]
+
     return (
+
              <Wrapper>
             <CardsWrapper>
+
+               {
+               genres.map(g => {
+                   return (
+                g == genre ? 
+                    <SelectedItem>
+                    <p>{g}</p>
+                </SelectedItem> 
+                    :
+                    <Item onClick={() => setGenre(g)}>
+                    <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
+                    <p>{g}</p>
+                </Item> 
+                )
+            })
+            }
+ 
         <SelectedItem>
-            <p>All</p>
+            <p>{genre}</p>
         </SelectedItem> 
-        <Item>
-            <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
-            <p>Movies</p>
-        </Item> 
-        <Item>
+        <Item onClick={() => setGenre('Comedy')}>
             <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
             <p>Comedy</p>
         </Item> 
-        <Item>
+        <Item onClick={() => setGenre('Horror')}>
             <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
-            <p>Comedy</p>
+            <p>Horror</p>
+        </Item> 
+        <Item onClick={() => setGenre('Action')}>
+            <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
+            <p>Action</p>
+        </Item> 
+        <Item onClick={() => setGenre('Epic')}>
+            <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
+            <p>Epic</p>
+        </Item> 
+        <Item onClick={() => setGenre('Sci-fi')}>
+            <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
+            <p>Sci-fi</p>
+        </Item> 
+        <Item onClick={() => setGenre('Romance')}>
+            <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
+            <p>Romance</p>
+        </Item> 
+       
+        <Item onClick={() => setGenre('Drama')}>
+            <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
+            <p>Drama</p>
         </Item> 
         </CardsWrapper>
         </Wrapper> 

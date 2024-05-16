@@ -34,30 +34,30 @@ function App() {
 
   const [auth, setAuth] = useState({
     isAuth: false,
-    token: null,
     user: {
-      name: null
+      name: null,
+      picture: null
     }
   })
 
   useEffect(() => {
-    console.log('running auth global effect')
-    async function validateToken() {
-      const access_token = localStorage.getItem('access_token')
-      if (access_token){
-        const res = await fetch('http://localhost:3001/access_token/validate', {
-          headers: {
-            Authorization: `${access_token}`
-          }
-        })
-        const {token_info} = await res.json()
+    // console.log('running auth global effect')
+    // async function validateToken() {
+    //   const access_token = localStorage.getItem('access_token')
+    //   if (access_token){
+    //     const res = await fetch('http://localhost:3001/access_token/validate', {
+    //       headers: {
+    //         Authorization: `${access_token}`
+    //       }
+    //     })
+    //     const {token_info} = await res.json()
 
 
-        setAuth({...auth, isAuth: true, token: token_info.access_token, user: {name: token_info.name}})
+    //     setAuth({...auth, isAuth: true, token: token_info.access_token, user: {name: token_info.name}})
 
-      }
-    }
-    validateToken();
+    //   }
+    // }
+    // validateToken();
 
     
   }, [])

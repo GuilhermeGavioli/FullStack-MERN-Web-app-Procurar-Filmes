@@ -2,10 +2,11 @@ import { Skeleton } from '@mui/material';
 import Fab from '@mui/material/Fab';
 
 import { grey } from '@mui/material/colors';
-
+import { useContext } from 'react';
 import styled from 'styled-components'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Loadingtctx } from './Pages/MainPage';
 
 
 const Movie = styled.img`
@@ -18,27 +19,28 @@ const Movie = styled.img`
     }
 `
 
-export default function MovieCard({id, title, cover}) {
-  const loading = false;
+export default function MovieCard({movie}) {
+
+
   const navigator = useNavigate()
-  
+
+
   function viewMovie(){
-    navigator(`/movie/${id}`)
+    navigator(`/movie/${movie?._id}`)
   }
 
 return (
-  <>
 
-    { loading ? 
-      
-      <Skeleton animation="wave" sx={{background: grey[900]}} variant="rectangular" width={'115px'} height={'135px'} />
+
+    
+    
+    <Movie src={movie?.cover} onClick={viewMovie}/>
      
-     :
-      <Movie src={cover} onClick={viewMovie}/>
+  
       
-    }
+    
 
-    </>
+
      
   )
 }

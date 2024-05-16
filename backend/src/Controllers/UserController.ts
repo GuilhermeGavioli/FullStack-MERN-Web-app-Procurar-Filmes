@@ -2,10 +2,12 @@ import { UserService } from '../Services/user.service'
 import { Request, Response } from 'express';
 import { Authentication } from '../Services/authentication.service';
 import { Validator } from '../Services/validator.service';
+import { MongoUser } from '../DTOS/user.dto';
 
 
 export interface UserController{
     authGoogle(request: Request, response: Response): Promise<any>;
+    getUserInfo(request: Request, response: Response): Promise<any>
 }
 
 export class UserControllerImpl implements UserController{
@@ -33,6 +35,14 @@ export class UserControllerImpl implements UserController{
             const access_token = this.authenticator.generateToken({...user, id: user_id})
             response.json({ access_token })
         }
+    }
+
+
+    public async getUserInfo(request: Request, response: Response): Promise<any>{
+        const user_id = response.locals.user_id
+        const user = await this.userService.getUser(user_id)
+        if (!user) return response.status(404).end()
+        return response.json(user).end()
     }
 
 }

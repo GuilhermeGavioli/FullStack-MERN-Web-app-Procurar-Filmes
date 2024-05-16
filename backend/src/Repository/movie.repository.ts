@@ -11,7 +11,7 @@ export interface MovieRepository {
 export class MovieRepositoryImpl implements MovieRepository{
 
     public async getMoviesBatchByGenre(genre: string, page: number): Promise<Movie[] | []>{
-        const PAGE_SIZE = 10
+        const PAGE_SIZE = 20
         const skip = (page - 1) * PAGE_SIZE
         const query = { genres: { $in: [genre] } };
         const data = await db?.db?.collection('Movie').find(query).skip(skip).limit(PAGE_SIZE).toArray()

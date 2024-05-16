@@ -4,13 +4,15 @@ import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { deepPurple, grey } from '@mui/material/colors';
-import { Fab, SwipeableDrawer, Typography, Stack } from '@mui/material';
+import { Fab, SwipeableDrawer, Typography, Stack, Skeleton } from '@mui/material';
 
 
 import Comment from './Comment';
 
 import AddIcon from '@mui/icons-material/Add';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
+import { useParams } from 'react-router-dom';
+
 
 const drawerBleeding = 56;
 
@@ -38,8 +40,46 @@ function SwipeableEdgeDrawer(props) {
   const { window } = props;
   const [open, setOpen] = React.useState(false);
 
+  const [firstCommentsLoaded, setFirstCommentsLoaded] = React.useState(false)
+  const [page, setPage] = React.useState(1)
+  const [loading, setLoading] = React.useState(true)
+  const [comments, setComments] = React.useState([])
+  const [end, setEnd] = React.useState(false)
+  const [noComments, setNoComments] = React.useState(false)
+  const { id } = useParams();
+
+
+ const getRatings = async () => {
+
+      if (end) return
+      const res = await fetch(`http://localhost:3001/ratings/${id}?page=${page}`, {
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      })
+      if (res.status == 200) {
+        const data = await res.json()
+
+        if (page == 1 && data?.length == 0){
+          setNoComments(true)
+          setEnd(true)
+        } else {
+          if (data?.length < 10){
+            setEnd(true)
+          } else {
+            setComments([ ...comments, ...data ])
+            setFirstCommentsLoaded(true)
+            setPage((prev_page) => { return prev_page + 1 })
+          }
+        }
+        setLoading(false)
+      }
+    }
+
+
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+    getRatings()
   };
 
   const toggleDrawerAlternativly = (s) => {
@@ -102,13 +142,30 @@ function SwipeableEdgeDrawer(props) {
         >
           <Stack spacing={1}>
 
-            <div style={{width: '100%', height: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
-            <InsertCommentIcon sx={{fontSize: '1.8em', color: grey[500]}}></InsertCommentIcon>
-            <Typography sx={{ p: 1, color: grey[500], fontWeight: 600, fontSize: '0.9em' }}>No Comments Yet...</Typography>
-            </div>
-            
-          <Comment></Comment>
-          <Comment></Comment>
+            {noComments ? 
+              <div style={{width: '100%', height: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+              <InsertCommentIcon sx={{fontSize: '1.8em', color: grey[500]}}></InsertCommentIcon>
+              <Typography sx={{ p: 1, color: grey[500], fontWeight: 600, fontSize: '0.9em' }}>No Comments Yet...</Typography>
+              </div> : <></>
+          }
+
+            {comments.map(comment => {
+              return (
+                loading ?
+                <div key={comment?._id}>
+                  <h1>UÉ</h1>
+                <Skeleton key={comment?._id} animation="wave" height={'60px'} width={"200px"} /> 
+                </div> 
+                :
+                <Comment key={comment?._id} comment={comment?.comment} ></Comment>
+              )
+            })}
+
+            {!end ?
+            <button onClick={() => {getRatings()}}>fetch more</button>
+            : <></>
+            }
+      
           </Stack>
 
 

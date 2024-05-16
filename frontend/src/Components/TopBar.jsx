@@ -27,18 +27,34 @@ import styled from 'styled-components';
 
 
 export default function TopBar() {
-  const [loading, setLoading] = useState(true);
-
-    const {auth, setAuth, logout} = useContext(AuthContext);
-    const [anchorEl, setAnchorEl] = useState(null);
-  // const [isInputOpen, setIsInputOpen] = useState(false)
- 
   
-    useEffect(()=>{
-      setTimeout(() => {
-        setLoading(false)
-      }, 3000);
-    },[loading])
+  const {auth, setAuth, logout} = useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  // const [isInputOpen, setIsInputOpen] = useState(false)
+
+  const [loadingh, setLoadingh] = useState(true);
+  const [userPicture, setUserPicture] = useState(null)
+
+
+    useEffect(() => {
+      const getMyUserInfo = async () => {
+        const res = await fetch('http://localhost:3001/auth/user/getinfo', {
+          headers: {
+            'authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        })
+        if (res.status == 200) {
+          const userdata = await res.json()
+          console.log(userdata.picture)
+          setUserPicture(userdata.picture)
+        } else {
+          console.log('error')
+        }
+        setLoadingh(false)
+      }
+      getMyUserInfo()
+    }, [])
+
 
     const handleChange = (event) => {
       setAuth(event.target.checked);
@@ -63,7 +79,7 @@ export default function TopBar() {
             Movies
           </Typography> */}
 
-          {auth.isAuth && (
+           
             <div style={{}}>
               <IconButton
                 size="small"
@@ -75,10 +91,14 @@ export default function TopBar() {
      
               >
                 {
-                  loading ? 
+                  loadingh ? 
+              
                   <Skeleton animation="wave" variant="circular" width={'35px'} height={'35px'} sx={{bgcolor: grey[700]}} />
+            
                   :
-                <Avatar alt={auth.user?.name} src="/static/images/avatar/1.jpg"  sx={{p:0,m:0, width: '32px', height: '32px',bgcolor: grey[800] }} />
+            
+                <Avatar alt={auth.user?.name} src={userPicture}  sx={{p:0,m:0, width: '32px', height: '32px',bgcolor: grey[800] }} />
+              
                 }
               
               </IconButton>
@@ -101,7 +121,7 @@ export default function TopBar() {
                 <MenuItem onClick={() => {handleClose(); logout()}}>Logout</MenuItem>
               </Menu>
             </div>
-          )}
+          
 
         <div style={{display: 'flex', alignItems: 'center', gap: '5px', justifyContent: 'space-between'}}>
       

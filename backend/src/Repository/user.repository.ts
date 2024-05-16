@@ -25,5 +25,6 @@ export class UserRepositoryImpl implements UserRepository{
     public async findUserById(id: string): Promise<User | undefined>{
         return await db?.db?.collection('User').findOne({  _id: new ObjectId(id)}) as User | undefined
     }
+
 }
 
