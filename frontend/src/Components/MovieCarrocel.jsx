@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import MovieCard from './MovieCard';
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import { Loadingtctx } from './Pages/MainPage';
 import { Skeleton } from '@mui/material';
 import { grey } from '@mui/material/colors';
@@ -28,10 +28,24 @@ const CardsWrapper = styled.div`
 
 export default function MovieCarrocel({movies}){
     const { loadingt } = useContext(Loadingtctx)
+    const {fetchinmore, setFetchingmore } = useState(false)
+
+    async function test(e){
+
+      console.log(e.target.scrollLeft)
+      const maxScroll = e.target.scrollLeftMax
+      const nearEnd = (maxScroll - 100)
+      if (e.target.scrollLeft >= nearEnd && !fetchinmore){
+        setFetchingmore(true)
+        console.log('ending... fetch more')
+        await getMoreMovies()
+        setFetchingmore(false)
+      }
+    }
 
     return (
  
-<Wrapper>
+<Wrapper onScroll={(e) => test(e)}>
 <CardsWrapper>
         {
           movies?.map((movie) => {

@@ -25,28 +25,62 @@ export default function MainPage() {
   const [movies, setMovies] = useState([])
   const [loadingt, setloadingt] = useState(true)
   const [genre, setGenre] = useState('Animation')
+  const [page, setPage] = useState(1)
+  const [end, setEnd] = useState(1)
 
   useEffect(()=>{
 
+    const getFirstMovies = async () => {
+      setloadingt(true)
+      setPage(1)
 
-
-    const getMovies = async () => {
-      const res = await fetch('http://localhost:3001/movies/1/genres?genre=Animation', {
+      const res = await fetch(`http://localhost:3001/movies/${page}/genres?genre=${genre}`, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
       })
+
       if (res.status == 200) {
         const data = await res.json()
-        setMovies(data)
-        setloadingt(false)
+        if (data.length < 20){
+
+        }
+        setTimeout(() => {
+          
+          console.log(data)
+          setPage(prev_page => {return prev_page + 1})
+          setMovies(data)
+          setloadingt(false)
+        }, 1000);
       }
     }
 
-   
-    getMovies()
+    getFirstMovies()
 
-  }, [])
+  }, [genre])
+
+  const getMoreMovies = async () => {
+    if (end) return
+    const res = await fetch(`http://localhost:3001/movies/${page}/genres?genre=${genre}`, {
+      headers: {
+        'authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+
+    if (res.status == 200) {
+      const data = await res.json()
+      if (data.length < 20){
+        setEnd(true)
+      }
+      setTimeout(() => {
+        
+        console.log(data)
+        setPage(prev_page => {return prev_page + 1})
+        setMovies([...data])
+        // setloadingt(false)
+      }, 1000);
+    }
+  }
 
 
     return (
