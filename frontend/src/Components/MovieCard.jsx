@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loadingtctx } from './Pages/MainPage';
-
+import { BottomBarCtx } from './Pages/MainPage';
 
 const Movie = styled.img`
     width: 115px;
@@ -20,13 +20,14 @@ const Movie = styled.img`
 `
 
 export default function MovieCard({movie}) {
-
+  const { openBottomBar } = useContext(BottomBarCtx)
 
   const navigator = useNavigate()
 
 
   function viewMovie(){
-    navigator(`/movie/${movie?._id}`)
+    openBottomBar(movie?._id)
+    // navigator(`/movie/${movie?._id}`)
   }
 
 return (

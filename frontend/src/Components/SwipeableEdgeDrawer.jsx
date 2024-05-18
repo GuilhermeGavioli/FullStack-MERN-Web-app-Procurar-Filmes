@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { deepPurple, grey } from '@mui/material/colors';
+import { blue, deepPurple, grey } from '@mui/material/colors';
 import { Fab, SwipeableDrawer, Typography, Stack, Skeleton } from '@mui/material';
 
 
@@ -40,7 +40,6 @@ function SwipeableEdgeDrawer(props) {
   const { window } = props;
   const [open, setOpen] = React.useState(false);
 
-  const [firstCommentsLoaded, setFirstCommentsLoaded] = React.useState(false)
   const [page, setPage] = React.useState(1)
   const [loading, setLoading] = React.useState(true)
   const [comments, setComments] = React.useState([])
@@ -64,11 +63,10 @@ function SwipeableEdgeDrawer(props) {
           setNoComments(true)
           setEnd(true)
         } else {
+          setComments([ ...comments, ...data ])
           if (data?.length < 10){
             setEnd(true)
           } else {
-            setComments([ ...comments, ...data ])
-            setFirstCommentsLoaded(true)
             setPage((prev_page) => { return prev_page + 1 })
           }
         }
@@ -78,6 +76,7 @@ function SwipeableEdgeDrawer(props) {
 
 
   const toggleDrawer = (newOpen) => () => {
+    console.log('puller2')
     setOpen(newOpen);
     getRatings()
   };
@@ -98,6 +97,7 @@ function SwipeableEdgeDrawer(props) {
           '.MuiDrawer-root > .MuiPaper-root': {
             height: `calc(50% - ${drawerBleeding}px)`,
             overflow: 'visible',
+            height: '80%'
           },
         }}
       />
@@ -115,11 +115,13 @@ function SwipeableEdgeDrawer(props) {
         ModalProps={{
           keepMounted: true,
         }}
+
       >
         <StyledBox
           sx={{
             position: 'absolute',
             top: -drawerBleeding,
+          
             borderTopLeftRadius: 8,
             borderTopRightRadius: 8,
             visibility: 'visible',
@@ -138,6 +140,7 @@ function SwipeableEdgeDrawer(props) {
             pb: 2,
             height: '100%',
             overflow: 'auto',
+            background: 'blue',
           }}
         >
           <Stack spacing={1}>

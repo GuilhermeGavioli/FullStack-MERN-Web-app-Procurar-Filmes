@@ -53,7 +53,7 @@ const SelectedItem = styled.div`
 `
 
 
-export default function GenreCarrocel({setGenre,genre}){
+export default function GenreCarrocel({runGenreChange,genre}){
 
     const genres = [
         'Animation','Comedy', 'Horror', 'Action', 'Epic', 'Sci-fi', 'Romance', 'Drama'
@@ -68,12 +68,12 @@ export default function GenreCarrocel({setGenre,genre}){
                genres.map(g => {
                    return (
                 g == genre ? 
-                    <SelectedItem>
+                    <SelectedItem key={g}>
                     <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
                     <p>{g}</p>
                 </SelectedItem> 
                     :
-                    <Item onClick={() => setGenre(g)}>
+                    <Item key={g} onClick={() => runGenreChange(g)}>
                     <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>
                     <p>{g}</p>
                 </Item> 
