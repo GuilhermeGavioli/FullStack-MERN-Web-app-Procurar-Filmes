@@ -7,9 +7,9 @@ import { createContext } from 'react';
 import Cookies from 'js-cookie';
 
 import SearchPage from './Components/Pages/SearchPage';
-import MoviePage from './Components/Pages/MoviePage';
+
 import MyComments from './Components/Pages/MyComments';
-import A from './Components/Pages/A';
+
 import BarsWrapper from './Components/Layouts/BarsWrapper';
 
 
@@ -72,12 +72,10 @@ function App() {
               <Routes>
                 <Route element={<BarsWrapper />}>
                   <Route path="/"       element={ <MainPage /> }></Route>
-                  <Route path="/a"  element={ <A /> }></Route>
                   <Route path="/mycomments"       element={ <MyComments /> }></Route>
                 </Route>
                 <Route>
                   <Route path="/results"  element={ <SearchPage /> }></Route>
-                  <Route path="/movie/:id"  element={ <MoviePage /> }></Route>
                   <Route path="/login"  element={ <LoginPage /> }></Route>
                 </Route>
               </Routes>

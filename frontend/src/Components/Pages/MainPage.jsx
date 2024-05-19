@@ -1,8 +1,8 @@
 
-import { useEffect, useState, useContext, createContext } from "react"
+import { useEffect, useState, createContext } from "react"
 import { useNavigate } from "react-router-dom"
 
-import { AuthContext } from "../../App";
+
 
 import { grey,  } from "@mui/material/colors";
 import {  Typography, Box, Skeleton } from "@mui/material";
@@ -13,31 +13,35 @@ import MovieCarrocel from "../MovieCarrocel";
 import GenreCarrocel from "../GenreCarrocel";
 import MainCarrocel from "../MainCarrocel";
 import { useSearchParams } from 'react-router-dom'; // Import hook
-import BottomSwipeable from "../BottomSwipeable";
-
+import MovieScreen from "../MovieScreen";
 
 export const Loadingtctx = createContext();
-export const BottomBarCtx = createContext()
+export const MoviesContext = createContext()
+export const MovieContext = createContext()
+export const RatingsContext = createContext()
 
 export default function MainPage() {
  
-  const [bottomState, setBottomState] = useState(false);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const {auth, setAuth} = useContext(AuthContext)
-  const navigator = useNavigate()
-  const [movies, setMovies] = useState([])
+  
+  const [movies, setMovies] = useState([{},{},{},{},{},{},{},{},{},{},])
   const [loadingt, setloadingt] = useState(true)
-  const [genre, setGenre] = useState(null)
+  const [genre, setGenre] = useState('Animation')
   const [page, setPage] = useState(1)
   const [end, setEnd] = useState(false)
   const [movieCarrocelLeft, setMovieCarrocelLeft] = useState(1000)
   
-  const [currentBottomMovie, setCurrentBottomMovie]= useState({}) 
-  const [bottomMovieLoading, setBottomMovieLoading]= useState({}) 
+  const [isMovieContainerOpen, setIsMovieContainerOpen] = useState(false);
+  const [movie, setMovie]= useState({})
+  const [movieLoading, setMovieLoading]= useState(false)
+
+  const [ratingsPage, setRatingsPage] = useState(1)
+  const [isRatingsEnd, setIsRatingsEnd] = useState(false)
+  const [isRatingsContainerOpen, setIsRatingsContainerOpen] = useState(false);
+  const [ratings, setRatings] = useState([])
+  const [ratingsLoading, setRatingsLoading] = useState(false)
 
   function runGenreChange(g){
-    setMovies([])
+    setMovies([{},{},{},{},{},{},{},{},{},{},])
     setloadingt(true)
     setEnd(false)
     setPage(prev_page => {return 1})
@@ -45,57 +49,80 @@ export default function MainPage() {
     localStorage.setItem('genre_from_main', g)
   }
 
-  async function getBottomMovie(id){
-    setBottomMovieLoading(true)
-    setBottomState(true) // open bottom bar
+  async function handleOpenAndGetMovie(id){
+    setMovieLoading(true)
+    setIsMovieContainerOpen(true)
     const url = `http://localhost:3001/movie/${id}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
       })
-      if (res.status == 200) {
-        const data = await res.json()
-        console.log(data)
-        setCurrentBottomMovie(data)
-      }
 
+      setTimeout(async() => {
+        if (res.status == 200) {
+        const data = await res.json()
+        setMovie(data)
+      }
+      setMovieLoading(false)
+    }, 2500);
   }
 
-  useEffect(()=>{
-    // const value = searchParams.get('genre')  || 'Animation'
-    const value = localStorage.getItem('genre_from_main') || 'Animation'
-    setGenre(value);
-  }, [])
+  function handleCloseMovie(){
+    console.log('closing movie')
+    setMovieLoading(false)
+    setIsMovieContainerOpen(false)
+    setMovie({})
+  }
+
+  async function handleOpenAndGetRatings(){
+    setRatingsLoading(true)
+    setIsRatingsContainerOpen(true)
+    const url = `http://localhost:3001/ratings/${movie?._id}?page=${ratingsPage}`
+      const res = await fetch(url, {
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      })
+      if (res.status == 200) {
+        const data = await res.json()
+        if (data.length < 10){
+          setIsRatingsEnd(true)
+        }
+        setRatingsPage(prev_page => {return prev_page + 1})
+        setRatings(data)
+      }
+  }
+  
+  function handleCloseRatings(){
+    setIsRatingsEnd(false)
+    setRatingsLoading(false)
+    setIsRatingsContainerOpen(false)
+    setRatings([])
+    setRatingsPage(1)
+  }
+
 
   useEffect(()=>{
-
     const getFirstMovies = async () => {
-   
       const url = `http://localhost:3001/movies/${page}/genres?genre=${genre}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
         }
       })
-
       if (res.status == 200) {
         const data = await res.json()
         if (data.length < 20){
           setEnd(true)
-        }
-   
-          
-          console.log(data)
+        }       
           setPage(prev_page => {return prev_page + 1})
           setMovies(data)
           setloadingt(false)
-
+       
       }
     }
-
     getFirstMovies()
-
   }, [genre])
 
   const getMoreMovies = async () => {
@@ -112,37 +139,50 @@ export default function MainPage() {
       if (data.length < 20){
         setEnd(true)
       }
-    
-      console.log(data)
       setPage(prev_page => {return prev_page + 1})
       setMovies([...movies, ...data])
-     
+    }
+  }
+
+  const getMoreRatings = async () => {
+    if (isRatingsEnd) return
+    console.log('geting more')
+    const res = await fetch(`http://localhost:3001/ratings/${movie?._id}?page=${ratingsPage}`, {
+      headers: {
+        'authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+
+    if (res.status == 200) {
+      const data = await res.json()
+      if (data.length < 10){
+        setIsRatingsEnd(true)
+      }
+      setRatingsPage(prev_page => {return prev_page + 1})
+      setRatings([...ratings, ...data])
+      
     }
   }
 
 
     return (
       
-      <BottomBarCtx.Provider value={{movie: currentBottomMovie, openBottomBar: getBottomMovie}}>
+      <MoviesContext.Provider value={{getMoreMovies, movies}}>
+
+
+      
+      <MovieContext.Provider value={{movieLoading, isMovieContainerOpen, movie, handleOpenAndGetMovie, handleCloseMovie}}>
       <Loadingtctx.Provider value={{loadingt, setloadingt}} >
-<div style={{minHeight: '100%',height: 'fit-content', backgroundColor: '#161616', width: '100%',
- 
-paddingTop: '60px', display: 'flex', flexDirection: 'column', gap: '10px',
-msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
-  scrollbarWidth: 'none',
-  paddingBottom: '60px'
-}}>
 
 
 <MainCarrocel></MainCarrocel>
 <GenreCarrocel runGenreChange={runGenreChange} genre={genre}></GenreCarrocel>
+
   <MovieCarrocel 
   movieCarrocelLeft={movieCarrocelLeft} 
   setMovieCarrocelLeft={setMovieCarrocelLeft} 
   getMoreMovies={getMoreMovies}
    movies={movies} />
-
-
 
 
 
@@ -156,48 +196,13 @@ See all
 </Typography>
 </Box>
 
-{/* <MovieCarrocel getMoreMovies={getMoreMovies} movies={movies} /> */}
-
-
-
-
-<BottomSwipeable state={bottomState} setState={setBottomState}/>
+<RatingsContext.Provider value={{getMoreRatings, isRatingsEnd, isRatingsContainerOpen, setIsRatingsContainerOpen, ratings, handleOpenAndGetRatings, handleCloseRatings }} >
+  <MovieScreen/>
+</RatingsContext.Provider>
 
       
-
-
- 
-</div>
 </Loadingtctx.Provider>
-</BottomBarCtx.Provider>
+</MovieContext.Provider>
+  </MoviesContext.Provider>
     )
-  }
-
-const Wrapper = styled.div`
-  background: red;
-  width: 100vw;
-  height: 145px;
-  position: relative;
-  overflow: scroll;
-`
-
-const CardsWrapper = styled.div`
-  background: yellow;
-  position: absolute;
-  left: 0;
-  width: fit-content;
-  height: 100%;
-  padding: 5px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`
-const MovieCard = styled.img`
-    width: 115px;
-    height: 135px;
-    border-radius: 15px;
-    &: hover {
-      filter: brightness(1.1);
-      cursor: pointer;
-    }
-`
+}
