@@ -1,5 +1,11 @@
+
+
 import styled from 'styled-components'
 import TheaterComedyRoundedIcon from '@mui/icons-material/TheaterComedyRounded';
+import { Skeleton } from '@mui/material';
+import { Fragment } from 'react';
+import { grey } from '@mui/material/colors';
+
 
 const Wrapper = styled.div`
     background: red;
@@ -53,7 +59,7 @@ const SelectedItem = styled.div`
 `
 
 
-export default function GenreCarrocel({runGenreChange,genre}){
+export default function GenreCarrocel({runGenreChange,genre, loading}){
 
     const genres = [
         'Animation','Comedy', 'Horror', 'Action', 'Epic', 'Sci-fi', 'Romance', 'Drama'
@@ -65,8 +71,21 @@ export default function GenreCarrocel({runGenreChange,genre}){
             <CardsWrapper>
 
                {
-               genres.map(g => {
-                   return (
+                loading ? 
+                <Fragment>
+                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'60px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'80px'} height={'100%'} />
+                </Fragment>
+                :
+
+               genres.map(g => {   
+                return (
+                    
                 g == genre ? 
                     <SelectedItem key={g}>
                     <TheaterComedyRoundedIcon sx={{fontSize: '1.7em'}}/>

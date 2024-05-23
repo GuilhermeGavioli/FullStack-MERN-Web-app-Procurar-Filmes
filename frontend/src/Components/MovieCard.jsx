@@ -2,12 +2,11 @@ import { Skeleton } from '@mui/material';
 import Fab from '@mui/material/Fab';
 
 import { grey } from '@mui/material/colors';
-import { useContext } from 'react';
+
 import styled from 'styled-components'
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Loadingtctx } from './Pages/MainPage';
-import { MovieContext } from './Pages/MainPage';
+
+import { useContext } from 'react';
+import { MovieContext } from './Contexts/MovieContext';
 
 const Movie = styled.img`
     width: 115px;
@@ -22,12 +21,9 @@ const Movie = styled.img`
 export default function MovieCard({movie}) {
   const { handleOpenAndGetMovie } = useContext(MovieContext)
 
-  const navigator = useNavigate()
-
 
   function viewMovie(){
     handleOpenAndGetMovie(movie?._id)
-    // navigator(`/movie/${movie?._id}`)
   }
 
 return (

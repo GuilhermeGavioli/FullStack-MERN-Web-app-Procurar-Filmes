@@ -25,13 +25,15 @@ const CardsWrapper = styled.div`
     gap: 8px;
 `
 
-export default function MovieCarrocel(){
+export default function MovieCarrocel({ finite = true, movies, loading }){
 
-    const { getMoreMovies, movies } = useContext(MoviesContext)
-    const { loadingt } = useContext(Loadingtctx)
+    const { getMoreMovies } = useContext(MoviesContext)
     const [fetchinmore, setFetchingmore ] = useState(false)
 
     async function fetchMoreMovies(e){
+      if (finite) {
+        return
+      }
       const maxScroll = e.target.scrollLeftMax
       const nearEnd = (maxScroll - 500)
       if (e.target.scrollLeft >= nearEnd && !fetchinmore){
@@ -48,7 +50,7 @@ export default function MovieCarrocel(){
         {
           movies?.map((movie) => {
             return(
-              loadingt
+              loading
                 ? 
               <Skeleton animation="wave" sx={{background: grey[900], borderRadius: '15px'}} variant="rectangular" width={'115px'} height={'135px'} /> 
                 : 

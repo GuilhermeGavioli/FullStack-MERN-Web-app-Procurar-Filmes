@@ -12,6 +12,8 @@ import MyComments from './Components/Pages/MyComments';
 
 import BarsWrapper from './Components/Layouts/BarsWrapper';
 
+import MovieContextProvider from './Components/Contexts/MovieContext';
+
 
 export const AuthContext = createContext();
 
@@ -71,11 +73,11 @@ function App() {
 
               <Routes>
                 <Route element={<BarsWrapper />}>
-                  <Route path="/"       element={ <MainPage /> }></Route>
+                  <Route path="/"       element={ <MovieContextProvider><MainPage/></MovieContextProvider> }></Route>
                   <Route path="/mycomments"       element={ <MyComments /> }></Route>
+                  <Route path="/results"  element={ <MovieContextProvider><SearchPage /></MovieContextProvider> }></Route>
                 </Route>
                 <Route>
-                  <Route path="/results"  element={ <SearchPage /> }></Route>
                   <Route path="/login"  element={ <LoginPage /> }></Route>
                 </Route>
               </Routes>

@@ -14,10 +14,10 @@ import styled from "styled-components";
 import RattingsScreen from './RattingsScreen';
 import ActorCard from "./ActorCard";
 import Box from "@mui/material/Box";
-import { MovieContext } from './Pages/MainPage';
 
+import { createContext } from 'react';
 
-
+import { MovieContext } from './Contexts/MovieContext';
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -52,13 +52,69 @@ const Item = styled.div`
     font-family: roboto;
 `
 
+export const RatingsContext = createContext()
 export default function MovieScreen() {
   const { movieLoading, isMovieContainerOpen, movie, handleCloseMovie } = useContext(MovieContext)
- 
+
+  const [ratingsPage, setRatingsPage] = useState(1)
+  const [isRatingsEnd, setIsRatingsEnd] = useState(false)
+  const [isRatingsContainerOpen, setIsRatingsContainerOpen] = useState(false);
+  const [ratings, setRatings] = useState([])
+  const [ratingsLoading, setRatingsLoading] = useState(false)
+
+  async function handleOpenAndGetRatings(){
+    setRatingsLoading(true)
+    setIsRatingsContainerOpen(true)
+    const url = `http://localhost:3001/ratings/${movie?._id}?page=${ratingsPage}`
+      const res = await fetch(url, {
+        headers: {
+          'authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+      })
+      if (res.status == 200) {
+        const data = await res.json()
+        if (data.length < 10){
+          setIsRatingsEnd(true)
+        }
+        setRatingsPage(prev_page => {return prev_page + 1})
+        setRatings(data)
+      }
+  }
+  
+  function handleCloseRatings(){
+    setIsRatingsEnd(false)
+    setRatingsLoading(false)
+    setIsRatingsContainerOpen(false)
+    setRatings([])
+    setRatingsPage(1)
+  }
 
   const toggleDrawer = () => (event) => {
     handleCloseMovie();
   };
+
+  
+  const getMoreRatings = async () => {
+    if (isRatingsEnd) return
+    console.log('geting more')
+    const res = await fetch(`http://localhost:3001/ratings/${movie?._id}?page=${ratingsPage}`, {
+      headers: {
+        'authorization': `Bearer ${localStorage.getItem('access_token')}`
+      }
+    })
+
+    if (res.status == 200) {
+      const data = await res.json()
+      if (data.length < 10){
+        setIsRatingsEnd(true)
+      }
+      setRatingsPage(prev_page => {return prev_page + 1})
+      setRatings([...ratings, ...data])
+      
+    }
+  }
+
+  
 
   return(
 
@@ -75,11 +131,12 @@ export default function MovieScreen() {
     sx={{ width:'auto', height: '100vh', overflowY: 'scroll', background: 'green' }}>
 
 
+      {/* <img style={{borderRadius: '0 0 25px 25px', width: '100%'}} src={"https://lumiere-a.akamaihd.net/v1/images/encanto_ka_bpo_pay1_ee2c2e0c.jpeg?region=0,225,1080,1046&width=960"} alt="" /> */}
 {
   movieLoading ?
   <Skeleton animation="wave" sx={{background: grey[900], borderRadius: '0 0 25px 25px'}} variant="rectangular" width={'100%'} height={'280px'} />
   :
-<img style={{borderRadius: '0 0 25px 25px', width: '100%'}} src={"https://lumiere-a.akamaihd.net/v1/images/encanto_ka_bpo_pay1_ee2c2e0c.jpeg?region=0,225,1080,1046&width=960"} alt="" />
+<img style={{borderRadius: '0 0 25px 25px', width: '270px', margin: 'auto'}} src={`${movie?.cover}`} alt="" />
 
 }
   
@@ -216,9 +273,11 @@ Coming Soon
         </div>
       </div>
 
-
-
+      <RatingsContext.Provider value={{getMoreRatings, isRatingsEnd, isRatingsContainerOpen, setIsRatingsContainerOpen, ratings, handleOpenAndGetRatings, handleCloseRatings }} >
       <RattingsScreen></RattingsScreen>
+</RatingsContext.Provider>
+
+
     </Box>
   </SwipeableDrawer>
 </React.Fragment>

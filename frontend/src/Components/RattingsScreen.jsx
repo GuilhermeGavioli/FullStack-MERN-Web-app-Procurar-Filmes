@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { RatingsContext } from './Pages/MainPage';
+import { RatingsContext } from './MovieScreen';
 import Comment from './Comment';
 import { Stack } from '@mui/material';
 
