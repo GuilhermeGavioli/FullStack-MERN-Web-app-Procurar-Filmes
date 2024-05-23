@@ -6,6 +6,7 @@ import { MovieService } from '../Services/movie.service'
 export interface MovieController{
     getMoviesBatchByGenre(request: Request, response: Response): Promise<any>;
     getMovieById(request: Request, response: Response): Promise<any>;
+    getTenRandomMovies(request: Request, response: Response): Promise<any>
 }
 
 
@@ -30,6 +31,11 @@ export class MovieControllerImpl implements MovieController{
         const movie = await this.movieService.getMovieById(id)
         console.log(movie)
         response.json(movie)
+    }
+
+    public async getTenRandomMovies(request: Request, response: Response): Promise<any>{
+        const movies = await this.movieService.getTenRandomMovies()
+        response.json(movies)
     }
 
 }

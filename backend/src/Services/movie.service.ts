@@ -5,6 +5,7 @@ import { MovieRepository } from '../Repository/movie.repository';
 export interface MovieService{
     getMoviesBatchByGenre(genre: string, page: number): Promise<Movie[] | []>
     getMovieById(id: string): Promise<Movie | undefined>
+    getTenRandomMovies(): Promise<Movie[] | []>
 }
 
 export class MovieServiceImpl {
@@ -18,5 +19,9 @@ export class MovieServiceImpl {
 
   async getMoviesBatchByGenre(genre: string, page: number): Promise<Movie[] | []>{
     return await this.movieRepository.getMoviesBatchByGenre(genre, page)
+  }
+
+  async getTenRandomMovies(): Promise<Movie[] | []>{
+    return await this.movieRepository.getTenRandomMovies() as Movie[] | []
   }
 }

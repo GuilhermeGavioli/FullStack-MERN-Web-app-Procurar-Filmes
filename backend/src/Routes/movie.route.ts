@@ -5,3 +5,4 @@ export const router = express.Router()
 
 router.get('/movie/:id', (rq,rs,nx) => authGuard.protect(rq,rs,nx) , (rq:any,rs:any) => movieController.getMovieById(rq,rs))
 router.get('/movies/:page/genres', (rq,rs,nx) => authGuard.protect(rq,rs,nx), (rq:any,rs:any) => movieController.getMoviesBatchByGenre(rq,rs))
+router.get('/movies/sample/random', (rq,rs,nx) => authGuard.protect(rq,rs,nx), (rq:any,rs:any) => movieController.getTenRandomMovies(rq,rs))

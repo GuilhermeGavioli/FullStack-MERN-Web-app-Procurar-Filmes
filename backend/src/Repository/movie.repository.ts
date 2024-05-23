@@ -6,6 +6,7 @@ import { Movie } from '../DTOS/movie.dto';
 export interface MovieRepository {
     getMoviesBatchByGenre(genre: string, page: number): Promise<Movie[] | []>
     getMovieById(id: string): Promise<Movie | undefined>
+    getTenRandomMovies(): Promise<Movie[] | undefined>
 }
 
 export class MovieRepositoryImpl implements MovieRepository{
@@ -22,6 +23,10 @@ export class MovieRepositoryImpl implements MovieRepository{
         // transform in singleton,
         return await db?.db?.collection('Movie').findOne({  _id: new ObjectId(id)}) as Movie | undefined
     }
-
+    
+    public async getTenRandomMovies(): Promise<Movie[] | undefined>{
+        const pipeline = [ { $sample: { size: 10 } } ];
+        return await db?.db?.collection('Movie').aggregate(pipeline).toArray() as Movie[] | undefined
+    }
 }
 
