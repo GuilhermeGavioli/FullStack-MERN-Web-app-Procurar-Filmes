@@ -1,19 +1,19 @@
+import React from 'react'
 
 import { useEffect, useState, createContext } from "react"
 import { useNavigate } from "react-router-dom"
 
 
-
-import { grey,  } from "@mui/material/colors";
+import { deepPurple, grey, pink  } from "@mui/material/colors";
 import {  Typography, Box } from "@mui/material";
 
 import styled from "styled-components";
 
 import MovieCarrocel from "../MovieCarrocel";
 import GenreCarrocel from "../GenreCarrocel";
-import MainCarrocel from "../MainCarrocel";
 
-import MovieScreen from "../MovieScreen";
+
+import MovieScreen from "../Screen/MovieScreen";
 
 
 export const TopMoviesContext = createContext()
@@ -112,37 +112,40 @@ function MainPage() {
     return (
       
       
-      <TopMoviesContext.Provider value={{TopMovies, topMoviesLoading}}>
-      <MoviesContext.Provider value={{getMoreMovies, movies}}>
-  
+   
+     
+  <React.Fragment>
 
-       
+       {/* <div style={{position: 'relative', width: '100%', height: 'fit-content'}}>
+      <div style={{width: '60px', height: '60px', position: 'absolute', top: '15px', left: '40px', background: pink[500], borderRadius: '50%'}}></div>
+<img style={{width: '100%'}} src="https://w0.peakpx.com/wallpaper/340/1011/HD-wallpaper-batman-with-batarang-dark-batman-superheroes-artist-artwork-digital-art-dark-black.jpg" alt="" />
 
-<MainCarrocel></MainCarrocel>
-<GenreCarrocel runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
-
-  <MovieCarrocel finite={false} loading={moviesLoading} movies={movies}/>
-
+       </div> */}
 
 
-<Box sx={{background: 'red', mt: 3, width: '100%', maxWidth: 500, padding: '0 10px 0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-<Typography sx={{p:0,m:0,color: grey[200], fontWeight: '500', fontSize: '1.5em'}} variant="h4" gutterBottom>
-Trending Now
+
+{/* <Box sx={{ mt: 1, width: '100%', maxWidth: 500, padding: '0 10px 0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+<Typography sx={{p:0,m:0,color: grey[200], fontWeight: '600', fontSize: '1.6em'}} variant="h4" gutterBottom>
+Released This Year
 </Typography>
 <Typography sx={{p:0,m:0,color: grey[300], fontWeight: '500', fontSize: '.9em', textDecoration: 'underline'}} variant="subtitle1" gutterBottom>
 See all
 </Typography>
-</Box>
+</Box> */}
 
-<MovieCarrocel finite={true} loading={topMoviesLoading} movies={TopMovies}/>
+<TopMoviesContext.Provider value={{TopMovies, topMoviesLoading}}>
+<MovieCarrocel loading={topMoviesLoading} movies={TopMovies}/>
+<MovieCarrocel loading={topMoviesLoading} movies={TopMovies}/>
 
+
+<GenreCarrocel runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
+  <MovieCarrocel finite={false} loading={moviesLoading} movies={movies} getMoreMovies={getMoreMovies}/>
 
   <MovieScreen/>
 
 
-  </MoviesContext.Provider>
   </TopMoviesContext.Provider>
- 
+  </React.Fragment>
     )
 }
 

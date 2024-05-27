@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 
 import { useState, useContext,useEffect } from 'react';
-import { AuthContext } from '../App';
+import { AuthContext } from '../../App';
 import { Avatar, Menu, MenuItem, Skeleton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
@@ -123,16 +123,7 @@ export default function TopBar() {
             </div>
           
 
-        <div style={{display: 'flex', alignItems: 'center', gap: '5px', justifyContent: 'space-between'}}>
-      
-            {/* <MySearchInput isInputOpen={isInputOpen} placeholder="Search…"/> */}
-
-{/* <IconButton size="large" aria-label="search" color="inherit" sx={{m:0, p:0}} onClick={() => setIsInputOpen(!isInputOpen)}> */}
-<IconButton size="large" aria-label="search" color="inherit" sx={{m:0, p:0}}>
-            <SearchIcon sx={{fontSize: '.9em'}} />
-          </IconButton>
-        </div>
-
+    
 
         </Toolbar>
       </AppBar>

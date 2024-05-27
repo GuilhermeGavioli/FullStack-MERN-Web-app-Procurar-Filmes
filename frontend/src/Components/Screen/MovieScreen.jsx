@@ -12,12 +12,12 @@ import { grey } from "@mui/material/colors";
 import {  Divider, Skeleton, Typography } from "@mui/material";
 import styled from "styled-components";
 import RattingsScreen from './RattingsScreen';
-import ActorCard from "./ActorCard";
+import ActorCard from "../ActorCard";
 import Box from "@mui/material/Box";
 
 import { createContext } from 'react';
 
-import { MovieContext } from './Contexts/MovieContext';
+import { MovieContext } from '../Contexts/MovieContext';
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -27,7 +27,6 @@ const Wrapper = styled.div`
 `
 
 const CardsWrapper = styled.div`
-    background: yellow;
     position: absolute;
     left: 0;
     width: fit-content;
@@ -54,7 +53,7 @@ const Item = styled.div`
 
 export const RatingsContext = createContext()
 export default function MovieScreen() {
-  const { movieLoading, isMovieContainerOpen, movie, handleCloseMovie } = useContext(MovieContext)
+  const { movieLoading, isMovieContainerOpen, movie, handleCloseMovie, months } = useContext(MovieContext)
 
   const [ratingsPage, setRatingsPage] = useState(1)
   const [isRatingsEnd, setIsRatingsEnd] = useState(false)
@@ -64,6 +63,8 @@ export default function MovieScreen() {
 
   async function handleOpenAndGetRatings(){
     setRatingsLoading(true)
+    console.log(movie?._id)
+    console.log(ratingsPage)
     setIsRatingsContainerOpen(true)
     const url = `http://localhost:3001/ratings/${movie?._id}?page=${ratingsPage}`
       const res = await fetch(url, {
@@ -73,6 +74,7 @@ export default function MovieScreen() {
       })
       if (res.status == 200) {
         const data = await res.json()
+        console.log(data)
         if (data.length < 10){
           setIsRatingsEnd(true)
         }
@@ -128,7 +130,7 @@ export default function MovieScreen() {
      <Box
     role="presentation"
 
-    sx={{ width:'auto', height: '100vh', overflowY: 'scroll', background: 'green' }}>
+    sx={{ width:'auto', height: '100vh', overflowY: 'scroll', background: '#161616' }}>
 
 
       {/* <img style={{borderRadius: '0 0 25px 25px', width: '100%'}} src={"https://lumiere-a.akamaihd.net/v1/images/encanto_ka_bpo_pay1_ee2c2e0c.jpeg?region=0,225,1080,1046&width=960"} alt="" /> */}
@@ -193,7 +195,7 @@ export default function MovieScreen() {
   
     <React.Fragment>
     <Typography sx={{color: grey[300], fontWeight: '600', fontSize: '.9em'}} variant="h4" gutterBottom>
-Runtime: <span style={{fontWeight: '500', color: grey[400], marginLeft: '5px'}}>1h 36m</span>
+Runtime: <span style={{fontWeight: '500', color: grey[400], marginLeft: '5px'}}>{movie?.runTime}</span>
 </Typography>
 <Typography sx={{color: 'blue', fontWeight: '600', fontSize: '.9em'}} variant="subtitle1" gutterBottom>
 Coming Soon
@@ -236,7 +238,7 @@ Coming Soon
       <Skeleton animation="wave" height={18} width={'200px'} /> 
       :
     <Typography sx={{ fontWeight: '600', fontSize: '.9em', color: grey[300]}} variant="h4" gutterBottom>
-    Released November 25, 2021
+    Released  {movie?.released?.substring(0,2)} {months[movie?.released?.substring(3,5) - 1]} {movie?.released?.slice(-4)}
     </Typography>
 
     }

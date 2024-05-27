@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { RatingsContext } from './MovieScreen';
-import Comment from './Comment';
+import Comment from '../Comment';
 import { Stack } from '@mui/material';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -40,7 +40,7 @@ export default function RattingsScreen() {
     handleCloseRatings()
   };
 
- 
+
 
   return (
     <React.Fragment>

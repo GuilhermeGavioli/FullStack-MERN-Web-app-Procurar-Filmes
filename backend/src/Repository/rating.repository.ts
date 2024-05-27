@@ -31,8 +31,12 @@ export class RatingRepositoryImpl implements RatingRepository{
     public async getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>{
         const PAGE_SIZE = 10
         const skip = (page - 1) * PAGE_SIZE
+
+        console.log(id)
+        console.log(page)
         const query = {movie_id: new ObjectId(id)}
         const data = await db?.db?.collection('Rating').find(query).skip(skip).limit(PAGE_SIZE).toArray()
+        console.log(data)
         return data as Rating[] | [];
     }
 

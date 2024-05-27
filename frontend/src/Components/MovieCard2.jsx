@@ -9,17 +9,16 @@ import { useContext } from 'react';
 import { MovieContext } from './Contexts/MovieContext';
 
 const Movie = styled.img`
-    width: 115px;
-    height: 135px;
-    border-radius: 15px;
-    max-width: 150px;
+    width: 150px;
+    height: 220px;
+    border-radius: 0px;
     &: hover {
       filter: brightness(1.1);
       cursor: pointer;
     }
 `
 
-export default function MovieCard({movie}) {
+export default function MovieCard2({movie}) {
   const { handleOpenAndGetMovie } = useContext(MovieContext)
 
 
@@ -30,6 +29,7 @@ export default function MovieCard({movie}) {
 return (
 
 
+    
     
     <Movie src={movie?.cover} onClick={viewMovie}/>
      

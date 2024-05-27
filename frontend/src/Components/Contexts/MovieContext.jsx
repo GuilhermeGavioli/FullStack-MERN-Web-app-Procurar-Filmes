@@ -7,6 +7,10 @@ function MovieContextProvider ({ children }) {
     const [isMovieContainerOpen, setIsMovieContainerOpen] = useState(false);
     const [movie, setMovie]= useState({})
     const [movieLoading, setMovieLoading]= useState(false)
+    const [months , setMonths] = useState([
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ])
   
     async function handleOpenAndGetMovie(id){
         setMovieLoading(true)
@@ -24,7 +28,7 @@ function MovieContextProvider ({ children }) {
             setMovie(data)
           }
           setMovieLoading(false)
-        }, 2500);
+        }, 500);
       }
     
       function handleCloseMovie(){
@@ -34,7 +38,7 @@ function MovieContextProvider ({ children }) {
       }
 
     return (
-      <MovieContext.Provider value={{ movie, movieLoading, isMovieContainerOpen, handleOpenAndGetMovie, handleCloseMovie }}>
+      <MovieContext.Provider value={{ movie, movieLoading, isMovieContainerOpen, handleOpenAndGetMovie, handleCloseMovie, months }}>
         {children}
       </MovieContext.Provider>
     );

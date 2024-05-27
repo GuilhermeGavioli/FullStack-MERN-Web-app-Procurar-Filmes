@@ -1,11 +1,13 @@
 
 import { Movie } from '../DTOS/movie.dto';
 import { MovieRepository } from '../Repository/movie.repository';
+import { Valids } from './validator.service';
 
 export interface MovieService{
     getMoviesBatchByGenre(genre: string, page: number): Promise<Movie[] | []>
     getMovieById(id: string): Promise<Movie | undefined>
     getTenRandomMovies(): Promise<Movie[] | []>
+    getMoviesByText(query: string, page: number, valids: Valids): Promise<Movie[] | []>
 }
 
 export class MovieServiceImpl {
@@ -23,5 +25,9 @@ export class MovieServiceImpl {
 
   async getTenRandomMovies(): Promise<Movie[] | []>{
     return await this.movieRepository.getTenRandomMovies() as Movie[] | []
+  }
+
+  async getMoviesByText(query: string, page: number, valids: Valids): Promise<Movie[] | []>{
+    return await this.movieRepository.getMoviesByTextAndFilters(query, page, valids)
   }
 }

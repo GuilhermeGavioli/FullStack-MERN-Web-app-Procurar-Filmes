@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     position: relative;
     overflow: scroll;
     scroll-left: 1000px;
+
 `
 
 const CardsWrapper = styled.div`
@@ -23,11 +24,13 @@ const CardsWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 8px;
+    padding: 0 10px 0 10px;
 `
 
-export default function MovieCarrocel({ finite = true, movies, loading }){
 
-    const { getMoreMovies } = useContext(MoviesContext)
+
+export default function MovieCarrocel({ finite = true, movies, loading, getMoreMovies }){
+
     const [fetchinmore, setFetchingmore ] = useState(false)
 
     async function fetchMoreMovies(e){
