@@ -14,6 +14,7 @@ import AppBar from '@mui/material/AppBar';
 import SearchIcon from '@mui/icons-material/Search';
 
 import styled from 'styled-components';
+import { theme } from '../../theme';
 
 // const MySearchInput = styled.input`
 //   background: ${grey[50]};
@@ -70,7 +71,7 @@ export default function TopBar() {
 
   return (
     <Box sx={{ flexGrow: 1, position: 'fixed',top: 0, width: '100vw', zIndex: 10 }}>
-      <AppBar position="static" sx={{background: grey[900]}}>
+      <AppBar position="static" sx={{background: theme.palette.mid}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between', gap: '5px', alignItems: 'center'}}>
        
 
@@ -93,7 +94,7 @@ export default function TopBar() {
                 {
                   loadingh ? 
               
-                  <Skeleton animation="wave" variant="circular" width={'35px'} height={'35px'} sx={{bgcolor: grey[700]}} />
+                  <Skeleton animation="wave" variant="circular" width={'35px'} height={'35px'} sx={{bgcolor: theme.palette.lighter}} />
             
                   :
             

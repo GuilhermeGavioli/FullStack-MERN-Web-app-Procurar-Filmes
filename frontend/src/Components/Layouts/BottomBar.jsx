@@ -14,6 +14,7 @@ import InsertCommentIcon from '@mui/icons-material/InsertComment';
 import { useNavigate } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box } from '@mui/material';
+import { theme } from '../../theme';
 
 
 export default function BottomBar() {
@@ -40,7 +41,7 @@ export default function BottomBar() {
 
   return (
     <BottomNavigation
-     sx={{ background: grey[900], position: 'fixed',bottom: 0, width: '100vw', zIndex: 10, display: 'flex', justifyContent: 'space-evenly'  }}>
+     sx={{ background: theme.palette.lighter, position: 'fixed',bottom: 0, width: '100vw', zIndex: 10, display: 'flex', justifyContent: 'space-evenly'  }}>
      
       <Box value={0} sx={{background: pink[700], display: 'flex', justifyContent:'center', alignItems: 'center', width: '33.33%'}} 
       onClick={()=> {goToMain()}}>

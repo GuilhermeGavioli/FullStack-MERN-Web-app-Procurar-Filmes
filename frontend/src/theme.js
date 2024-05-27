@@ -3,6 +3,7 @@ import { grey, amber } from '@mui/material/colors';
 
 const darkTheme = createTheme({
   palette: {
+    
     hover: grey[400],
     primary: { //bg
       main: '#ffffff',
@@ -27,6 +28,15 @@ const lightTheme = createTheme({
     },
   });
 
+  const theme = createTheme({
+    palette:{
+      darker: 'rgb(25,20,46)',
+      dark: 'rgb(39,32,66)',
+      mid: 'rgb(51,46,89)',
+      light: 'rgb(48,40,79)',
+      lighter: 'rgb(68,58,107)',
+    }
+  })
 
   
-export { lightTheme, darkTheme }
+export { lightTheme, darkTheme, theme }

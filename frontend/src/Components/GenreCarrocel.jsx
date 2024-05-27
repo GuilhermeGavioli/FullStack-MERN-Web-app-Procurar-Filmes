@@ -5,6 +5,7 @@ import TheaterComedyRoundedIcon from '@mui/icons-material/TheaterComedyRounded';
 import { Skeleton } from '@mui/material';
 import { Fragment } from 'react';
 import { deepPurple, grey, pink } from '@mui/material/colors';
+import { theme } from '../theme';
 
 
 const Wrapper = styled.div`
@@ -20,7 +21,7 @@ const CardsWrapper = styled.div`
     left: 0;
     width: fit-content;
     height: 100%;
-    padding: 5px;
+    padding: 0px 10px 0 10px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -71,13 +72,13 @@ export default function GenreCarrocel({runGenreChange,genre, loading}){
                {
                 loading ? 
                 <Fragment>
-                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
-                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
-                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
-                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
-                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
-                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'60px'} height={'100%'} />
-                <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'80px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: theme.palette.lighter ,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: theme.palette.lighter ,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: theme.palette.lighter ,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: theme.palette.lighter ,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: theme.palette.lighter ,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: theme.palette.lighter ,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'60px'} height={'100%'} />
+                <Skeleton animation="wave" sx={{background: theme.palette.lighter ,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'80px'} height={'100%'} />
                 </Fragment>
                 :
 
