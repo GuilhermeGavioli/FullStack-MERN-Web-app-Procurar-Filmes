@@ -13,7 +13,8 @@ export default function BarsWrapper () {
 paddingTop: '60px', display: 'flex', flexDirection: 'column', gap: '10px',
 msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   scrollbarWidth: 'none',
-  paddingBottom: '60px'
+  paddingBottom: '60px',
+  overflowY: 'scroll'
 }}>
   
       <Outlet />

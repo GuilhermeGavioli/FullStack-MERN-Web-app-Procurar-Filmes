@@ -18,6 +18,7 @@ import Box from "@mui/material/Box";
 import { createContext } from 'react';
 
 import { MovieContext } from '../Contexts/MovieContext';
+import { theme } from '../../theme';
 
 const Wrapper = styled.div`
     width: 100vw;
@@ -31,7 +32,7 @@ const CardsWrapper = styled.div`
     left: 0;
     width: fit-content;
     height: 100%;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 0 5px 0;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -40,14 +41,43 @@ const CardsWrapper = styled.div`
 const Item = styled.div`
     width: fit-content;
     height: 100%;
-    background: blue;
+    background: linear-gradient(${theme.palette.cyan},${theme.palette.cyan_light});
+    color: white;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 0 15px 0 15px;
-    border-radius: 13px;
+    padding: 12px 15px 12px 15px;
+    border-radius: 20px;
     font-size: .9em;
     font-weight: 500;
+    font-family: roboto;
+`
+const RuntimeItem = styled.div`
+    width: fit-content;
+    height: 100%;
+    background: linear-gradient(${theme.palette.pink},${theme.palette.pink_light});
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 15px 12px 15px;
+    border-radius: 20px;
+    font-size: .9em;
+    font-weight: 500;
+    font-family: roboto;
+`
+const YearItem = styled.div`
+    width: fit-content;
+    height: 100%;
+    background: linear-gradient(${theme.palette.yellow},${theme.palette.yellow_light});
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 15px 12px 15px;
+    border-radius: 20px;
+    font-size: .9em;
+    font-weight: 600;
     font-family: roboto;
 `
 
@@ -130,7 +160,7 @@ export default function MovieScreen() {
      <Box
     role="presentation"
 
-    sx={{ width:'auto', height: '100vh', overflowY: 'scroll', background: '#161616' }}>
+    sx={{ width:'auto', height: '100vh', overflowY: 'scroll', background: theme.palette.dark }}>
 
 
       {/* <img style={{borderRadius: '0 0 25px 25px', width: '100%'}} src={"https://lumiere-a.akamaihd.net/v1/images/encanto_ka_bpo_pay1_ee2c2e0c.jpeg?region=0,225,1080,1046&width=960"} alt="" /> */}
@@ -138,74 +168,63 @@ export default function MovieScreen() {
   movieLoading ?
   <Skeleton animation="wave" sx={{background: grey[900], borderRadius: '0 0 25px 25px'}} variant="rectangular" width={'100%'} height={'280px'} />
   :
-<img style={{borderRadius: '0 0 25px 25px', width: '270px', margin: 'auto'}} src={`${movie?.cover}`} alt="" />
 
-}
-  
-<div style={{padding: '0 10px 0 10px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
-  {
-    movieLoading ?
-    <Skeleton animation="wave" sx={{background: grey[400],margin: '10px 0 10px 0', borderRadius: '5px'}} variant="rectangular" width={'70%'} height={'30px'} />
-    :
-    <Typography variant="h5" gutterBottom sx={{margin: 0, padding: 0, fontWeight: 700, color: 'white'}}>
+  <div style={{position: 'relative', width: '100%', maxWidth: '300px', height: '350px', margin: 'auto',}}>
+
+    <div style={{position: 'absolute', inset: 'auto 0 20px 0', 
+    width: '280px', maxWidth: '100%', minHeight: '50px', height: 'fit-content', background: 'rgba(240,240,240,0.3)', zIndex: '2', margin: 'auto',borderRadius: '15px',
+    padding: '10px'}}>
+      <Typography variant="h6" gutterBottom sx={{margin: 0, padding: 0, fontWeight: 700, color: 'white'}}>
     {movieLoading ? <Skeleton /> : movie?.title}
      </Typography>
-  }
-    </div>
- 
-    <Divider sx={{margin: '10px 0 10px 0'}}/>
- 
 
-    <Wrapper>
+
+     <Wrapper>
     <CardsWrapper>
       {
-        movieLoading ?
+        movieLoading || !movie?.genres ?
         <>
         <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
       <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'60px'} height={'100%'} />
       <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'80px'} height={'100%'} />
         </>
         :
-        movie?.genres?.map(genre => {
-          return (
-            <Item key={genre}>
-            <p>{genre}</p>
-        </Item> 
-          )
-        })
+        
+        <React.Fragment>
+          
+        <Item>
+        <p>{movie?.genres[0]}</p>
+    </Item> 
+        <RuntimeItem>
+        <p>{movie?.runTime} Min</p>
+    </RuntimeItem>
+        <YearItem>
+        <p>{movie?.released?.slice(-4)}</p>
+    </YearItem>
+        </React.Fragment>
 
       }
 </CardsWrapper>
 </Wrapper> 
+
+
+    </div>
+
+  <div style={{borderRadius: '0 0 0 0', width: '100%', height: '100%',
+  maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 40%, transparent 100%)', position: 'absolute',
+  inset: '0 0 0 0', margin: 'auto', zIndex: '1'
+}}>
+  <img src={`${movie?.cover}`} style={{width: '100%', height: '100%',}} alt="" />
+  </div>
  
 
-
-<Divider sx={{margin: '10px 0 10px 0'}}/>
-
+    </div>
 
 
-<Box sx={{ width: '100%', maxWidth: 500, padding: '0 10px 0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-  {
-    movieLoading ?
-    <React.Fragment>
-    <Skeleton animation="wave" height={18} width={'100px'} />
-    <Skeleton animation="wave" height={18} width={'50px'} />
-    </React.Fragment>
-    :
+
+}
   
-    <React.Fragment>
-    <Typography sx={{color: grey[300], fontWeight: '600', fontSize: '.9em'}} variant="h4" gutterBottom>
-Runtime: <span style={{fontWeight: '500', color: grey[400], marginLeft: '5px'}}>{movie?.runTime}</span>
-</Typography>
-<Typography sx={{color: 'blue', fontWeight: '600', fontSize: '.9em'}} variant="subtitle1" gutterBottom>
-Coming Soon
-</Typography>
-    </React.Fragment>
-
-  }
-  </Box>
-
-
+ 
 
 
 
@@ -220,8 +239,12 @@ Coming Soon
             </div>
     
 :
-<div style={{padding: '0 10px 0 10px', display: 'flex', flexDirection: 'column', alignItems: 'end', justifyContent: 'flex-start'}}>
-        <Typography variant="body2" gutterBottom sx={{color: grey[600], fontWeight: '500', textAlign: 'justify'}}>
+<div style={{padding: '0 10px 0 10px', width: '100%', maxWidth: '280px', display: 'flex', flexDirection: 'column', alignItems: 'start', 
+margin: 'auto',justifyContent: 'flex-start'}}>
+        <Typography variant="body1" gutterBottom sx={{fontWeight: '700', color: theme.palette.purple_title}}>
+          Plot
+      </Typography>
+        <Typography variant="body2" gutterBottom sx={{ fontWeight: '500', textAlign: 'justify', color: grey[100]}}>
         {movie?.description}
       </Typography>
      </div>
@@ -229,20 +252,6 @@ Coming Soon
 }
 
 
-
-
-
-     <Box sx={{ width: '100%', maxWidth: 500, padding: '0 10px 0 10px' }}>
-
-      {movieLoading ? 
-      <Skeleton animation="wave" height={18} width={'200px'} /> 
-      :
-    <Typography sx={{ fontWeight: '600', fontSize: '.9em', color: grey[300]}} variant="h4" gutterBottom>
-    Released  {movie?.released?.substring(0,2)} {months[movie?.released?.substring(3,5) - 1]} {movie?.released?.slice(-4)}
-    </Typography>
-
-    }
-</Box>
 
 <Divider sx={{margin: '10px 0 10px 0'}}/>
 

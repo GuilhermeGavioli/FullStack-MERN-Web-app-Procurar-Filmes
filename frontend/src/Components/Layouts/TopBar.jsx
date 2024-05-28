@@ -10,7 +10,6 @@ import { Avatar, Menu, MenuItem, Skeleton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
 
-
 import SearchIcon from '@mui/icons-material/Search';
 
 import styled from 'styled-components';
@@ -70,7 +69,10 @@ export default function TopBar() {
     };
 
   return (
-    <Box sx={{ flexGrow: 1, position: 'fixed',top: 0, width: '100vw', zIndex: 10 }}>
+    <Box sx={{ flexGrow: 1, position: 'fixed',top: 0, width: '100vw', zIndex: 10, 
+    boxShadow: 'unset'
+       // boxShadow: 'rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
+  }}>
       <AppBar position="static" sx={{background: theme.palette.mid}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between', gap: '5px', alignItems: 'center'}}>
        
@@ -122,7 +124,13 @@ export default function TopBar() {
                 <MenuItem onClick={() => {handleClose(); logout()}}>Logout</MenuItem>
               </Menu>
             </div>
-          
+
+        <div style={{background: theme.palette.lighter, padding: '0', borderRadius: '50%', width: '35px', height: '35px', display: 'flex', alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <SearchIcon  sx={{fontSize: '1.3em'}}/>
+        </div>
+
 
     
 

@@ -35,6 +35,24 @@ const lightTheme = createTheme({
       mid: 'rgb(51,46,89)',
       light: 'rgb(48,40,79)',
       lighter: 'rgb(68,58,107)',
+
+      
+      pink: 'rgb(184,6,248)',
+      pink_light: 'rgb(195,2,252)',
+      
+      cyan: 'rgb(5,176,249)',
+      cyan_light: 'rgb(3,180,251)',
+      
+      yellow: 'rgb(250,178,16)',
+      yellow_light: 'rgb(248,176,6)',
+      
+
+      purple_title: 'rgb(85,57,145)',
+      purple_normal: 'rgb(136,46,250)',
+      purple_mid: 'rgb(71, 73, 183)',
+      purple_light: 'rgb(121, 79, 207)',
+
+      purple_selected_icon: 'rgb(121, 35, 245)',
     }
   })
 

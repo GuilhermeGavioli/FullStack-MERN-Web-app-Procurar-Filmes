@@ -14,6 +14,7 @@ import GenreCarrocel from "../GenreCarrocel";
 
 
 import MovieScreen from "../Screen/MovieScreen";
+import { theme } from '../../theme';
 
 
 export const TopMoviesContext = createContext()
@@ -116,11 +117,50 @@ function MainPage() {
      
   <React.Fragment>
 
-       {/* <div style={{position: 'relative', width: '100%', height: 'fit-content'}}>
-      <div style={{width: '60px', height: '60px', position: 'absolute', top: '15px', left: '40px', background: pink[500], borderRadius: '50%'}}></div>
-<img style={{width: '100%'}} src="https://w0.peakpx.com/wallpaper/340/1011/HD-wallpaper-batman-with-batarang-dark-batman-superheroes-artist-artwork-digital-art-dark-black.jpg" alt="" />
+       <div style={{position: 'relative', width: '100vw', height: 'fit-content',  
+       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
+       background: 'radial-gradient(circle, rgba(66,55,106,1) 0%, rgba(44,37,74,1) 45%, rgba(39,32,66,1) 100%)'
+       }}>
 
-       </div> */}
+
+        <div style={{width: '100%', height: '220px', position: 'relative', overflow: 'hidden'}}>
+
+
+
+      
+      <div style={{width: '240px', borderRadius: '20px', height: '220px', background: 'blue', overflow: 'hidden', position: 'absolute',
+        inset: '0 0 0 0', margin: 'auto',
+        boxShadow: 'rgba(50, 50, 93, 0.4) 0px 50px 100px -20px, rgba(0, 0, 0, 0.5) 0px 30px 60px -30px',
+       }}>
+      <img
+      style={{width: '100%', height: '100%'}}
+      src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F3A06E15EE141CF4BAC34B4FAB7FBE5F7E3757D0CE5EDF869800FA6A862D9368/scale?width=1200&amp;aspectRatio=1.78&amp;format=webp" alt="" />
+      </div>
+
+      <div style={{width: '225px', borderRadius: '20px', height: '180px', background: 'blue', overflow: 'hidden', position: 'absolute',
+        inset: '0 0 0 -160%', margin: 'auto'}}>
+      <img
+      style={{width: '100%', height: '100%'}}
+      src="https://rukminim2.flixcart.com/image/850/1000/kzzw5u80/poster/o/r/b/medium-joker-the-dark-knight-movie-on-fine-art-paper-hd-quality-original-imagbvmycjvpv5ph.jpeg?q=90&crop=false" alt="" />
+      </div>
+      <div style={{width: '225px', borderRadius: '20px', height: '180px', background: 'blue', overflow: 'hidden', position: 'absolute',
+        inset: '0 -160% 0 0%', margin: 'auto'}}>
+      <img
+      style={{width: '100%', height: '100%'}}
+      src="https://support.musicgateway.com/wp-content/uploads/2021/05/cyberpunk-movies-thumbnail-large-2.png" alt="" />
+      </div>
+
+      </div>
+
+      <div style={{width: '100%', height: '30px', display: 'flex', gap: '7px', alignItems: 'center', justifyContent: 'center'}}>
+        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
+        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
+        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: theme.palette.purple_normal}}></div>
+        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
+        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
+      </div>
+
+       </div>
 
 
 
@@ -134,12 +174,11 @@ See all
 </Box> */}
 
 <TopMoviesContext.Provider value={{TopMovies, topMoviesLoading}}>
-<MovieCarrocel loading={topMoviesLoading} movies={TopMovies}/>
-<MovieCarrocel loading={topMoviesLoading} movies={TopMovies}/>
 
 
 <GenreCarrocel runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
   <MovieCarrocel finite={false} loading={moviesLoading} movies={movies} getMoreMovies={getMoreMovies}/>
+<MovieCarrocel loading={topMoviesLoading} movies={TopMovies}/>
 
   <MovieScreen/>
 
