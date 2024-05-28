@@ -17,8 +17,10 @@ import { Avatar, Box, Skeleton } from '@mui/material';
 import { theme } from '../../theme';
 
 
-export default function BottomBar() {
+import { AuthContext } from '../Contexts/AuthContext';
 
+export default function BottomBar() {
+  const {user, userLoading } = React.useContext(AuthContext)
 
   const navigator = useNavigate()
   const [value, setValue] = React.useState(0);
@@ -40,6 +42,9 @@ export default function BottomBar() {
   }
 
   return (
+
+ 
+
     <div style={{
         position: 'fixed', width: '100%', zIndex: 10, display: 'flex', justifyContent: 'space-evenly', 
         borderRadius: '10px',
@@ -79,15 +84,22 @@ export default function BottomBar() {
       <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
        onClick={()=> {goToResults()}}>
 
-      <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: grey[300]}} />
-        {/* <Avatar
+      {
+        userLoading ? 
+        <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: grey[300]}} />
+        :
+        <Avatar
         alt="Remy Sharp"
-        src="/static/images/avatar/1.jpg"
+        src={user.picture}
         sx={{ width: 24, height: 24 }}
-      /> */}
+      />
+      }
+      
       </Box>
       
     </BottomNavigation>
     </div>
+
+
   )
 }

@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
-import {  Routes, Route, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import {  Routes, Route } from 'react-router-dom';
 import LoginPage from './Components/Pages/LoginPage';
 import MainPage from './Components/Pages/MainPage';
 
-import { createContext } from 'react';
-import Cookies from 'js-cookie';
 
 import SearchPage from './Components/Pages/SearchPage';
 
@@ -15,34 +13,10 @@ import BarsWrapper from './Components/Layouts/BarsWrapper';
 import MovieContextProvider from './Components/Contexts/MovieContext';
 
 
-export const AuthContext = createContext();
-
-
 function App() {
   
-  const navigator = useNavigate()
- 
 
-  function logout(){
-    Cookies.remove('token')
-    setAuth({
-      isAuth: false,
-      token: null,
-    })
-    navigator('/login')
-  }
-
-
-
-  const [auth, setAuth] = useState({
-    isAuth: false,
-    user: {
-      name: null,
-      picture: null
-    }
-  })
-
-  useEffect(() => {
+  // useEffect(() => {
     // console.log('running auth global effect')
     // async function validateToken() {
     //   const access_token = localStorage.getItem('access_token')
@@ -62,14 +36,14 @@ function App() {
     // validateToken();
 
     
-  }, [])
+  // }, [])
 
 
   return (
 
     //logo
     // https://as1.ftcdn.net/v2/jpg/01/85/89/64/1000_F_185896439_wCIjG0spPZakuNiL34khgrTAEZGIJei5.jpg
-  <AuthContext.Provider value={{auth, setAuth, logout}} >
+
 
               <Routes>
                 <Route element={<BarsWrapper />}>
@@ -82,13 +56,11 @@ function App() {
                 </Route>
               </Routes>
 
-
-      </AuthContext.Provider>
  ) 
 }
 
 
 //Snack bar for notification after creating / deleting comment
-// dialog for conforming deletion of comment
+// dialog for confirming deletion of comment
 
 export default App;

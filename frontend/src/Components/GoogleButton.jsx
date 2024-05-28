@@ -3,10 +3,11 @@ import Button from '@mui/material/Button';
 import { useGoogleLogin  } from '@react-oauth/google';
 
 import { useContext } from 'react';
-import { AuthContext } from '../App';
+
 import { useNavigate } from 'react-router-dom';
 
 import { grey } from '@mui/material/colors';
+import AuthContextProvider, { AuthContext } from './Contexts/AuthContext';
 
 
 
@@ -14,10 +15,10 @@ import { grey } from '@mui/material/colors';
 
 
 export default function GoogleButonComp() {
-  // const { theme } = useContext(ThemeContext)
+  const { setUser } = useContext(AuthContext)
   const navigator = useNavigate()
 
-  const {auth, setAuth} = useContext(AuthContext)
+ 
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => delegateGoogleOAuthToBackend(tokenResponse.access_token),
@@ -31,13 +32,13 @@ async function delegateGoogleOAuthToBackend(oauth_access_token){
   if (res.status == 200){
     const { access_token } = await res.json()
     localStorage.setItem('access_token', access_token)
-    setAuth({ isAuth: true, access_token })
     navigator('/')
   }
 }
 
 return (
 
+  <AuthContextProvider>
 
     <Button fullWidth  onClick={login} variant="outlined"
     sx={{
@@ -50,6 +51,7 @@ return (
     }}
     >
       Continue with Google</Button>
+      </AuthContextProvider>
 
 
    // <GoogleLogin

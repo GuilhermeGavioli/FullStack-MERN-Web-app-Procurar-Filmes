@@ -2,11 +2,14 @@ import TopBar from './TopBar';
 import BottomBar from './BottomBar';
 import { Outlet } from "react-router-dom";
 import { theme } from '../../theme';
+import AuthContextProvider from '../Contexts/AuthContext';
 
 export default function BarsWrapper () {
   return (
     <>
-      <TopBar />
+        <AuthContextProvider>
+          <TopBar />
+        </AuthContextProvider>
 
       <div style={{minHeight: '100%',height: 'fit-content', backgroundColor: theme.palette.dark, width: '100%',
  
@@ -19,7 +22,13 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   
       <Outlet />
 </div>
+
+<AuthContextProvider>
       <BottomBar />
+</AuthContextProvider>
     </>
   )
 };
+
+
+

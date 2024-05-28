@@ -4,8 +4,8 @@ import Toolbar from '@mui/material/Toolbar';
 
 import IconButton from '@mui/material/IconButton';
 
-import { useState, useContext,useEffect } from 'react';
-import { AuthContext } from '../../App';
+import { useState, useContext } from 'react';
+
 import { Avatar, Menu, MenuItem, Skeleton } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
@@ -15,49 +15,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import styled from 'styled-components';
 import { theme } from '../../theme';
 
-// const MySearchInput = styled.input`
-//   background: ${grey[50]};
-//   display: ${(props) => (props.isInputOpen ? 'hidden' : 'none')};
-//   border: none;
-//   height: 30px;
-//   outline: none;
-//   border-radius: 4px;
-//   padding-left: 5px;
-// `
 
+import { AuthContext } from '../Contexts/AuthContext';
 
 export default function TopBar() {
   
-  const {auth, setAuth, logout} = useContext(AuthContext);
+  const {user, userLoading, logout} = useContext(AuthContext)
   const [anchorEl, setAnchorEl] = useState(null);
-  // const [isInputOpen, setIsInputOpen] = useState(false)
-
-  const [loadingh, setLoadingh] = useState(true);
-  const [userPicture, setUserPicture] = useState(null)
-
-
-    useEffect(() => {
-      const getMyUserInfo = async () => {
-        const res = await fetch('http://localhost:3001/auth/user/getinfo', {
-          headers: {
-            'authorization': `Bearer ${localStorage.getItem('access_token')}`
-          }
-        })
-        if (res.status == 200) {
-          const userdata = await res.json()
-          console.log(userdata.picture)
-          setUserPicture(userdata.picture)
-        } else {
-          console.log('error')
-        }
-        setLoadingh(false)
-      }
-      getMyUserInfo()
-    }, [])
-
 
     const handleChange = (event) => {
-      setAuth(event.target.checked);
+      
     };
   
     const handleMenu = (event) => {
@@ -69,19 +36,15 @@ export default function TopBar() {
     };
 
   return (
+
+
+
     <Box sx={{ flexGrow: 1, position: 'fixed',top: 0, width: '100vw', zIndex: 10, 
     boxShadow: 'unset'
-       // boxShadow: 'rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
+      // boxShadow: 'rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
   }}>
       <AppBar position="static" sx={{background: theme.palette.mid}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between', gap: '5px', alignItems: 'center'}}>
-       
-
-       
-          {/* <Typography variant="h6" color="inherit" component="div">
-            Movies
-          </Typography> */}
-
            
             <div style={{}}>
               <IconButton
@@ -94,13 +57,13 @@ export default function TopBar() {
      
               >
                 {
-                  loadingh ? 
+                  userLoading ? 
               
                   <Skeleton animation="wave" variant="circular" width={'35px'} height={'35px'} sx={{bgcolor: theme.palette.lighter}} />
             
                   :
             
-                <Avatar alt={auth.user?.name} src={userPicture}  sx={{p:0,m:0, width: '32px', height: '32px',bgcolor: grey[800] }} />
+                <Avatar alt={user.name} src={user.picture}  sx={{p:0,m:0, width: '32px', height: '32px',bgcolor: grey[800] }} />
               
                 }
               
@@ -130,13 +93,10 @@ export default function TopBar() {
         }}>
           <SearchIcon  sx={{fontSize: '1.3em'}}/>
         </div>
-
-
-    
-
         </Toolbar>
       </AppBar>
     </Box>
+
   );
 }
 
