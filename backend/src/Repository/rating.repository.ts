@@ -31,13 +31,37 @@ export class RatingRepositoryImpl implements RatingRepository{
     public async getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>{
         const PAGE_SIZE = 10
         const skip = (page - 1) * PAGE_SIZE
-
-        console.log(id)
-        console.log(page)
         const query = {movie_id: new ObjectId(id)}
-        const data = await db?.db?.collection('Rating').find(query).skip(skip).limit(PAGE_SIZE).toArray()
-        console.log(data)
-        return data as Rating[] | [];
+
+        const pipeline = [
+            {
+              $lookup: {
+                from: "User", // Foreign collection name (Users)
+                localField: "user_id", // Field in ratings referencing user
+                foreignField: "_id", // Field in users with user ID (assuming _id)
+                as: "user", // Name for the joined user data
+              },
+            },
+            {
+              $unwind: "$user", // Deconstructs the "user" array (if it contains multiple entries)
+            },
+            {
+              $project: {
+                // Include desired fields from ratings and user (exclude unnecessary ones)
+                _id: 1,
+                comment: 1, // Replace with specific fields you want from ratings
+                user: { email: 1, name: 1, picture: 1 }, // Include username and picture from user
+              },
+            },
+          ];
+          
+          const cursor = await db?.db?.collection('Rating').aggregate(pipeline).skip(skip).limit(PAGE_SIZE).toArray();
+          console.log('cursor')
+          console.log(cursor)
+
+          
+        // const data = await db?.db?.collection('Rating').find(query).skip(skip).limit(PAGE_SIZE).toArray()
+        return cursor as Rating[] | [];
     }
 
 }

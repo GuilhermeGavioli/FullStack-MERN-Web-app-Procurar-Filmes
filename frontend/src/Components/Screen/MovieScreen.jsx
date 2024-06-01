@@ -9,7 +9,7 @@ import { useEffect, useState, useContext } from "react"
 
 
 import { grey } from "@mui/material/colors";
-import {  Divider, Skeleton, Typography } from "@mui/material";
+import {  Button, Divider, Skeleton, Typography, styled as MUIStyled } from "@mui/material";
 import styled from "styled-components";
 import RattingsScreen from './RattingsScreen';
 import ActorCard from "../ActorCard";
@@ -20,8 +20,16 @@ import { createContext } from 'react';
 import { MovieContext } from '../Contexts/MovieContext';
 import { theme } from '../../theme';
 
+import Slide from '@mui/material/Slide';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
+
+
+
+
+
 const Wrapper = styled.div`
-    width: 100vw;
+    width: 100%;
     height: 45px;
     position: relative;
     overflow: scroll;
@@ -77,11 +85,16 @@ const YearItem = styled.div`
     padding: 12px 15px 12px 15px;
     border-radius: 20px;
     font-size: .9em;
-    font-weight: 600;
+    font-weight: 500;
     font-family: roboto;
 `
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 export const RatingsContext = createContext()
+
 export default function MovieScreen() {
   const { movieLoading, isMovieContainerOpen, movie, handleCloseMovie, months } = useContext(MovieContext)
 
@@ -93,6 +106,7 @@ export default function MovieScreen() {
 
   async function handleOpenAndGetRatings(){
     setRatingsLoading(true)
+    console.log('movie?._id')
     console.log(movie?._id)
     console.log(ratingsPage)
     setIsRatingsContainerOpen(true)
@@ -162,6 +176,20 @@ export default function MovieScreen() {
 
     sx={{ width:'auto', height: '100vh', overflowY: 'scroll', background: theme.palette.dark }}>
 
+<div style={{height: '40px', width: '40px', background: 'rgba(51,46,89,0.7)', position: 'absolute', top: '15px', left: '10px', zIndex: 3, 
+display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%'}}>
+{/* theme.palette.mid */}
+    <ChevronLeftIcon onClick={toggleDrawer(false)}  sx={{color: 'white', fontSize: '2em'}}></ChevronLeftIcon>
+</div>
+
+ <RatingsContext.Provider value={{getMoreRatings, isRatingsEnd, isRatingsContainerOpen, setIsRatingsContainerOpen, ratings, handleOpenAndGetRatings, handleCloseRatings }} >
+      <RattingsScreen></RattingsScreen>
+</RatingsContext.Provider>
+
+
+
+
+
 
       {/* <img style={{borderRadius: '0 0 25px 25px', width: '100%'}} src={"https://lumiere-a.akamaihd.net/v1/images/encanto_ka_bpo_pay1_ee2c2e0c.jpeg?region=0,225,1080,1046&width=960"} alt="" /> */}
 {
@@ -172,7 +200,7 @@ export default function MovieScreen() {
   <div style={{position: 'relative', width: '100%', maxWidth: '300px', height: '350px', margin: 'auto',}}>
 
     <div style={{position: 'absolute', inset: 'auto 0 20px 0', 
-    width: '280px', maxWidth: '100%', minHeight: '50px', height: 'fit-content', background: 'rgba(240,240,240,0.3)', zIndex: '2', margin: 'auto',borderRadius: '15px',
+    width: '280px', maxWidth: '100%', minHeight: '50px', height: 'fit-content', background: 'rgba(240,240,240,0.1)', zIndex: '2', margin: 'auto',borderRadius: '15px',
     padding: '10px'}}>
       <Typography variant="h6" gutterBottom sx={{margin: 0, padding: 0, fontWeight: 700, color: 'white'}}>
     {movieLoading ? <Skeleton /> : movie?.title}
@@ -239,13 +267,17 @@ export default function MovieScreen() {
             </div>
     
 :
-<div style={{padding: '0 10px 0 10px', width: '100%', maxWidth: '280px', display: 'flex', flexDirection: 'column', alignItems: 'start', 
-margin: 'auto',justifyContent: 'flex-start'}}>
-        <Typography variant="body1" gutterBottom sx={{fontWeight: '700', color: theme.palette.purple_title}}>
+<div style={{padding: '0 20px 0 20px', width: '100%', maxWidth: '350px', display: 'flex', flexDirection: 'column', alignItems: 'start', 
+margin: 'auto',justifyContent: 'flex-start', }}>
+        <Typography variant="body1" gutterBottom sx={{fontWeight: '600', color: theme.palette.purple_title}}>
           Plot
       </Typography>
-        <Typography variant="body2" gutterBottom sx={{ fontWeight: '500', textAlign: 'justify', color: grey[100]}}>
-        {movie?.description}
+        <Typography variant="body2" gutterBottom sx={{ fontWeight: '500', textAlign: 'justify', 
+          
+          wordSpacing: '1px', textAlign: 'justify', fontWeight: 400, fontSize: '.8em', color: 'rgb(227,226,230)', lineHeight: '22px'
+        }}>
+        {movie?.description} 
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam accusantium soluta placeat, debitis distinctio sed temporibus harum iusto iste quibusdam quidem minus, ullam repellendus nobis possimus impedit corrupti perferendis neque.
       </Typography>
      </div>
 
@@ -253,15 +285,58 @@ margin: 'auto',justifyContent: 'flex-start'}}>
 
 
 
-<Divider sx={{margin: '10px 0 10px 0'}}/>
+      <div style={{width: 'fit-content', display: 'flex', gap: '15px',
+       width: '100vw', overflowX: 'scroll', overflowY: 'hidden',
+       height: 'fit-content',
+       msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
+  scrollbarWidth: 'none',
+  padding: '0 20px 0 20px',
+  margin: '20px 0 0 0',
+    }}>
+      <div style={{width: 'fit-content', height: 'fit-content', display: 'flex', gap: '20px'}}>
 
+        <div style={{display: 'flex', flexDirection: 'column', width: 'fit-content'}}>
+      <Typography variant="body1" gutterBottom sx={{fontWeight: '600', color: theme.palette.purple_title}}>
+          Director
+      </Typography>
+      <p style={{whiteSpace: 'nowrap', fontWeight: 400, fontSize: '.8em', color: 'rgb(227,226,230)'}}>Andy Serkis</p>
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column',width: 'fit-content'}}>
+      <Typography variant="body1" gutterBottom sx={{fontWeight: '600', color: theme.palette.purple_title}}>
+          Mainrole
+      </Typography>
+      <p style={{whiteSpace: 'nowrap',fontWeight: 400, fontSize: '.8em', color: 'rgb(227,226,230)'}}>Kelly Marcel</p>
+
+        </div>
+        <div style={{display: 'flex', flexDirection: 'column',width: 'fit-content'}}>
+      <Typography variant="body1" gutterBottom sx={{fontWeight: '600', color: theme.palette.purple_title}}>
+          Production
+      </Typography>
+      
+      <p style={{whiteSpace: 'nowrap',fontWeight: 400, fontSize: '.8em', color: 'rgb(227,226,230)'}}>Columbia Pictures</p>
+        </div>
+    
+
+
+        </div>
+      </div>
+
+
+<div style={{padding: '0 20px 0 20px', width: '100%', maxWidth: '350px', display: 'flex', flexDirection: 'column', alignItems: 'start', 
+margin: 'auto',justifyContent: 'flex-start', marginTop: '20px' }}>
+
+<Typography variant="body1" gutterBottom sx={{fontWeight: '600', color: theme.palette.purple_title}}>
+          Cast
+      </Typography>
+</div>
 
     <div style={{width: 'fit-content', display: 'flex', gap: '15px',
        width: '100vw', overflowX: 'scroll', overflowY: 'hidden',
-       height: '250px',
+       height: 'fit-content',
        msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   scrollbarWidth: 'none',
-  padding: '0 10px 0 10px'
+  padding: '0 20px 0 20px',
+  margin: '5px 0 40px 0',
     }}>
       <div style={{width: 'fit-content', height: 'fit-content', display: 'flex', gap: '10px'}}>
         {
@@ -272,22 +347,45 @@ margin: 'auto',justifyContent: 'flex-start'}}>
         <Skeleton animation="wave" height={'200px'} width={'100px'} /> 
         </>
         :
-        movie?.actors?.map((actor, i) => {
-          return (
-            <ActorCard key={i}
-            name={actor.name}
-             picture={actor.picture}
-             role={actor.role} 
+        // movie?.actors?.map((actor, i) => {
+          // return (
+            <React.Fragment>
+
+            <ActorCard 
+            
+            picture={'https://m.media-amazon.com/images/M/MV5BYTdlMzNkODUtZTA2My00NzJhLTkwMjAtMzk4MWQ0MDQzMGNiXkEyXkFqcGdeQXVyNDY1Njg3OA@@._V1_FMjpg_UX1000_.jpg'}
+           
              ></ActorCard>
-          )
-        })}
+            <ActorCard 
+            
+             picture={'https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/05/200619093245-jamie-foxx-0222-e1690023305618.jpg?w=1200&h=1200&crop=1'}
+            
+             ></ActorCard>
+            <ActorCard 
+            
+             picture={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROilTPHDFFMUm0eETL8ENzSJNdsTpGqGpPug&s'}
+            
+             ></ActorCard>
+            <ActorCard 
+            
+             picture={'https://hips.hearstapps.com/hmg-prod/images/gettyimages-1230039869.jpg?crop=1xw:1.0xh;center,top&resize=640:*'}
+            
+             ></ActorCard>
+              <ActorCard 
+            
+            picture={'https://www.cnnbrasil.com.br/wp-content/uploads/sites/12/2023/05/200619093245-jamie-foxx-0222-e1690023305618.jpg?w=1200&h=1200&crop=1'}
+           
+            ></ActorCard>
+
+             </React.Fragment>
+          // )
+        // })}
+        }
+        
         </div>
       </div>
 
-      <RatingsContext.Provider value={{getMoreRatings, isRatingsEnd, isRatingsContainerOpen, setIsRatingsContainerOpen, ratings, handleOpenAndGetRatings, handleCloseRatings }} >
-      <RattingsScreen></RattingsScreen>
-</RatingsContext.Provider>
-
+     
 
     </Box>
   </SwipeableDrawer>

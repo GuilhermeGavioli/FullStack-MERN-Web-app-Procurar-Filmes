@@ -25,7 +25,7 @@ export default function AuthContextProvider({children}){
             const userdata = await res.json()
             console.log(userdata)
 
-            setUser((prev_user) => { return {...prev_user, picture: userdata.picture} })
+            setUser(userdata)
           } else {
             console.log('error')
           }

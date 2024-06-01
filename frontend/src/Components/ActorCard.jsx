@@ -28,11 +28,8 @@ export default function ActorCard({name, picture, role}) {
 
 
       {/* </MaskAround> */}
-<MovieImage src={picture} alt="" />
-<Stack spacing={.1} sx={{flexGrow: 1, padding: '10px' }}> 
-  <p style={{fontSize: '.9em', fontWeight: 600, color: grey[400]}}>Diretor</p>
-    <p style={{color: grey[200], fontSize: '.8em'}}>Paul Lyan</p>
-</Stack>
+<MovieImage src={picture || 'https://i.pinimg.com/originals/83/72/e9/8372e957fc617e9e956f116afd3e599b.jpg'} alt="" />
+
   </Container>
 
 
@@ -42,7 +39,7 @@ export default function ActorCard({name, picture, role}) {
 
 const Container = styled.div`
 background-image: blue;
-width: 100px;
+width: fit-content;
 height: fit-content;
 display: flex;
 flex-direction: column;
@@ -54,24 +51,10 @@ cursor: pointer;
 border-radius: 10px;
 `
 
-const RateCard = styled.div`
-display: flex;
- justify-content: center; 
- align-items: center;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 35px;
-  height: 35px;
-  z-index: 3;
-  border-radius: 0px;
-  background: ${deepPurple[900]}; 
-)}
-`
 
 const MovieImage = styled.img`
-width: 100%;
-height: 120px;
+width: 50px;
+height: 50px;
 `
 
 

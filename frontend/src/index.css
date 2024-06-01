@@ -83,3 +83,8 @@ body{
 .carousel-button.next {
   right: 10px; /* Right positioning for next button */
 }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

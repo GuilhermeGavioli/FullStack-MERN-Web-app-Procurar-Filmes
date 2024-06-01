@@ -15,6 +15,7 @@ import MovieCard2 from '../MovieCard2';
 import DeletableChip from '../DeletableChip';
 import { Stack } from '@mui/material';
 import MovieCarrocel from '../MovieCarrocel';
+import { theme } from '../../theme';
 
 
 export const MovieContext = createContext()
@@ -385,19 +386,27 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
 }
   </Stack>
 
-      {/* <div style={{padding: '0 10px 0 10px', width: '100%', marginTop: '10px'}}> */}
 
-
-      <MovieCarrocel loading={false} movies={movies}/>
-      <MovieCarrocel loading={false} movies={movies}/>
-{/* 
-      <MyGrid>
-        {
+  <Stack sx={{padding: '10px'}} direction='column' spacing={1}>
+  {
           movies?.map(movie => {
-            return <MovieCard2 key={movie?._id} movie={movie}></MovieCard2>
+            return (
+              <MovieCard2 key={movie?._id} movie={movie}/>
+            )
           })
           
         }
+
+
+  </Stack>
+
+      {/* <div style={{padding: '0 10px 0 10px', width: '100%', marginTop: '10px'}}> */}
+
+
+
+{/* 
+      <MyGrid>
+       
       </MyGrid> */}
 
         {/* </div> */}

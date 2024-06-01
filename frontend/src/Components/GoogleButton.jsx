@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { grey } from '@mui/material/colors';
-import AuthContextProvider, { AuthContext } from './Contexts/AuthContext';
+import  { AuthContext } from './Contexts/AuthContext';
 
 
 
@@ -38,7 +38,7 @@ async function delegateGoogleOAuthToBackend(oauth_access_token){
 
 return (
 
-  <AuthContextProvider>
+
 
     <Button fullWidth  onClick={login} variant="outlined"
     sx={{
@@ -51,7 +51,7 @@ return (
     }}
     >
       Continue with Google</Button>
-      </AuthContextProvider>
+   
 
 
    // <GoogleLogin

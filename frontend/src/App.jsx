@@ -11,7 +11,8 @@ import MyComments from './Components/Pages/MyComments';
 import BarsWrapper from './Components/Layouts/BarsWrapper';
 
 import MovieContextProvider from './Components/Contexts/MovieContext';
-
+import ProfilePage from './Components/Pages/ProfilePage';
+import AuthContextProvider from './Components/Contexts/AuthContext';
 
 function App() {
   
@@ -50,6 +51,7 @@ function App() {
                   <Route path="/"       element={ <MovieContextProvider><MainPage/></MovieContextProvider> }></Route>
                   <Route path="/mycomments"       element={ <MyComments /> }></Route>
                   <Route path="/results"  element={ <MovieContextProvider><SearchPage /></MovieContextProvider> }></Route>
+                  <Route path="/profile/me"  element={ <AuthContextProvider><ProfilePage/></AuthContextProvider> }></Route>
                 </Route>
                 <Route>
                   <Route path="/login"  element={ <LoginPage /> }></Route>

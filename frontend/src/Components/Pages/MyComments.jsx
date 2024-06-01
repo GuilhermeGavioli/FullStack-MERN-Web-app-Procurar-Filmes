@@ -59,7 +59,7 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   scrollbarWidth: 'none', paddingBottom: '60px', paddingTop: '60px',
 }}>
 
-<AlertDialog openDialog={openDialog} handleClickOpenDialog={handleClickOpenDialog} handleCloseDialog={handleCloseDialog}></AlertDialog>
+
 
         
         <Stack spacing={1} sx={{padding: '0 10px 0 10px'}}>

@@ -18,27 +18,50 @@ import { theme } from '../../theme';
 
 
 import { AuthContext } from '../Contexts/AuthContext';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export default function BottomBar() {
   const {user, userLoading } = React.useContext(AuthContext)
+  const location = useLocation();
 
   const navigator = useNavigate()
-  const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const [iconInitialState, setIconInitialState] = React.useState('');
+  const [page, setPage] = React.useState('');
 
-  };
+  useEffect(() => {
+    const pathname = location.pathname;
+    if (pathname == '/'){
+      setIconInitialState(0)
+    } else if (pathname == '/mycomments'){
+      setIconInitialState(1)
+    } else if (pathname == '/results'){
+      setIconInitialState(2)
+    } else if (pathname == '/profile/me'){
+      setIconInitialState(3)
+    }
+
+  }, [page])
 
   function goToMain(){
+    setPage('/')
     navigator('/')
   }
-
+  
   function goToMyComments(){
+    setPage('/mycomments')
     navigator('/mycomments')
   }
-
+  
   function goToResults(){
+    setPage('/results')
     navigator('/results')
+  }
+
+  function goToProfile(){
+    setPage('/profile/me')
+    navigator('/profile/me')
   }
 
   return (
@@ -68,21 +91,32 @@ export default function BottomBar() {
      
       <Box value={0} sx={{ display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}} 
       onClick={()=> {goToMain()}}>
-        <HomeIcon sx={{fontSize: '1.9em', color: theme.palette.purple_selected_icon}}/>
+        {/* <HomeIcon sx={{fontSize: '1.9em', color: theme.palette.purple_selected_icon}}/> */}
+        <HomeIcon sx={{
+          fontSize: iconInitialState == 0 ? '1.9em' : '1.4em', 
+          color: iconInitialState == 0 ? theme.palette.purple_selected_icon : theme.palette.dark
+          }}/>
       </Box>
 
       <Box value={1} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}} 
       onClick={()=> {goToMyComments()}}>
-        <InsertCommentIcon  sx={{fontSize: '1.4em', color: theme.palette.dark}}/>
+        <InsertCommentIcon  
+        sx={{
+          fontSize: iconInitialState == 1 ? '1.9em' : '1.4em', 
+          color: iconInitialState == 1 ? theme.palette.purple_selected_icon : theme.palette.dark
+          }}/>
       </Box>
   
       <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
        onClick={()=> {goToResults()}}>
-        <SearchIcon  sx={{fontSize: '1.6em', color:  theme.palette.dark}} />
+        <SearchIcon  sx={{
+          fontSize: iconInitialState == 2 ? '1.9em' : '1.4em', 
+          color: iconInitialState == 2 ? theme.palette.purple_selected_icon : theme.palette.dark
+          }}/>
       </Box>
 
       <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
-       onClick={()=> {goToResults()}}>
+       onClick={()=> {goToProfile()}}>
 
       {
         userLoading ? 

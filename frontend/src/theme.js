@@ -47,7 +47,10 @@ const lightTheme = createTheme({
       yellow_light: 'rgb(248,176,6)',
       
 
-      purple_title: 'rgb(85,57,145)',
+      purple_button_dark: 'rgb(123,40,245)',
+      purple_button_light: 'rgb(127,46,239)',
+
+      purple_title: 'rgb(118,76,202)',
       purple_normal: 'rgb(136,46,250)',
       purple_mid: 'rgb(71, 73, 183)',
       purple_light: 'rgb(121, 79, 207)',

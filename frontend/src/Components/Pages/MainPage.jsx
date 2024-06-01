@@ -77,8 +77,8 @@ function MainPage() {
       })
       if (res.status == 200) {
         const data = await res.json()
-        console.log(data[0]._id)
-        if (data.length < 20){
+       
+        if (data?.length < 20){
           setEnd(true)
         }       
           setPage(prev_page => {return prev_page + 1})
