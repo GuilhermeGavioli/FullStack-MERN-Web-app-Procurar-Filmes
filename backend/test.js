@@ -79,3 +79,75 @@ function areRuntimesValid(min, max){
     let gap = 20;
     return max - min >= gap
 }
+
+
+function isIdValid(id){
+    if (!!!id) return false
+    if (id.length != 24) return false
+    const reg = /^[0-9a-f]+$/
+    return reg.test(id)
+}
+
+// console.log(isIdValid('113'))
+// console.log(isIdValid('15ab58fe1514'))
+// console.log(isIdValid('6592008029c8c3e4dc76256c'))
+// console.log(isIdValid('-2'))
+// console.log(isIdValid('6592008029c8c3e4dc76256h'))
+// console.log(isIdValid(''))
+// console.log(isIdValid(8))
+// console.log(isIdValid(null))
+
+function isPageValid(page){
+    if (!!!page) return false
+    if (page.toString().length > 2) return false
+    const reg = /^[1-9]|1[0-9]|20$/
+    if (reg.test(page)){
+        return Number(page)
+    }
+    return false
+}
+
+// console.log(isPageValid(1))
+// console.log(isPageValid('1'))
+// console.log(isPageValid('14'))
+// console.log(isPageValid(90))
+// console.log(isPageValid('140'))
+// console.log(isPageValid(null))
+// console.log(isPageValid('ab'))
+// console.log(isPageValid(-1))
+// console.log(isPageValid('08'))
+// console.log(isPageValid(100))
+// console.log(isPageValid(1000))
+
+
+function isGenreValid(g){
+    const v = ['Animation', '']
+}
+
+function isCommentValid(c){
+    c = c.toString()
+    const sequential_spaces_r = /\s+/g;
+    c = c.replace(sequential_spaces_r, " ");
+    const r = /[^a-zA-Z0-9À-ÿ \.!?:,()@&\[\]\-_]/g;
+    if (c.length > 160 || c.length < 4) return false
+    return c.replace(r, " ")
+}
+
+// console.log(isCommentValid('Muito legal esse filme!Nãoç~´á é[]()&*-785'))
+// console.log(isCommentValid('Muito legal esse filme!Nãoç~´á é[]()&*-785""'))
+// console.log(isCommentValid(147475))
+// console.log(isCommentValid('Muito legal esse faaaaaaaaaaaaaasdcxazaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaailme!Nãoç~´á é[]()&*-785""'))
+// console.log(isCommentValid('      1 15 1 551         b'))
+
+
+
+function isQueryValid(q){
+    q = q.toString()
+    const sequential_spaces_r = /\s+/g;
+    q = q.replace(sequential_spaces_r, " ");
+    const r = /[^a-zA-Z0-9À-ÿ \.!?:,()@&\[\]\-_]/g;
+    if (q.length > 30 || q.length < 1) return false
+    return q.toString().replace(r, " ")
+}
+
+console.log(isQueryValid(' 1    '))

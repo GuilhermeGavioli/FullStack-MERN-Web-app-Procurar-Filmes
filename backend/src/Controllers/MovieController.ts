@@ -19,18 +19,21 @@ export class MovieControllerImpl implements MovieController{
     ){}
 
     public async getMoviesBatchByGenre(request: Request, response: Response): Promise<any>{
-        console.log(request.params)
         const { page } = request.params
+        const is_page_valid = this.validator.isPageValid(page)
+        if (!is_page_valid) return response.status(400).end()
         const { genre } = request.query
+
         if (!genre) return
-        const movies = await this.movieService.getMoviesBatchByGenre(genre.toString(), Number(page))
+        const movies = await this.movieService.getMoviesBatchByGenre(genre.toString(), is_page_valid)
         response.json(movies)
     }
 
     public async getMovieById(request: Request, response: Response): Promise<any>{
         const { id } = request.params
+        const is_id_valid = this.validator.isIdValid(id)
+        if (!is_id_valid) return response.status(400).end()
         const movie = await this.movieService.getMovieById(id)
-        console.log(movie)
         response.json(movie)
     }
 
@@ -40,9 +43,12 @@ export class MovieControllerImpl implements MovieController{
     }
 
     public async getMoviesByText(request:Request, response: Response): Promise<any>{
-        console.log('moviesbytext')
         const { page } = request.params as any
+        const is_page_valid = this.validator.isPageValid(page)
+        if (!is_page_valid) return response.status(400).end()
         const { query, year, runtime, min_runtime, max_runtime, min_year, max_year } = request.query as any
+        const is_query_valid = this.validator.isQueryValid(query)
+        if (!is_query_valid) return response.status(400).end()
 
         const valids: Valids = {}
 
@@ -78,13 +84,8 @@ export class MovieControllerImpl implements MovieController{
             }
         }
 
-        const movies= await this.movieService.getMoviesByText(query, Number(page), valids)
-        console.log(movies)
+        const movies= await this.movieService.getMoviesByText(is_query_valid, is_page_valid, valids)
         response.json(movies)
     }
-
-
-    // movies/results/:page?query=a&min_runtime=50&max_runtime=100&min_year=1930&max_year=2010
-
 }
 

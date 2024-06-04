@@ -20,7 +20,6 @@ export class UserControllerImpl implements UserController{
 
     public async authGoogle(request: Request, response: Response): Promise<any>{
         const oauth_access_token: any = request.params.oauth_access_token
-        console.log(oauth_access_token)
         const is_oauth_token_valid = this.validator.validateOAuthToken(oauth_access_token)
         if (!is_oauth_token_valid) {
             return response.status(404).end()

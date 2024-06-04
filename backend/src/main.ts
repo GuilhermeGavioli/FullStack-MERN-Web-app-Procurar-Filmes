@@ -34,15 +34,15 @@ const app = express()
 
 
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.use(cors({origin: '*', allowedHeaders: '*'}))
+app.use(cors({origin: process.env.ALLOWED_ORIGIN, allowedHeaders: '*'}))
 
 app.use(movieRouter)
 app.use(userRouter)
 app.use(ratingRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.listen(3001, () => {
+app.listen(process.env.PORT, () => {
     console.log('Server is Up and Running')
 })

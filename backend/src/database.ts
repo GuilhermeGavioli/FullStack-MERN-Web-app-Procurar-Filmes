@@ -10,9 +10,8 @@ import { Db, MongoClient }  from 'mongodb'
     public async createConnection(): Promise<MongoClient | undefined>{
         try {
         const client = await MongoClient.connect(process.env.MONGODB_CONNECTION_URI as string);
-        return client
-  
         console.log('Connected to MongoDB')
+        return client
         } catch (error) {
             console.error("Error connecting to MongoDB:", error);
         }
