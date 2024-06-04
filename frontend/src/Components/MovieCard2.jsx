@@ -34,9 +34,9 @@ return (
     <div  onClick={viewMovie} key={movie._id} style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
     <img src={movie?.cover} style={{width: '80px', height: '100px', background: theme.palette.light, borderRadius: '15px'}} />
     <div style={{padding: '10px'}}>
-      <p style={{color: 'white', fontWeight: 500}}>Titulo Legalzao</p>
-      <p style={{color: 'white', fontWeight: 500, fontSize: '0.9em', marginTop: '5px'}}>{movie?.genres[0]}</p>
-      <p style={{color: 'white', fontWeight: 500, fontSize: '0.8em', marginTop: '5px'}}>{movie?.released?.slice(-4)}</p>
+      <p style={{color: 'white', fontWeight: 500}}>{movie?.title}</p>
+      <p style={{color: 'white', fontWeight: 500, fontSize: '0.9em', marginTop: '5px'}}>{movie?.genres ? movie?.genres[0] : ''}</p>
+      <p style={{color: 'white', fontWeight: 500, fontSize: '0.8em', marginTop: '5px'}}>{movie?.released}</p>
       <p style={{color: 'white', fontWeight: 500, fontSize: '0.8em', marginTop: '5px'}}>{movie?.runTime} min</p>
       
 

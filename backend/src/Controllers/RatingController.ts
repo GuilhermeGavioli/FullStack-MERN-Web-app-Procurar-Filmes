@@ -8,6 +8,7 @@ export interface RatingController{
     createRating(request: Request, response: Response): Promise<any>;
     deleteRating(request: Request, response: Response): Promise<any>;
     getRatingsBatchByMovieId(request: Request, response: Response): Promise<any>;
+    getRatingsBatchFromUserId(request: Request, response: Response): Promise<any>;
 }
 
 
@@ -29,17 +30,23 @@ export class RatingControllerImpl implements RatingController{
 
     public async deleteRating(request: Request, response: Response): Promise<any>{
         const { id } = request.params
-        const { user_id } = request.res?.locals.id
+        const   user_id   = request.res?.locals.user_id
         const was_deleted = await this.ratingService.deleteRating(user_id, id)
+        console.log(was_deleted)
         return response.status(was_deleted ? 200 : 404).end()
     }
 
     public async getRatingsBatchByMovieId(request: Request, response: Response): Promise<any>{
         const { movie_id } = request.params
         const { page } = request.query
-        console.log(movie_id)
         const ratings = await this.ratingService.getRatingsBatchByMovieId(movie_id, Number(page))
-        console.log(ratings)
+        return response.json(ratings)
+    }
+
+    public async getRatingsBatchFromUserId(request: Request, response: Response): Promise<any>{
+        const   user_id   = request.res?.locals.user_id
+        const { page } = request.query
+        const ratings = await this.ratingService.getRatingsBatchFromUserId(user_id, Number(page))
         return response.json(ratings)
     }
    

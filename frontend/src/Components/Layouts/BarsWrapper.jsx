@@ -9,10 +9,9 @@ export default function BarsWrapper () {
     <>
         <AuthContextProvider>
           <TopBar />
-        </AuthContextProvider>
+   
 
-      <div style={{minHeight: '100%',height: 'fit-content', backgroundColor: theme.palette.dark, width: '100%',
- 
+      <div style={{minHeight: '100%',height: '100%', backgroundColor: theme.palette.dark, width: '100%',
 paddingTop: '60px', display: 'flex', flexDirection: 'column', gap: '10px',
 msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
   scrollbarWidth: 'none',
@@ -23,7 +22,7 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
       <Outlet />
 </div>
 
-<AuthContextProvider>
+
       <BottomBar />
 </AuthContextProvider>
     </>

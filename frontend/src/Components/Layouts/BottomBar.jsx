@@ -8,61 +8,22 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
 import HomeIcon from '@mui/icons-material/Home';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+
 import { grey, amber, pink } from '@mui/material/colors';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
-import { useNavigate } from 'react-router-dom';
+
 import SearchIcon from '@mui/icons-material/Search';
 import { Avatar, Box, Skeleton } from '@mui/material';
 import { theme } from '../../theme';
 
 
 import { AuthContext } from '../Contexts/AuthContext';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+
+
 
 export default function BottomBar() {
-  const {user, userLoading } = React.useContext(AuthContext)
-  const location = useLocation();
+  const {user, userLoading, iconInitialState, goTo } = React.useContext(AuthContext)
 
-  const navigator = useNavigate()
-
-  const [iconInitialState, setIconInitialState] = React.useState('');
-  const [page, setPage] = React.useState('');
-
-  useEffect(() => {
-    const pathname = location.pathname;
-    if (pathname == '/'){
-      setIconInitialState(0)
-    } else if (pathname == '/mycomments'){
-      setIconInitialState(1)
-    } else if (pathname == '/results'){
-      setIconInitialState(2)
-    } else if (pathname == '/profile/me'){
-      setIconInitialState(3)
-    }
-
-  }, [page])
-
-  function goToMain(){
-    setPage('/')
-    navigator('/')
-  }
-  
-  function goToMyComments(){
-    setPage('/mycomments')
-    navigator('/mycomments')
-  }
-  
-  function goToResults(){
-    setPage('/results')
-    navigator('/results')
-  }
-
-  function goToProfile(){
-    setPage('/profile/me')
-    navigator('/profile/me')
-  }
 
   return (
 
@@ -74,7 +35,8 @@ export default function BottomBar() {
         inset: 'auto 0 10px 0',
        margin: 'auto',
        padding: '10px',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        boxShadow: 'none',
     }}>
 
     
@@ -82,7 +44,7 @@ export default function BottomBar() {
      sx={{ 
        width: '100%', zIndex: 10, display: 'flex', justifyContent: 'space-evenly', 
        borderRadius: '10px',
-       boxShadow: `rgb(38, 57, 77) 0px 20px 30px -10px`,
+       boxShadow: 'none',
       margin: 'auto',
 
        background: 'white',
@@ -90,33 +52,34 @@ export default function BottomBar() {
        }}>
      
       <Box value={0} sx={{ display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}} 
-      onClick={()=> {goToMain()}}>
+      onClick={() => {goTo('/')}}>
         {/* <HomeIcon sx={{fontSize: '1.9em', color: theme.palette.purple_selected_icon}}/> */}
         <HomeIcon sx={{
-          fontSize: iconInitialState == 0 ? '1.9em' : '1.4em', 
-          color: iconInitialState == 0 ? theme.palette.purple_selected_icon : theme.palette.dark
+          fontSize: iconInitialState == 0 ? '1.5em' : '1.4em', 
+          color: iconInitialState == 0 ? theme.palette.purple_selected_icon : theme.palette.dark,
+          background: iconInitialState == 0 ? 'rgb(245,238,255)' : 'none',
           }}/>
       </Box>
 
       <Box value={1} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}} 
-      onClick={()=> {goToMyComments()}}>
+      onClick={()=> {goTo('/mycomments')}}>
         <InsertCommentIcon  
         sx={{
-          fontSize: iconInitialState == 1 ? '1.9em' : '1.4em', 
+          fontSize: iconInitialState == 1 ? '1.5em' : '1.4em', 
           color: iconInitialState == 1 ? theme.palette.purple_selected_icon : theme.palette.dark
           }}/>
       </Box>
   
       <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
-       onClick={()=> {goToResults()}}>
+       onClick={()=> {goTo('/results')}}>
         <SearchIcon  sx={{
-          fontSize: iconInitialState == 2 ? '1.9em' : '1.4em', 
+          fontSize: iconInitialState == 2 ? '1.5em' : '1.4em', 
           color: iconInitialState == 2 ? theme.palette.purple_selected_icon : theme.palette.dark
           }}/>
       </Box>
 
       <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
-       onClick={()=> {goToProfile()}}>
+       onClick={()=> {goTo('/profile/me')}}>
 
       {
         userLoading ? 

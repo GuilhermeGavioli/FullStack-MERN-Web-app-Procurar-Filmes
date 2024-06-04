@@ -13,10 +13,10 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import MovieCard2 from '../MovieCard2';
 import DeletableChip from '../DeletableChip';
-import { Stack } from '@mui/material';
+import { Button, Fab, Skeleton, Stack, Typography } from '@mui/material';
 import MovieCarrocel from '../MovieCarrocel';
 import { theme } from '../../theme';
-
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 export const MovieContext = createContext()
 export const RatingsContext = createContext()
@@ -36,13 +36,15 @@ const Search = styled('div')(() => ({
   position: 'relative',
   display: 'flex',
   gap: '5px',
-  backgroundColor: grey[900],
+  backgroundColor: theme.palette.mid,
+
   '&:hover': {
     backgroundColor: grey[700],
   },
   width: '100%',
   height: '40px',
   color: 'white',
+
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -201,6 +203,8 @@ export default function SearchPage() {
     }
   })
 
+  const [loadingMovies, setLoadingMovies] = useState(false)
+
 
 function changeGenre(g){
   setAvailableGenres((prev_genres) => {
@@ -272,22 +276,74 @@ function disableGenresSnapshot(){
     const [searchQuery, setSearchQuery] = useState('')
     const [movies, setMovies] = useState([])
   
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(0)
+    const [forceUpdate, setForceUpdate] = useState(false);
+    const [end, setEnd] = useState(false)
+    const [loadingMoreMovies, setLoadingMoreMovies] = useState(false)
+  const [scrollpos, setScrollpos] = useState(0)
+  const [noMovies, setNoMovies] = useState(false)
 
+  const listRef = React.useRef(null);
 
-  function queryMovies(){
-    console.log('test')
-    console.log(filtersSnapshot)
-    getMovies()
+  function scrollToTop(){
+    listRef.current.scrollTop = 0
+    setScrollpos(0)
   }
 
+  const handleFetchingMoreOnScroll = async (e) => {
+    const { scrollHeight, clientHeight, scrollTop } = listRef.current;
+    setScrollpos(scrollTop)
+    const isNearEnd = scrollTop + clientHeight >= scrollHeight - 100; // Adjust threshold
+    if (isNearEnd && !loadingMoreMovies && !end) {
+      console.log('loading more')
+      setForceUpdate(!forceUpdate)
+      setPage(p => {return p + 1})
+    }
+  }
 
-  // useEffect(()=>{
-    async function getMovies(){
+  async function queryMovies(){
+    setForceUpdate(!forceUpdate)
+    setPage(p => {return 1})
+    console.log(page)
+  }
+
+  useEffect(() => { // handle older stored values
+    if (localStorage.getItem('search_url')){
       setPage(1)
-      setMovies([])
+      setForceUpdate(!forceUpdate)
+    }
 
-      console.log(searchQuery)
+    const sq = localStorage.getItem('last_query')
+    sq && setSearchQuery(sq)
+  },[])
+
+  useEffect(() => {
+
+    async function run(){
+      console.log('use effect')
+      console.log(page)
+      if (page == 0 ) return
+     
+      if (page == 1){
+        if (loadingMovies) return
+        setMovies([])
+        setLoadingMovies(true)
+      } else {
+        if (loadingMoreMovies) return
+        console.log('end')
+        console.log(end)
+        if (end) return
+        setLoadingMoreMovies(true)
+      }
+      await getMovies()
+    }
+    run()
+  }, [page, forceUpdate])
+
+
+
+    async function getMovies(){
+      console.log('getting')
       let url = `http://localhost:3001/movies/results/${page}?query=${searchQuery}`
       if (filtersSnapshot.year.on) url = url.concat(`&year=1&min_year=${filtersSnapshot.year.min}&max_year=${filtersSnapshot.year.max}`)
       if (filtersSnapshot.runtime.on) url = url.concat(`&runtime=1&min_runtime=${filtersSnapshot.runtime.min}&max_runtime=${filtersSnapshot.runtime.max}`)
@@ -298,10 +354,11 @@ function disableGenresSnapshot(){
             url += `${g.genre},`
           }
         })
-      } 
+      }
+      localStorage.setItem('search_url', url)
+      localStorage.setItem('last_query', searchQuery)
       console.log(url)
       const res = await fetch(url, {
-        // /movies/results/filter/:page
         method: 'GET',
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -310,21 +367,52 @@ function disableGenresSnapshot(){
       if (res.status == 200) {
         // setPage(prev_page => { return prev_page + 1 })
         const data = await res.json()
+
+        if (data.length == 0 && page == 1){
+          setNoMovies(true)
+        } else if (data.length < 20){
+          setEnd(true)
+          setNoMovies(false)
+        } else {
+          setNoMovies(false)
+          setEnd(false)
+        }
         console.log(data)
+        // setPage(prev => {return page + 1})
         setMovies((prev_movies) => {return [...prev_movies, ...data]})
       } else {
         console.log('ops')
       }
+      setLoadingMoreMovies(false)
+      setLoadingMovies(false)
     }
     
-  // }, [])
 
     return (
     <React.Fragment>
+      <div 
+         ref={listRef}
+         onScroll={handleFetchingMoreOnScroll}
+      style={{background: theme.palette.dark, width: '100%', height: '100%', overflowY:'scroll',paddingBottom: '20px',position: 'relative' }}>
+
+
+{
+      scrollpos > 400 &&
+    <Fab onClick={scrollToTop} size="small" sx={{transition: '0.3s ease-in-out', background: theme.palette.cyan, position: 'fixed', bottom: '95px', right: '15px', zIndex: 2,
+    }}>
+              <KeyboardArrowUpIcon sx={{fontSize: '2em', color: 'theme.palette.darker'}}/>
+          </Fab>
+}
+
+       <div style={{position: 'relative', width: '100vw', height: 'fit-content',  
+       display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
+       
+       }}>
+
       <Box sx={{ flexGrow: 1 }}>
 
 
-      <div style={{padding: '0 10px 0 10px', width: '100%', marginTop: '10px'}}>
+      <div style={{padding: '0 10px 0 10px', width: '100%', marginTop: '10px', }}>
       <Search>
       <SearchIconWrapper>
               <SearchIcon />
@@ -364,15 +452,20 @@ function disableGenresSnapshot(){
 
       
               <button onClick={queryMovies}
-              style={{ borderRadius: '0 15px 0 15px', fontWeight: '600', color: 'white',border: 'none', padding: '0 20px 0 20px',  background: `linear-gradient(${pink[700]},${pink[600]})` }}>
+              style={{ borderRadius: '0', fontWeight: '600', color: 'white',border: 'none', padding: '0 20px 0 20px', 
+               background: `linear-gradient(${theme.palette.purple_light},${theme.palette.purple_mid})` }}>
                 Search</button>
        
           </Search>
               </div>
 
-    
+        
 
-<Stack sx={{padding: '10px'}} direction='row' spacing={1}>
+   
+
+<Stack sx={{padding: 
+  filtersSnapshot.year.on || filtersSnapshot.runtime.on || filtersSnapshot.genres.on ? 
+  '10px 10px 0 10px' : '0px', margin: '0', height: 'fit-content'}} direction='row' spacing={1}>
 {
   filtersSnapshot.year.on && <DeletableChip  name={'Year'} action={() => { disableYearSnapshot() }} />
   
@@ -389,6 +482,38 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
 
   <Stack sx={{padding: '10px'}} direction='column' spacing={1}>
   {
+    loadingMovies ?
+    <React.Fragment>
+        <div style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+    <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+    <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+    </div>
+</div>
+        <div style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+    <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+    <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+    </div>
+</div>
+        <div style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+    <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+    <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+    </div>
+</div>
+      
+    </React.Fragment>
+    :
           movies?.map(movie => {
             return (
               <MovieCard2 key={movie?._id} movie={movie}/>
@@ -397,22 +522,57 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
           
         }
 
+        {
+          loadingMoreMovies &&
+          <React.Fragment>
+          <div style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+          <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+          <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+          </div>
+      </div>
+          <div style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+          <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+          <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+          </div>
+      </div>
+          <div style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+          <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+          <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+            <Skeleton animation="wave" sx={{background: theme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+          </div>
+      </div>
+      </React.Fragment>
+        }
+
 
   </Stack>
 
-      {/* <div style={{padding: '0 10px 0 10px', width: '100%', marginTop: '10px'}}> */}
 
-
-
-{/* 
-      <MyGrid>
-       
-      </MyGrid> */}
-
-        {/* </div> */}
         
     </Box>
+
+            
 <MovieScreen/>
+
+</div>
+    {noMovies && !loadingMovies &&
+<div style={{height: 'fit-content', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', position: 'absolute', margin: 'auto', inset: '0 0 0 0'}}>
+              <img src="/popcorn.png" style={{width: '150px'}} alt="" />
+              <Typography sx={{fontSize: '1.2em', color: 'white', fontWeight: 700}}>No Movies Found...</Typography>
+            </div>
+            }
+</div>
     </React.Fragment>
     )
 }

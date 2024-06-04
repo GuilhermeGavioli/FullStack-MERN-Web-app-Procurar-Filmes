@@ -3,9 +3,14 @@ import { AuthContext } from '../Contexts/AuthContext'
 import EmailIcon from '@mui/icons-material/Email';
 import { theme } from '../../theme';
 import { Skeleton } from '@mui/material';
+import Button from '@mui/material/Button';
+import LogoutIcon from '@mui/icons-material/Logout';
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function ProfilePage (){
-    const {user, userLoading, logout} = React.useContext(AuthContext)
+    const {user, userLoading, logout, loggingOutLoading} = React.useContext(AuthContext)
 
 
     return(
@@ -44,6 +49,31 @@ export default function ProfilePage (){
 </>
 }
 </div>
+
+{
+    userLoading ?
+    <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '5px'}} variant='rectangular' width={'120px'} height={'35px'} />
+    :
+
+    !loggingOutLoading &&
+        <Button color="error" variant="text" onClick={logout}>
+    <LogoutIcon sx={{marginRight: '5px'}}></LogoutIcon>
+    Log out</Button>
+    
+
+}
+
+{
+    loggingOutLoading &&
+<Button disabled loading variant="outlined" sx={{width: '100px', height: '40px'}}>
+<CircularProgress size={20} sx={{color: theme.palette.light}} />
+</Button>
+}
+
+{/* <Button sx={{color: 'white'}} variant="text" >
+    <ModeEditOutlineIcon sx={{marginRight: '5px'}}></ModeEditOutlineIcon>
+    Edit
+    </Button> */}
 
 
     

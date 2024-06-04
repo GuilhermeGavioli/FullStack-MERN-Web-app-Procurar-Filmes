@@ -57,6 +57,9 @@ export class MovieRepositoryImpl implements MovieRepository{
         if (valids?.runtime){
             filters.push( { runTime: { $gt: valids.runtime.min, $lt: valids.runtime.max } } )
         }
+        if (valids?.year){
+            filters.push( { released: { $gt: valids.year.min, $lt: valids.year.max } } )
+        }
 
         const filter = { 
             $and: filters

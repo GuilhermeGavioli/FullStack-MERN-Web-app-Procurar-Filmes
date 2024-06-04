@@ -20,9 +20,9 @@ document.getElementById('root').style.height = '100%'
 root.render(
   <GoogleOAuthProvider clientId="483651865774-nt9c6up5vhk94roqmijr7kgdjd8jliud.apps.googleusercontent.com">
        <BrowserRouter>
-  <React.StrictMode>
+  {/* <React.StrictMode> */}
     <App />
-  </React.StrictMode>
+  {/* </React.StrictMode> */}
        </BrowserRouter>
   </GoogleOAuthProvider>
 );

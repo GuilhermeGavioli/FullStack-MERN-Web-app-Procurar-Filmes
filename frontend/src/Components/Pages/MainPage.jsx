@@ -115,7 +115,8 @@ function MainPage() {
       
    
      
-  <React.Fragment>
+      <div 
+      style={{ width: '100%', height: '100%', overflowY:'scroll',paddingBottom: '20px'}}>
 
        <div style={{position: 'relative', width: '100vw', height: 'fit-content',  
        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
@@ -178,13 +179,20 @@ See all
 
 <GenreCarrocel runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
   <MovieCarrocel finite={false} loading={moviesLoading} movies={movies} getMoreMovies={getMoreMovies}/>
+
+  <Typography sx={{
+    padding: '10px',
+    color: 'white',
+    fontWeight: 700,
+    fontSize: '1.5em'
+  }}>TOP 10</Typography>
 <MovieCarrocel loading={topMoviesLoading} movies={TopMovies}/>
 
   <MovieScreen/>
 
 
   </TopMoviesContext.Provider>
-  </React.Fragment>
+  </div>
     )
 }
 

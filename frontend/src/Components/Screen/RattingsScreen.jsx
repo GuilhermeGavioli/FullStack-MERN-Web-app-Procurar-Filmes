@@ -33,8 +33,10 @@ const ColorButton = MUIStyled(Button)(() => ({
 }));
 
 export default function RattingsScreen() {
-
+  const listRef = React.useRef(null);
   const {
+    loadingMoreRatings,
+
     getMoreRatings, 
     isRatingsEnd,
      isRatingsContainerOpen, 
@@ -49,15 +51,39 @@ export default function RattingsScreen() {
   };
 
   const handleClose = () => {
+    if (listRef.current) {
+      listRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     handleCloseRatings()
   };
+
+  const handleFetchingMoreOnScroll = async (e) => {
+    const { scrollHeight, clientHeight, scrollTop } = listRef.current;
+    const isNearEnd = scrollTop + clientHeight >= scrollHeight - 350; // Adjust threshold
+    if (isNearEnd && !loadingMoreRatings) {
+      await getMoreRatings()
+    }
+  }
 
 
 
   return (
     <React.Fragment>
 
+{/* <div 
+      ref={listRef}
+      onScroll={handleFetchingMoreOnScroll}
+      style={{width: '100%', height: '100%', padding: '5px', overflowY:'scroll',}}>
 
+      <div 
+
+      style={{display: 'flex', flexDirection: 'column',
+      height: 'fit-content',minHeight: '100%', 
+      width: '100%',
+      padding: '10px', 
+      gap: '20px',
+      paddingBottom: '40px',
+      }}> */}
  
     <div style={{padding: '0 10px 0 10px'}}>   
 
@@ -69,6 +95,8 @@ export default function RattingsScreen() {
 
 
       <Dialog
+
+
         fullScreen
         open={isRatingsContainerOpen}
         onClose={handleClose}
@@ -93,32 +121,40 @@ export default function RattingsScreen() {
       </AppBar>
 
       
-        <Box sx={{width: '100%', height: '100%', background: theme.palette.dark, overflowY: 'scroll', paddingTop: '20px' }}>
+        <Box 
+         ref={listRef}
+         onScroll={handleFetchingMoreOnScroll}
+        sx={{width: '100%', height: '100%', background: theme.palette.dark, overflowY: 'scroll', padding: '10px 10px 20px 10px'}}>
 
 
         
 
          
         {
-        isRatingsEnd && (ratings?.length == 0) ? <p>sem ratings</p> : <></>
-        }  
+        isRatingsEnd && (ratings?.length == 0) &&
+          <div style={{height: 'fit-content', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', position: 'absolute', margin: 'auto', inset: '0 0 30px 0'}}>
+            <img src="/popcorn.png" style={{width: '150px'}} alt="" />
+            <Typography sx={{fontSize: '1.2em', color: 'white', fontWeight: 700}}>No Comments Found...</Typography>
+          </div>
+        }
+        
 
 
-        <Stack spacing={2} sx={{width: '100%', margin: "auto", }}>
+        <Stack spacing={'10px'} sx={{width: '100%', margin: "auto", }}>
           {ratings.map(rating => {
             return (
-              <Comment key={rating._id} comment={rating.comment}></Comment>
+              <Comment key={rating._id} comment={rating.comment} userid={rating.user?._id} username={rating?.user?.name} pic={rating?.user?.picture}></Comment>
             )
           })}
-             {
-          !isRatingsEnd ? <button onClick={() => getMoreRatings()}>load more</button> : <></>
-        }
+         
         </Stack>
         
         <CreateRatingDialog/>
 
         </Box>
       </Dialog>
+
+
     </React.Fragment>
   );
 }

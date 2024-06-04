@@ -23,6 +23,8 @@ import styled from 'styled-components';
 import { FilterContext } from '../Pages/SearchPage';
 import SliderTwoButtons from '../SliderTwoButtons';
 import PinkSwitch from '../PinkSwitch';
+import FilterGenreCarrocel from '../FilterGenreCarrocel';
+import { theme } from '../../theme';
 
 const Item = styled.div`
     width: fit-content;
@@ -52,7 +54,6 @@ const SelectedItem = styled.div`
     color: white;
     font-family: roboto;
     font-size: 0.9em;
-
 `
 
 const style = {
@@ -61,7 +62,7 @@ const style = {
   width: '100%',
   maxWidth: 360,
   borderColor: 'divider',
-  backgroundColor: grey[900],
+  backgroundColor: 'none',
   gap: '50px'
 };
 
@@ -92,7 +93,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return (
       <React.Fragment>
  
-        <FilterListIcon sx={{color: 'white', fontSize: '1.3em'}} onClick={handleClickOpen}></FilterListIcon>
+        <FilterListIcon sx={{color: 'white', fontSize: '1.5em'}} onClick={handleClickOpen}></FilterListIcon>
        
         <Dialog
             sx={{width: '100vw'}}
@@ -101,7 +102,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <AppBar sx={{ position: 'relative', background: pink[500] }}>
+          <AppBar sx={{ position: 'relative', background: theme.palette.mid}}>
             <Toolbar>
               <IconButton
                 edge="start"
@@ -114,13 +115,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 Filters
               </Typography>
-              <Button autoFocus color="inherit" onClick={handleApplying}>
+              <Button sx={{color: 'white',background: `linear-gradient(${theme.palette.purple_light},${theme.palette.purple_mid})`}}  onClick={handleApplying}>
                 Apply
               </Button>
             </Toolbar>
           </AppBar>
 
-          <div style={{background: '#161616', height: '100%', width: '100vw', margin: 0, padding: 0}}>
+          <div style={{background: theme.palette.dark, height: '100%', width: '100vw', margin: 0, padding: 0}}>
 
 
 
@@ -134,19 +135,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
          <Typography variant="h6" component="h2" sx={{color: 'white'}}>
           Genre
         </Typography>
-         <div style={{ gridAutoFlow: 'column',padding: '10px', placeItems: 'start', alignItems: 'start', display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', rowGap: '5px', columnGap: '5px', width: 'fit-content', justifyContent: 'start', width: '100%', overflow: 'hidden'}}>
-        {
-          availableGenres.map(g => {
-          
-            return (
-              g.selected ?
-                <SelectedItem key={g.genre} onClick={() => changeGenre(g.genre)}>{g.genre}</SelectedItem>
-              :
-                <Item key={g.genre}  onClick={() => changeGenre(g.genre)}>{g.genre}</Item>
-              )
-            })
-        }
-         </div>
+       
+        
+          <FilterGenreCarrocel availableGenres={availableGenres} handleGenreChange={changeGenre}></FilterGenreCarrocel>
+
+        
+      
          
 
          <Typography variant="h6" component="h2" sx={{color: 'white'}}>

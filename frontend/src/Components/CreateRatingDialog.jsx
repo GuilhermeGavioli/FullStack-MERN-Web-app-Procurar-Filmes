@@ -16,6 +16,8 @@ import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAuto
 import { styled } from '@mui/system';
 import { blue, grey } from '@mui/material/colors';
 import { MovieContext } from './Contexts/MovieContext';
+import { RatingsContext } from './Screen/MovieScreen';
+import { AuthContext } from './Contexts/AuthContext';
 
 
 
@@ -60,6 +62,8 @@ export default function CreateRatingDialog() {
   const [open, setOpen] = React.useState(false);
   const [commentValue, setCommentValue] = React.useState('');
   const {movie} = React.useContext(MovieContext)
+  const { setRatings, handleCloseRatings } = React.useContext(RatingsContext)
+  const { user } = React.useContext(AuthContext)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -70,11 +74,27 @@ export default function CreateRatingDialog() {
     };
     
     const createComment = async () => {
+      const r = {
+        _id: Math.random().toString(),
+        comment: commentValue,
+        movie_id: movie?._id,
+        user: {
+          _id: user?._id,
+          name: user?.name,
+          picture: user?.picture,
+        }
+      }
+      setRatings((p) => {return [r, ...p]})
+      handleClose()
+      setTimeout(() => {
+        handleCloseRatings()
+      }, 500);
+      try{
 
-      console.log(commentValue)
+        console.log(commentValue)
         const res = await fetch(`http://localhost:3001/ratings/create/for_movie/${movie?._id}`, {
             method: 'POST',
-        body: JSON.stringify({comment: commentValue}),
+            body: JSON.stringify({comment: commentValue}),
         
           headers: {
             'Content-Type': 'application/json',
@@ -82,11 +102,14 @@ export default function CreateRatingDialog() {
           }
         })
         if (res.status == 200) {
-          alert('ok')
+          console.log('ok')
         } else {
-            alert('not ok')
+          console.log('not ok')
         }
-        handleClose()
+
+      } catch(err){
+        console.log(err)
+      }
     }
   return (
     <React.Fragment>

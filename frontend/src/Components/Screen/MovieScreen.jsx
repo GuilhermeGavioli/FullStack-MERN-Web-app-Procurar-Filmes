@@ -96,16 +96,18 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export const RatingsContext = createContext()
 
 export default function MovieScreen() {
-  const { movieLoading, isMovieContainerOpen, movie, handleCloseMovie, months } = useContext(MovieContext)
+  const { movieLoading, isMovieContainerOpen, movie, handleCloseMovie } = useContext(MovieContext)
 
   const [ratingsPage, setRatingsPage] = useState(1)
   const [isRatingsEnd, setIsRatingsEnd] = useState(false)
   const [isRatingsContainerOpen, setIsRatingsContainerOpen] = useState(false);
   const [ratings, setRatings] = useState([])
   const [ratingsLoading, setRatingsLoading] = useState(false)
+  const [loadingMoreRatings, setLoadingMoreRatings] = useState(false)
 
   async function handleOpenAndGetRatings(){
     setRatingsLoading(true)
+    setLoadingMoreRatings(true)
     console.log('movie?._id')
     console.log(movie?._id)
     console.log(ratingsPage)
@@ -119,12 +121,13 @@ export default function MovieScreen() {
       if (res.status == 200) {
         const data = await res.json()
         console.log(data)
-        if (data.length < 10){
+        if (data.length < 20){
           setIsRatingsEnd(true)
         }
         setRatingsPage(prev_page => {return prev_page + 1})
         setRatings(data)
       }
+      setLoadingMoreRatings(false)
   }
   
   function handleCloseRatings(){
@@ -132,7 +135,7 @@ export default function MovieScreen() {
     setRatingsLoading(false)
     setIsRatingsContainerOpen(false)
     setRatings([])
-    setRatingsPage(1)
+    setRatingsPage(prev_page => {return 1})
   }
 
   const toggleDrawer = () => (event) => {
@@ -141,8 +144,9 @@ export default function MovieScreen() {
 
   
   const getMoreRatings = async () => {
-    if (isRatingsEnd) return
-    console.log('geting more')
+    console.log('firing gettting more ratings')
+    if (isRatingsEnd || loadingMoreRatings) return
+    setLoadingMoreRatings(true)
     const res = await fetch(`http://localhost:3001/ratings/${movie?._id}?page=${ratingsPage}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -151,13 +155,15 @@ export default function MovieScreen() {
 
     if (res.status == 200) {
       const data = await res.json()
-      if (data.length < 10){
+      console.log(data)
+      if (data.length < 20){
         setIsRatingsEnd(true)
       }
       setRatingsPage(prev_page => {return prev_page + 1})
       setRatings([...ratings, ...data])
       
     }
+    setLoadingMoreRatings(false)
   }
 
   
@@ -182,7 +188,9 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
     <ChevronLeftIcon onClick={toggleDrawer(false)}  sx={{color: 'white', fontSize: '2em'}}></ChevronLeftIcon>
 </div>
 
- <RatingsContext.Provider value={{getMoreRatings, isRatingsEnd, isRatingsContainerOpen, setIsRatingsContainerOpen, ratings, handleOpenAndGetRatings, handleCloseRatings }} >
+ <RatingsContext.Provider value={{loadingMoreRatings,
+   getMoreRatings, isRatingsEnd, isRatingsContainerOpen, setIsRatingsContainerOpen, 
+   ratings, setRatings, handleOpenAndGetRatings, handleCloseRatings }} >
       <RattingsScreen></RattingsScreen>
 </RatingsContext.Provider>
 
@@ -227,7 +235,7 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
         <p>{movie?.runTime} Min</p>
     </RuntimeItem>
         <YearItem>
-        <p>{movie?.released?.slice(-4)}</p>
+        <p>{movie?.released}</p>
     </YearItem>
         </React.Fragment>
 

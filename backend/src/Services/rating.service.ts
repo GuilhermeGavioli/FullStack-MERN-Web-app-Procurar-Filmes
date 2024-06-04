@@ -9,6 +9,7 @@ export interface RatingService{
     createRating(rating: Rating): Promise<ObjectId | undefined>
     deleteRating(id: string, rating_id: string): Promise<boolean>
     getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>
+    getRatingsBatchFromUserId(id: string, page: number): Promise<Rating[] | []>
 }
 
 export class RatingServiceImpl {
@@ -37,6 +38,10 @@ export class RatingServiceImpl {
 
   async getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>{
     return await this.ratingRepository.getRatingsBatchByMovieId(id, page)
+  }
+
+  async getRatingsBatchFromUserId(id: string, page: number): Promise<Rating[] | []>{
+    return await this.ratingRepository.getRatingsBatchFromUserId(id, page)
   }
 
   

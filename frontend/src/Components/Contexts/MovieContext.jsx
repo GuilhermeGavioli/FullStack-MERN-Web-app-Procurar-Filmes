@@ -7,12 +7,10 @@ function MovieContextProvider ({ children }) {
     const [isMovieContainerOpen, setIsMovieContainerOpen] = useState(false);
     const [movie, setMovie]= useState({})
     const [movieLoading, setMovieLoading]= useState(false)
-    const [months , setMonths] = useState([
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ])
+
   
     async function handleOpenAndGetMovie(id){
+      console.log(id)
         setMovieLoading(true)
         setIsMovieContainerOpen(true)
         const url = `http://localhost:3001/movie/${id}`
@@ -22,13 +20,13 @@ function MovieContextProvider ({ children }) {
             }
           })
     
-          setTimeout(async() => {
+
             if (res.status == 200) {
             const data = await res.json()
             setMovie(data)
           }
           setMovieLoading(false)
-        }, 500);
+   
       }
     
       function handleCloseMovie(){
@@ -38,7 +36,7 @@ function MovieContextProvider ({ children }) {
       }
 
     return (
-      <MovieContext.Provider value={{ movie, movieLoading, isMovieContainerOpen, handleOpenAndGetMovie, handleCloseMovie, months }}>
+      <MovieContext.Provider value={{ movie, movieLoading, isMovieContainerOpen, handleOpenAndGetMovie, handleCloseMovie }}>
         {children}
       </MovieContext.Provider>
     );
