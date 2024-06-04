@@ -52,7 +52,7 @@ export default function AuthContextProvider({children}){
     useEffect(() => {
         console.log('RUNNING AUTH')
         const getMyUserInfo = async () => {
-          const res = await fetch('http://localhost:3001/auth/user/getinfo', {
+          const res = await fetch('https://popfix.onrender.com/auth/user/getinfo', {
             headers: {
               'authorization': `Bearer ${localStorage.getItem('access_token')}`
             }

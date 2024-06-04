@@ -74,7 +74,7 @@ export default function MyComments(){
   useEffect(() => {
     console.log('RUNNING')
     const getMyComments = async () => {
-      const url = `http://localhost:3001/myratings?page=${page}`
+      const url = `https://popfix.onrender.com/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -107,7 +107,7 @@ export default function MyComments(){
     }
     console.log(page)
       setLoadingMore(true)
-      const url = `http://localhost:3001/myratings?page=${page}`
+      const url = `https://popfix.onrender.com/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -159,7 +159,7 @@ export default function MyComments(){
     setTimeout(()=>{
       setIsSnackBarOpen(false)
     },2500)
-      const url = `http://localhost:3001/ratings/delete/${currentCommentId}`
+      const url = `https://popfix.onrender.com/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

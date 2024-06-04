@@ -28,7 +28,7 @@ export default function GoogleButonComp() {
 
 async function delegateGoogleOAuthToBackend(oauth_access_token){
   console.log(oauth_access_token)
-  const res = await fetch(`http://localhost:3001/auth/google/${oauth_access_token}`);
+  const res = await fetch(`https://popfix.onrender.com/auth/google/${oauth_access_token}`);
   if (res.status == 200){
     const { access_token } = await res.json()
     localStorage.setItem('access_token', access_token)

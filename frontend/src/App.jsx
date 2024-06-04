@@ -22,7 +22,7 @@ function App() {
     // async function validateToken() {
     //   const access_token = localStorage.getItem('access_token')
     //   if (access_token){
-    //     const res = await fetch('http://localhost:3001/access_token/validate', {
+    //     const res = await fetch('https://popfix.onrender.com/access_token/validate', {
     //       headers: {
     //         Authorization: `${access_token}`
     //       }

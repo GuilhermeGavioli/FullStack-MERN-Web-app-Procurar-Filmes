@@ -344,7 +344,7 @@ function disableGenresSnapshot(){
 
     async function getMovies(){
       console.log('getting')
-      let url = `http://localhost:3001/movies/results/${page}?query=${searchQuery}`
+      let url = `https://popfix.onrender.com/movies/results/${page}?query=${searchQuery}`
       if (filtersSnapshot.year.on) url = url.concat(`&year=1&min_year=${filtersSnapshot.year.min}&max_year=${filtersSnapshot.year.max}`)
       if (filtersSnapshot.runtime.on) url = url.concat(`&runtime=1&min_runtime=${filtersSnapshot.runtime.min}&max_runtime=${filtersSnapshot.runtime.max}`)
       if (filtersSnapshot.genres.on){

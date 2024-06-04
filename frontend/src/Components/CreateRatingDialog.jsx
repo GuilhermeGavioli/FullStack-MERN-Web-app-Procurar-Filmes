@@ -92,7 +92,7 @@ export default function CreateRatingDialog() {
       try{
 
         console.log(commentValue)
-        const res = await fetch(`http://localhost:3001/ratings/create/for_movie/${movie?._id}`, {
+        const res = await fetch(`https://popfix.onrender.com/ratings/create/for_movie/${movie?._id}`, {
             method: 'POST',
             body: JSON.stringify({comment: commentValue}),
         

@@ -48,7 +48,7 @@ function MainPage() {
   useEffect(()=> { //get (fake) top 10
     
     async function getTopTen(){
-      const url = `http://localhost:3001/movies/sample/random`
+      const url = `https://popfix.onrender.com/movies/sample/random`
     const res = await fetch(url, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -69,7 +69,7 @@ function MainPage() {
 
   useEffect(()=>{
     const getFirstMovies = async () => {
-      const url = `http://localhost:3001/movies/${page}/genres?genre=${genre}`
+      const url = `https://popfix.onrender.com/movies/${page}/genres?genre=${genre}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -93,7 +93,7 @@ function MainPage() {
   const getMoreMovies = async () => {
     if (end) return
     console.log('geting more')
-    const res = await fetch(`http://localhost:3001/movies/${page}/genres?genre=${genre}`, {
+    const res = await fetch(`https://popfix.onrender.com/movies/${page}/genres?genre=${genre}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }

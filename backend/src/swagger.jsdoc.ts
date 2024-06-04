@@ -54,7 +54,7 @@ const options = {
       description: 'A simple Node.js API',
     },
     servers: [
-      { url: 'http://localhost:3001' },
+      { url: 'https://popfix.onrender.com' },
     ],
     paths: {
 
