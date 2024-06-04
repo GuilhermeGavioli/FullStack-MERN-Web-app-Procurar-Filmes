@@ -43,6 +43,10 @@ app.use(userRouter)
 app.use(ratingRouter)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
+app.get('/health', (req,res)=> {
+    res.send('ok')
+})
+
 app.listen(process.env.PORT, () => {
     console.log('Server is Up and Running')
 })
