@@ -93,7 +93,7 @@ export default function MyComments(){
  
 
     const getMyComments = async () => {
-      const url = `http://localhost:80/myratings?page=${page}`
+      const url = `http://167.172.124.145:80/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -128,7 +128,7 @@ export default function MyComments(){
     }
     console.log(page)
       setLoadingMore(true)
-      const url = `http://localhost:80/myratings?page=${page}`
+      const url = `http://167.172.124.145:80/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -188,7 +188,7 @@ export default function MyComments(){
     setTimeout(()=>{
       setIsRSnackBarOpen(false)
     },2500)
-      const url = `http://localhost:80/ratings/delete/${currentCommentId}`
+      const url = `http://167.172.124.145:80/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

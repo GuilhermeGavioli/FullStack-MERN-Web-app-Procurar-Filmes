@@ -108,7 +108,7 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
 
   async function updateCommentFetch(){
  try{
-        const res = await fetch(`http://localhost:80/ratings/update/${c_id}`, {
+        const res = await fetch(`http://167.172.124.145:80/ratings/update/${c_id}`, {
             method: 'PUT',
             body: JSON.stringify({comment: editMode.newText, stars: editMode.newStars, movie_id: movie_id}),
         

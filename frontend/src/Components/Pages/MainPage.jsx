@@ -61,7 +61,7 @@ function MainPage() {
     setMoviesRetry(true)
       return
     } 
-    const url = `http://localhost:80/movies/${page}/genres?genre=${genre}`
+    const url = `http://167.172.124.145:80/movies/${page}/genres?genre=${genre}`
     const res = await fetch(url, {
     headers: {
       'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -117,7 +117,7 @@ function MainPage() {
     setRandomMoviesRetry(true)
       return
     } 
-    const url = `http://localhost:80/movies/sample/random`
+    const url = `http://167.172.124.145:80/movies/sample/random`
   const res = await fetch(url, {
     headers: {
       'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -157,7 +157,7 @@ function MainPage() {
     setOldMoviesRetry(true)
       return
     } 
-      const url = `http://localhost:80/movies/sample/olddies`
+      const url = `http://167.172.124.145:80/movies/sample/olddies`
     const res = await fetch(url, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -195,7 +195,7 @@ function MainPage() {
   const getMoreMovies = async () => {
     if (end) return
     console.log('geting more')
-    const res = await fetch(`http://localhost:80/movies/${page}/genres?genre=${genre}`, {
+    const res = await fetch(`http://167.172.124.145:80/movies/${page}/genres?genre=${genre}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
