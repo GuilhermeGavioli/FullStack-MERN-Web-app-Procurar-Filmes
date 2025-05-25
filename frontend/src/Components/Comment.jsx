@@ -92,7 +92,7 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
   }
     async function updateCommentFetch(){
  try{
-        const res = await fetch(`http://167.172.124.145:80/ratings/update/${c_id}`, {
+        const res = await fetch(`http://procurarfilmes.xyz/ratings/update/${c_id}`, {
             method: 'PUT',
             body: JSON.stringify({comment: editMode.newText, stars: editMode.newStars, movie_id: movie._id}),
         

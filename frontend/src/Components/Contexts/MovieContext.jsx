@@ -13,7 +13,7 @@ function MovieContextProvider ({ children }) {
       console.log(id)
         setMovieLoading(true)
         setIsMovieContainerOpen(true)
-        const url = `http://167.172.124.145:80/movie/${id}`
+        const url = `http://procurarfilmes.xyz/movie/${id}`
           const res = await fetch(url, {
             headers: {
               'authorization': `Bearer ${localStorage.getItem('access_token')}`

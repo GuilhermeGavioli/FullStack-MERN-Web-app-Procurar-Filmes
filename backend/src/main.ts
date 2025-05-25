@@ -12,7 +12,13 @@ import { Database } from './database';
 
 
 
+import https from 'https';
+import fs from 'fs';
 
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/fullchain.pem')
+};
 
 // import { authGuard } from './objects.instances';
 // import { movieController } from "./objects.instances";
@@ -98,6 +104,6 @@ app.get('/health', (req,res)=> {
     res.send('ok')
 })
 
-app.listen(process.env.PORT, () => {
-    console.log('Server is Up and Running')
-})
+https.createServer(options, app).listen(process.env.PORT, () => {
+  console.log('Server is Up and Running on 443');
+});

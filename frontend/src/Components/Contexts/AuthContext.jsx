@@ -70,7 +70,7 @@ export default function AuthContextProvider({children}){
     }
     
       const getMyUserInfo = async () => {
-        const res = await fetch('http://167.172.124.145:80/auth/user/getinfo', {
+        const res = await fetch('http://procurarfilmes.xyz/auth/user/getinfo', {
           headers: {
             'authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
