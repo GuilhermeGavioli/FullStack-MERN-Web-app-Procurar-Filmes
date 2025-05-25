@@ -63292,6 +63292,12 @@ var require_main = __commonJS({
     var express_1 = __importDefault(require_express2());
     var body_parser_1 = __importDefault(require_body_parser());
     var database_1 = require_database();
+    var https_1 = __importDefault(require("https"));
+    var fs_1 = __importDefault(require("fs"));
+    var options = {
+      key: fs_1.default.readFileSync("/etc/letsencrypt/live/procurarfilmes.xyz/privkey.pem"),
+      cert: fs_1.default.readFileSync("/etc/letsencrypt/live/procurarfilmes.xyz/fullchain.pem")
+    };
     var movie_repository_1 = require_movie_repository();
     var user_repository_1 = require_user_repository();
     var user_service_1 = require_user_service();
@@ -63334,7 +63340,7 @@ var require_main = __commonJS({
     app.use(body_parser_1.default.json());
     app.use(body_parser_1.default.urlencoded({ extended: false }));
     app.use((0, cors_1.default)({
-      origin: "http://localhost:3000",
+      origin: "https://procurarfilmes.vercel.app",
       credentials: true,
       allowedHeaders: ["Content-Type", "Authorization"]
     }));
@@ -63353,8 +63359,8 @@ var require_main = __commonJS({
     app.get("/health", (req, res) => {
       res.send("ok");
     });
-    app.listen("80", () => {
-      console.log("Server is Up and Running");
+    https_1.default.createServer(options, app).listen("443", () => {
+      console.log("Server is Up and Running on 443");
     });
   }
 });
