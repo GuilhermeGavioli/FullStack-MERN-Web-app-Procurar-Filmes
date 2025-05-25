@@ -7,6 +7,7 @@ import { UserRepository } from '../Repository/user.repository';
 
 export interface RatingService{
     createRating(rating: Rating): Promise<ObjectId | undefined>
+    updateRating(rating_id: string, rating: Rating): Promise<boolean>
     deleteRating(id: string, rating_id: string): Promise<boolean>
     getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>
     getRatingsBatchFromUserId(id: string, page: number): Promise<Rating[] | []>
@@ -25,6 +26,17 @@ export class RatingServiceImpl {
     const user = await this.userRepository.findUserById(rating.user_id)
     if (!user) return
     return await this.ratingRepository.insertOneRating(rating)
+  }
+
+  async updateRating(rating_id: string, new_rating: Rating): Promise<boolean> {
+    const user = await this.userRepository.findUserById(new_rating.user_id)
+    if (!user) return false
+    const found_rating = await this.ratingRepository.getOneRatingById(rating_id)
+    if (!found_rating) return false 
+    if (found_rating.user_id.toString() !== new_rating.user_id) return false // Does not belong to the user
+    const was_updated = await this.ratingRepository.updateOneRating(rating_id, new_rating)
+    if (!was_updated) return false
+    return true
   }
 
   async deleteRating(user_id: string, rating_id: string): Promise<boolean>{

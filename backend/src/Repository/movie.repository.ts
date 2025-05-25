@@ -8,6 +8,7 @@ export interface MovieRepository {
     getMoviesBatchByGenre(genre: string, page: number): Promise<Movie[] | []>
     getMovieById(id: string): Promise<Movie | undefined>
     getTenRandomMovies(): Promise<Movie[] | undefined>
+    getTenOldMovies(): Promise<Movie[] | undefined>
     getMoviesByTextAndFilters(
         query: string,
         page: number,
@@ -35,6 +36,13 @@ export class MovieRepositoryImpl implements MovieRepository{
         return await db?.db?.collection('Movie').aggregate(pipeline).toArray() as Movie[] | undefined
     }
 
+    public async getTenOldMovies(): Promise<Movie[] | undefined>{        
+        const filters: any = 
+            { released: { $lt: 1950 } }
+        
+        return await db?.db?.collection('Movie').find(filters).limit(10).toArray() as Movie[] | undefined
+    }
+
     public async getMoviesByTextAndFilters(
         query: string,
         page: number,
@@ -53,13 +61,23 @@ export class MovieRepositoryImpl implements MovieRepository{
         // if (valids?.year){
         //     filters.push( { year: { $gt: valids.runtime.min, $lt: valids.runtime.max } } )
         // }
-
+        console.log('valids')
+        console.log(valids)
         if (valids?.runtime){
             filters.push( { runTime: { $gt: valids.runtime.min, $lt: valids.runtime.max } } )
         }
         if (valids?.year){
             filters.push( { released: { $gt: valids.year.min, $lt: valids.year.max } } )
         }
+        if (valids?.genres){
+            // filters.push({ genres: { $in: valids.genres }})
+            const genreConditions = valids?.genres.map(g => ({
+                genres: { $elemMatch: { $regex: `^${g}$`, $options: 'i' } }
+            }));
+            filters.push(...genreConditions)
+        }
+        console.log('filters')
+        console.log(filters)
 
         const filter = { 
             $and: filters

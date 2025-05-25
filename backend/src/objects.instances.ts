@@ -19,7 +19,6 @@ const ratingService: RatingService = new RatingServiceImpl(ratingRepository, use
 const validator: Validator = new ValidatorImpl()
 const authenticator: Authentication = new JWTAuthImpl()
 
-
 export const authGuard: AuthGuard = new AuthGuardImpl(authenticator)
 export const userController: UserController = new UserControllerImpl(userService, authenticator, validator)
 export const movieController: MovieController = new MovieControllerImpl(movieService, validator)

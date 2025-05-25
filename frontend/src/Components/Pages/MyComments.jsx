@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Skeleton, Stack, Typography } from "@mui/material"
+import { Fab, Skeleton, Stack, Typography } from "@mui/material"
 import Comment from "../Comment"
 import { grey } from "@mui/material/colors"
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
@@ -10,41 +10,53 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useState, Fragment, useEffect, useContext, useRef } from "react";
-import { theme } from "../../theme";
+import { useState, Fragment, useEffect, useRef, useContext } from "react";
+
 import { AuthContext } from "../Contexts/AuthContext";
 import CommentSkeleton from "../CommentSkeleton";
 import SnackBar from '../SnackBar';
+import CommentWithMovieLink from '../CommentWithMovieLink';
+import { RatingsContext } from '../Screen/MovieScreen';
 
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { ThemeContext } from '../Contexts/ThemeContext';
+import ReplayIcon from '@mui/icons-material/Replay';
 
-function AlertDialog({state, close, mainAction}) {
+//todo
+//alert dialog here and on ratingscreen is the same // reuse it //
+//todo
+function AlertDialog({state, close, mainAction, currentTheme}) {
   return (
     <Fragment>
       <Dialog
         open={state}
         onClose={close}
+
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
         <div style={{
           width: '100%',
           height: '100%',
-          background: theme.palette.dark
+          // background: `${currentTheme.palette.dark}`
         }}>
-        <DialogTitle sx={{color: 'white'}} id="alert-dialog-title">
-          {"Delete Comment?"}
+        <DialogTitle sx={{color: `${currentTheme.palette.darker}`}} id="alert-dialog-title">
+          {"Deletar Comentário?"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{color: 'white'}} id="alert-dialog-description">
-            Confirm the deletion of the comment.
+          <DialogContentText sx={{color: `${currentTheme.palette.dark}`}} id="alert-dialog-description">
+            Confirmar remoção do seu comentário?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button  sx={{color: 'white'}} onClick={close} autoFocus>
-            Cancel
+          <Button  sx={{color: currentTheme.palette.dark}} onClick={close} autoFocus>
+            Cancelar
           </Button>
-          <Button onClick={mainAction} color="error" variant="text" >
-        Delete</Button>
+          <Button onClick={mainAction}
+          sx={{color: currentTheme.palette.pink}}
+          
+            variant="text" >
+        Remover</Button>
         </DialogActions>
         </div>
       </Dialog>
@@ -54,6 +66,7 @@ function AlertDialog({state, close, mainAction}) {
 
 export default function MyComments(){
   
+  const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
   const {user, userLoading } = useContext(AuthContext)
 
   const listRef = useRef(null);
@@ -69,12 +82,18 @@ export default function MyComments(){
   const [scrollTop, setScrollTop] = useState(0);
   
   const [page, setPage] = useState(1)
+
+  const [scrollpos, setScrollpos] = useState(0)
+
+  
+    function scrollToTop(){
+      listRef.current.scrollTop = 0
+      setScrollpos(0)
+    }
  
 
-  useEffect(() => {
-    console.log('RUNNING')
     const getMyComments = async () => {
-      const url = `https://popfix.onrender.com/myratings?page=${page}`
+      const url = `http://localhost:80/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -82,7 +101,7 @@ export default function MyComments(){
       })
       if (res.status == 200) {
         const data = await res.json()
-        console.log(data.length)
+        console.log(data)
         setPage((prev) => (prev + 1))
         if (data.length < 10){
           setEnd((p) => {return true})
@@ -93,12 +112,14 @@ export default function MyComments(){
 
         setMyComments((prev) => { return [...prev, ...data] })
     
+      } else {
+        alert('Erro ao Carregar. Tente Novamente.')
       }
       setLoading(false)
     }
+  useEffect(() => {
     getMyComments()
   }, [])
-
 
 
   const getMoreComments = async () => {
@@ -107,7 +128,7 @@ export default function MyComments(){
     }
     console.log(page)
       setLoadingMore(true)
-      const url = `https://popfix.onrender.com/myratings?page=${page}`
+      const url = `http://localhost:80/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -128,9 +149,8 @@ export default function MyComments(){
       }
       setLoadingMore(false)
   };
-
+   
   const openDialog = (c_id) => {
-    console.log(c_id)
     setCurrentCommentId(c_id)
     setIsDeleteDialogOpen(true)
   }
@@ -140,14 +160,23 @@ export default function MyComments(){
   }
 
   const handleFetchingMoreOnScroll = async (e) => {
-    const { scrollHeight, clientHeight, scrollTop } = listRef.current;
+    const { scrollHeight, clientHeight, scrollTop } = listRef.current
+        // setScrollpos(scrollTop)
     const isNearEnd = scrollTop + clientHeight >= scrollHeight - 100; // Adjust threshold
+ 
     if (isNearEnd && !loadingMore) {
       await getMoreComments()
     }
   }
 
-  const [isSnackBarOpen, setIsSnackBarOpen] = useState(false)
+  async function reloading(){
+    setLoading(true)
+    await getMyComments()
+
+  }
+
+  const [isCSnackBarOpen, setIsCSnackBarOpen] = useState(false)
+  const [isRSnackBarOpen, setIsRSnackBarOpen] = useState(false)
 
   async function deleteComment(){
     console.log('deleting')
@@ -155,11 +184,11 @@ export default function MyComments(){
     setMyComments(prev => {
       return myComments.filter((c) => { return c._id !== currentCommentId})
     })
-    setIsSnackBarOpen(true)
+    setIsRSnackBarOpen(true)
     setTimeout(()=>{
-      setIsSnackBarOpen(false)
+      setIsRSnackBarOpen(false)
     },2500)
-      const url = `https://popfix.onrender.com/ratings/delete/${currentCommentId}`
+      const url = `http://localhost:80/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {
@@ -181,10 +210,25 @@ export default function MyComments(){
       onScroll={handleFetchingMoreOnScroll}
       style={{width: '100%', height: '100%', overflowY:'scroll', position: 'relative'}}>
 
+<div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+  padding: '4px 15px',
+}}>
+
+          <Typography sx={{
+      
+            color: 'white',
+            fontWeight: 600,
+            fontSize: '1.5em'
+          }}>Meus Comentários</Typography>
+
+{!loading ? 
+          <ReplayIcon onClick={reloading}style={{color: 'white', fontSize: '1.6em'}}/>
+: <></>}
+          </div>
+
 {myComments.length == 0 && !loadingMore && end &&
 <div style={{height: 'fit-content', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', position: 'absolute', margin: 'auto', inset: '0 0 30px 0'}}>
-              <img src="/popcorn.png" style={{width: '150px'}} alt="" />
-              <Typography sx={{fontSize: '1.2em', color: 'white', fontWeight: 700}}>No Comments Found...</Typography>
+                  <Typography sx={{fontSize: '1.1em', color: currentTheme.palette.lighter, opacity: '50%'}}>Nenhum Comentário encontrado</Typography>
             </div>
             }
 
@@ -199,8 +243,11 @@ export default function MyComments(){
       }}>
 
 
-         <AlertDialog mainAction={deleteComment} state={isDeleteDialogOpen} close={closeDialog}/>
-<SnackBar state={isSnackBarOpen} setter={setIsSnackBarOpen}/>
+         <AlertDialog currentTheme={currentTheme} mainAction={deleteComment} state={isDeleteDialogOpen} close={closeDialog}/>
+   
+<SnackBar text={'Criado com Sucesso!'} state={isCSnackBarOpen} setter={setIsCSnackBarOpen}/>
+<SnackBar text={'Remoção Agendada!'}  state={isRSnackBarOpen} setter={setIsRSnackBarOpen}/>
+     
       {
         loading ? 
         <React.Fragment>
@@ -213,8 +260,8 @@ export default function MyComments(){
         myComments?.map(c => {
           console.log(c)
             return (
-              <Comment key={c?._id} openDialog={openDialog}
-                c_id={c?._id} comment={c?.comment} userid={c?.user_id} username={user?.name} pic={user?.picture}></Comment>
+              <CommentWithMovieLink key={c?._id} openDialog={openDialog}
+                c_id={c?._id} comment={c?.comment} userid={c?.user_id} username={user?.name} stars={c?.stars} pic={user?.picture} movie_id={c?.movie_id}></CommentWithMovieLink>
             )
         })
       }
@@ -230,7 +277,16 @@ export default function MyComments(){
 
 
 
-     
+
+{
+      scrollpos > 200 &&
+    <Fab onClick={scrollToTop} size="small" sx={{transition: '0.3s ease-in-out', background: currentTheme.palette.pink, position: 'fixed', bottom: '95px', right: '15px', zIndex: 2,
+    }}>
+              <KeyboardArrowUpIcon sx={{fontSize: '2em', color: currentTheme.palette.darker}}/>
+          </Fab>
+}
+
+
       </div>
        </div>
 

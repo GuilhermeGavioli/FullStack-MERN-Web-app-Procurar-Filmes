@@ -1,40 +1,16 @@
-import * as React from 'react';
-
-
-import Stack from '@mui/material/Stack';
-
-import { grey, amber, deepPurple } from '@mui/material/colors';
-
+import { grey } from '@mui/material/colors';
 import styled from 'styled-components'
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ActorContext } from './Screen/MovieScreen';
 
-import { useNavigate } from 'react-router-dom';
-
-
-export default function ActorCard({name, picture, role}) {
-  const [isHovered, setIsHovered] = useState(false)
-  const navigator = useNavigate()
-
-  function viewMovie(){
-    navigator(`/movie/`)
-  }
+export default function ActorCard({name, picture, age, nac}) {
+  const {handleOpenAndGetActor} = useContext(ActorContext)
 
   return (
-
-  <Container
-  onMouseEnter={() => {setIsHovered(true)}} onMouseLeave={() => {setIsHovered(false)}}>
-      {/* <MaskAround> */}
-      
-
-
-      {/* </MaskAround> */}
-<MovieImage src={picture || 'https://i.pinimg.com/originals/83/72/e9/8372e957fc617e9e956f116afd3e599b.jpg'} alt="" />
-
+  <Container        onClick={()=> handleOpenAndGetActor(name, picture, age, nac)}>
+<MovieImage     draggable='false' src={picture || 'https://i.pinimg.com/originals/83/72/e9/8372e957fc617e9e956f116afd3e599b.jpg'} alt="" />
   </Container>
-
-
-
-  );
+  )
 }
 
 const Container = styled.div`
@@ -51,10 +27,9 @@ cursor: pointer;
 border-radius: 10px;
 `
 
-
 const MovieImage = styled.img`
-width: 50px;
-height: 50px;
+  width: 50px;
+  height: 50px;
 `
 
 

@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ErrorSnackBar from '../ErrorSnackBar'
 
 export const AuthContext = createContext()
 
@@ -12,6 +13,25 @@ export default function AuthContextProvider({children}){
     const [userLoading, setUserLoading] = useState(true)
     const [loggingOutLoading, setLoggingOutLoading] = useState(false)
     const [user, setUser] = useState({name: null, email: null, picture: null})
+    const [auth, setAuth] = useState(false)
+    const [authErrorMessage, setAuthErrorMessage] = useState({display: false, opacity: false})
+
+    function showErrorMessage(){
+      setAuthErrorMessage({opacity: false, display: true})
+      setTimeout(() => {
+        setAuthErrorMessage({display: true, opacity: true})
+      }, 200);
+
+      setTimeout(() => {
+        hideErrorMessage()
+      }, 18198000);
+    }
+    function hideErrorMessage(){
+        setAuthErrorMessage({opacity: false, display: true})
+          setTimeout(() => {
+            setAuthErrorMessage({display: false, opacity: false})
+          }, 1300);
+      }
 
     function logout(){
       setLoggingOutLoading(true)
@@ -37,7 +57,7 @@ export default function AuthContextProvider({children}){
         setIconInitialState(1)
       } else if (pathname == '/results'){
         setIconInitialState(2)
-      } else if (pathname == '/profile/me'){
+      } else if (pathname == '/settings'){
         setIconInitialState(3)
       }
   
@@ -48,29 +68,58 @@ export default function AuthContextProvider({children}){
       setPage(p)
       navigator(p)
     }
+    
+      const getMyUserInfo = async () => {
+        const res = await fetch('http://localhost:80/auth/user/getinfo', {
+          headers: {
+            'authorization': `Bearer ${localStorage.getItem('access_token')}`
+          }
+        })
+        if (res.status == 200) {
+          const userdata = await res.json()
+          console.log(userdata)
+          console.log('200')
+          setUserLoading(false)
+          setUser(userdata)
+          setAuth(true)
+        } else {
+          console.log(res.status)
+          showErrorMessage()
+          setUserLoading(false)
+          setAuth(false)
+        }
+       }
 
     useEffect(() => {
+        
         console.log('RUNNING AUTH')
-        const getMyUserInfo = async () => {
-          const res = await fetch('https://popfix.onrender.com/auth/user/getinfo', {
-            headers: {
-              'authorization': `Bearer ${localStorage.getItem('access_token')}`
-            }
-          })
-          if (res.status == 200) {
-            const userdata = await res.json()
-            setUser(userdata)
-          } else {
-            console.log('error')
-          }
-          setUserLoading(false)
+       
+        const token = localStorage.getItem('access_token')
+        console.log(token)
+        if (!token) {
+             setUserLoading(false)
+          // navigator('/login')
+          return
+        } else{
+        try{
+          getMyUserInfo()
+        } catch(err){
+          console.log(err)
+          showErrorMessage()
+                  setUserLoading(false)
+                            setAuth(false)
+                  }
         }
-        getMyUserInfo()
+
+
+      
       }, [])
 
 
       return (
-        <AuthContext.Provider value={{user, userLoading, setUserLoading, logout, loggingOutLoading, iconInitialState, goTo}}>
+        <AuthContext.Provider value={{auth, authErrorMessage, user, userLoading, setUserLoading, logout, loggingOutLoading, iconInitialState, hideErrorMessage, goTo}}>
+          {/* <div style={{position: 'fixed', top: 0, right: 0, zIndex: 15}}>aaa</div> */}
+          <ErrorSnackBar text='Faça Login para acessar o counteúdo.'/>
             {children}
         </AuthContext.Provider>
       )

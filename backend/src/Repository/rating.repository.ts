@@ -9,6 +9,7 @@ export interface RatingRepository {
     insertOneRating(rating: Rating): Promise<ObjectId | undefined>
     getOneRatingById(id: string): Promise<Rating | undefined>
     deleteOneRating(id: string): Promise<boolean | undefined>
+    updateOneRating(id: string, rating: Rating): Promise<boolean | undefined>
     getRatingsBatchByMovieId(id: string, page: number): Promise<Rating[] | []>
     getRatingsBatchFromUserId(id: string, page: number): Promise<Rating[] | []>
 }
@@ -16,10 +17,16 @@ export interface RatingRepository {
 export class RatingRepositoryImpl implements RatingRepository{
 
     public async insertOneRating(rating: Rating): Promise<ObjectId | undefined>{
-        const query = { user_id: new ObjectId(rating.user_id), movie_id: new ObjectId(rating.movie_id), comment: rating.comment};
+        const query = { user_id: new ObjectId(rating.user_id), movie_id: new ObjectId(rating.movie_id), comment: rating.comment, stars: rating.stars};
         console.log(query)
         const data = await db?.db?.collection('Rating').insertOne(query)
         return data?.insertedId
+    }
+
+    public async updateOneRating(id: string, rating: Rating): Promise<boolean | undefined>{
+      const filter = {_id: new ObjectId(id)}
+        const query = {$set: { user_id: new ObjectId(rating.user_id), movie_id: new ObjectId(rating.movie_id), comment: rating.comment, stars: rating.stars}};
+        return (await db?.db?.collection('Rating').updateOne(filter, query))?.acknowledged
     }
 
     public async getOneRatingById(id: string): Promise<Rating | undefined>{
@@ -53,6 +60,7 @@ export class RatingRepositoryImpl implements RatingRepository{
                 _id: 1,
                 movie_id: 1,
                 comment: 1, // Replace with specific fields you want from ratings
+                stars: 1,
                 user: {_id: 1, name: 1, picture: 1 }, // Include username and picture from user
               },
             },

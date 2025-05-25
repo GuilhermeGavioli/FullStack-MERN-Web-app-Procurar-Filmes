@@ -8,11 +8,14 @@ export interface Validator{
     isPageValid(page: string): number | false;
     isCommentValid(c: string): string | false;
     isQueryValid(q: string): string | false
+    isStarsValid(s: number): boolean;
+    isGenresValid(la: string): string[] | boolean; //#genre array#
 }
 
 export interface Valids{
     year?: Year;
     runtime?: Runtime;
+    genres: string[]
 }
 
 interface Year{
@@ -27,6 +30,7 @@ interface Runtime{
 
 export class ValidatorImpl{
     constructor(){}
+    public static valid_genres: string[] = ['animation', 'comedy', 'anime', 'horror', 'action', 'epic','postapocaliptycal', 'romance', 'scifi', 'fantasy', 'thriller']
 
     public validateOAuthToken(oauth_access_token: string): boolean{
         return true
@@ -90,7 +94,7 @@ export class ValidatorImpl{
         const sequential_spaces_r = /\s+/g;
         c = c.replace(sequential_spaces_r, " ");
         const r = /[^a-zA-Z0-9À-ÿ \.!?:,()@&\[\]\-_]/g;
-        if (c.length > 160 || c.length < 4) return false
+        if (c.length > 160 || c.length < 3) return false
         return c.replace(r, " ")
     }
 
@@ -101,6 +105,33 @@ export class ValidatorImpl{
         const r = /[^a-zA-Z0-9À-ÿ \.!?:,()@&\[\]\-_]/g;
         if (q.length > 30 || q.length < 1) return false
         return q.toString().replace(r, " ")
+    }
+
+    public isStarsValid(s: number): boolean{
+        if (!s) return false
+        if (s.toString().length != 1) return false
+        if (s < 1 || s > 5) return false
+        return true
+    }
+
+    public isGenresValid(gl: string): string[] | boolean{
+        const splg: string[] = gl.split(',')
+        if (splg.length <= 1) return false
+        splg.pop()
+        const valids: boolean[] = []
+        splg.forEach((g: any) => {
+            let is_g_valid = false
+            ValidatorImpl.valid_genres.forEach(vl => {
+                if (vl.toUpperCase() == g.toUpperCase()) is_g_valid = true
+            })
+            valids.push(is_g_valid)
+        })
+        let is_valid_final_decision = true
+        valids.forEach(i => {
+            if (!i) is_valid_final_decision = false
+        })
+        if (is_valid_final_decision == true) return splg
+        return is_valid_final_decision
     }
 }
 

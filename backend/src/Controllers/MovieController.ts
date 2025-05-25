@@ -8,6 +8,7 @@ export interface MovieController{
     getMovieById(request: Request, response: Response): Promise<any>;
     getTenRandomMovies(request: Request, response: Response): Promise<any>
     getMoviesByText(request:Request, response: Response): Promise<any>;
+    getTenOldMovies(request:Request, response: Response): Promise<any>;
 }
 
 
@@ -23,7 +24,6 @@ export class MovieControllerImpl implements MovieController{
         const is_page_valid = this.validator.isPageValid(page)
         if (!is_page_valid) return response.status(400).end()
         const { genre } = request.query
-
         if (!genre) return
         const movies = await this.movieService.getMoviesBatchByGenre(genre.toString(), is_page_valid)
         response.json(movies)
@@ -34,11 +34,21 @@ export class MovieControllerImpl implements MovieController{
         const is_id_valid = this.validator.isIdValid(id)
         if (!is_id_valid) return response.status(400).end()
         const movie = await this.movieService.getMovieById(id)
+        response.set('Cache-Control', 'public, max-age=900');
         response.json(movie)
     }
 
     public async getTenRandomMovies(request: Request, response: Response): Promise<any>{
+        //cache
         const movies = await this.movieService.getTenRandomMovies()
+        response.set('Cache-Control', 'public, max-age=300');
+        response.json(movies)
+    }
+
+    public async getTenOldMovies(request: Request, response: Response): Promise<any>{
+        //cache
+        const movies = await this.movieService.getTenOldMovies()
+        response.set('Cache-Control', 'public, max-age=300');
         response.json(movies)
     }
 
@@ -46,11 +56,11 @@ export class MovieControllerImpl implements MovieController{
         const { page } = request.params as any
         const is_page_valid = this.validator.isPageValid(page)
         if (!is_page_valid) return response.status(400).end()
-        const { query, year, runtime, min_runtime, max_runtime, min_year, max_year } = request.query as any
+        const { query, year, runtime, min_runtime, max_runtime, min_year, max_year, genres, genreslist } = request.query as any
         const is_query_valid = this.validator.isQueryValid(query)
         if (!is_query_valid) return response.status(400).end()
 
-        const valids: Valids = {}
+        const valids: Valids | any = {}
 
         if (year === '1'){
             const sanitazed_min_year = this.validator.isYearValid(min_year)
@@ -84,7 +94,22 @@ export class MovieControllerImpl implements MovieController{
             }
         }
 
+        if (genres === '1'){
+         
+            const sanitazed_genres_valid = this.validator.isGenresValid(genreslist)
+            console.log('sanitirzed')
+            console.log(sanitazed_genres_valid)
+            if(sanitazed_genres_valid){
+                valids.genres = sanitazed_genres_valid
+            } else {
+                //error
+            }
+        }
+
+        console.log('isq uery valid')
+        console.log(is_query_valid)
         const movies= await this.movieService.getMoviesByText(is_query_valid, is_page_valid, valids)
+        response.set('Cache-Control', 'public, max-age=100');
         response.json(movies)
     }
 }

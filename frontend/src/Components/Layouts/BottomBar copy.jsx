@@ -20,18 +20,14 @@ import { theme } from '../../theme';
 
 
 import { AuthContext } from '../Contexts/AuthContext';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { ThemeContext } from '../Contexts/ThemeContext';
-import { useLocation } from 'react-router-dom';
+
 
 
 export default function BottomBar() {
-    const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
 
-const location = useLocation();
+
   const {user, userLoading, iconInitialState, goTo } = React.useContext(AuthContext)
 
-  
 
   return (
 
@@ -42,11 +38,11 @@ const location = useLocation();
         justifyContent: 'space-evenly',
        
         borderRadius: '10px',
-        inset: 'auto 0 0 0',
+        inset: 'auto 0 10px 0',
        padding: '10px',
         overflow: 'hidden',
         boxShadow: 'none',
-       
+        maxWidth: '400px',
     }}>
 
     
@@ -61,7 +57,7 @@ const location = useLocation();
        boxShadow: 'none',
       margin: 'auto',
       padding: '0px',
-       background: currentTheme.palette.mid,
+       background: 'white',
        overflow: 'hidden'
        }}>
      
@@ -69,9 +65,9 @@ const location = useLocation();
       onClick={() => {goTo('/')}}>
        
         <HomeIcon sx={{
-          fontSize: iconInitialState == 0 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 0 && location.pathname !== '/profile/me'  ? currentTheme.palette.pink : currentTheme.palette.dark,
-          // background: iconInitialState == 0 ? 'rgb(245,238,255)' : 'none',
+          fontSize: iconInitialState == 0 ? '1.5em' : '1.4em', 
+          color: iconInitialState == 0 ? theme.palette.pink : theme.palette.dark,
+          background: iconInitialState == 0 ? 'rgb(245,238,255)' : 'none',
           }}/>
       </Box>
 
@@ -79,30 +75,32 @@ const location = useLocation();
       onClick={()=> {goTo('/mycomments')}}>
         <InsertCommentIcon  
         sx={{
-          fontSize: iconInitialState == 1 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 1 && location.pathname !== '/profile/me' ? currentTheme.palette.pink : currentTheme.palette.dark
+          fontSize: iconInitialState == 1 ? '1.5em' : '1.4em', 
+          color: iconInitialState == 1 ? theme.palette.pink : theme.palette.dark
           }}/>
       </Box>
   
       <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
        onClick={()=> {goTo('/results')}}>
         <SearchIcon  sx={{
-          fontSize: iconInitialState == 2 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 2 && location.pathname !== '/profile/me' ? currentTheme.palette.pink : currentTheme.palette.dark
+          fontSize: iconInitialState == 2 ? '1.5em' : '1.4em', 
+          color: iconInitialState == 2 ? theme.palette.pink : theme.palette.dark
           }}/>
       </Box>
 
-      <Box value={3} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
-       onClick={()=> {goTo('/settings')}}>
+      <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
+       onClick={()=> {goTo('/profile/me')}}>
 
-   
-        <SettingsIcon
-        sx={{
-          fontSize: iconInitialState == 3 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 3 && location.pathname !== '/profile/me' ? currentTheme.palette.pink : currentTheme.palette.dark
-          }}
+      {
+        userLoading ? 
+        <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: grey[300]}} />
+        :
+        <Avatar
+        // alt="Remy Sharp"
+        src={user.picture} 
+        sx={{ width: 24, height: 24 }}
       />
-      
+      }
       
       </Box>
 

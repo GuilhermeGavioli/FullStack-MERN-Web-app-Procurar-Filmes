@@ -4,7 +4,7 @@ import { useEffect, useState, createContext } from "react"
 import { useNavigate } from "react-router-dom"
 
 
-import { deepPurple, grey, pink  } from "@mui/material/colors";
+import {  grey, pink  } from "@mui/material/colors";
 import {  Typography, Box } from "@mui/material";
 
 import styled from "styled-components";
@@ -16,28 +16,37 @@ import GenreCarrocel from "../GenreCarrocel";
 import MovieScreen from "../Screen/MovieScreen";
 import { theme } from '../../theme';
 
-
+import { AuthContext } from '../Contexts/AuthContext';
+import { useContext } from 'react';
 export const TopMoviesContext = createContext()
 export const MoviesContext = createContext()
 
 
+
 function MainPage() {
-  
-  const [movies, setMovies] = useState([{},{},{},{},{},{},{},{},{},{},])
+  const {user, userLoading, goTo, auth} = useContext(AuthContext)
+  const [movies, setMovies] = useState([{id:1},{id:2},{id:3},{id:4},])
   const [moviesLoading, setMoviesLoading] = useState(true)
+  const [moviesRetry, setMoviesRetry] = useState(false)
   const [genre, setGenre] = useState('Animation')
   const [page, setPage] = useState(1)
   const [end, setEnd] = useState(false)
+
 
   // const [isMovieContainerOpen, setIsMovieContainerOpen] = useState(false);
   // const [movie, setMovie]= useState({})
   // const [movieLoading, setMovieLoading]= useState(false)
 
-  const [TopMovies, setTopMovies] = useState([{},{},{},{},{},{}])
-  const [topMoviesLoading, setTopMoviesLoading] = useState(true)
+  const [randomMovies, setRandomMovies] = useState([{id:1},{id:2},{id:3},{id:4}])
+  const [randomMoviesLoading, setRandomMoviesLoading] = useState(true)
+  const [randomMoviesRetry, setRandomMoviesRetry] = useState(false)
+
+  const [oldMovies, setOldMovies] = useState([{id:1},{id:2},{id:3},{id:4}])
+  const [oldMoviesLoading, setOldMoviesLoading] = useState(true)
+  const [oldMoviesRetry, setOldMoviesRetry] = useState(false)
 
   function runGenreChange(g){
-    setMovies([{},{},{},{},{},{},{},{},{},{},])
+    setMovies([{id:1},{id:2},{id:3},{id:4}])
     setMoviesLoading(true)
     setEnd(false)
     setPage(prev_page => {return 1})
@@ -45,55 +54,148 @@ function MainPage() {
     localStorage.setItem('genre_from_main', g)
   }
 
-  useEffect(()=> { //get (fake) top 10
+    const getFirstMovies = async () => {
+    if ( !userLoading && !auth ) {
+          setMovies([])
+          setMoviesLoading(false)
+    setMoviesRetry(true)
+      return
+    } 
+    const url = `http://localhost:80/movies/${page}/genres?genre=${genre}`
+    const res = await fetch(url, {
+    headers: {
+      'authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+  })
+  if (res.status == 200) {
+    const data = await res.json()
     
-    async function getTopTen(){
-      const url = `https://popfix.onrender.com/movies/sample/random`
+    if (data?.length < 20){
+      setEnd(true)
+    }       
+    if (page == 1) {
+      console.log('setting to empty')
+      setMovies(() => {return []})
+
+    }
+    setPage(prev_page => {return prev_page + 1})
+    setMovies(() => {return data})
+    setMoviesLoading(false)
+    
+  } else if (res.status == 403){
+    console.log('AUTH ERR')
+  } 
+  else {
+    setMovies([])
+    setMoviesLoading(false)
+    setMoviesRetry(true)
+  }
+  }
+  useEffect(()=>{
+       setGenre(localStorage.getItem('genre_from_main'))
+    try{
+      getFirstMovies()
+    } catch(err){
+       setMovies([])
+        setMoviesLoading(false)
+        setMoviesRetry(true)
+    }
+  }, [genre])
+  async function retry(){
+    setMovies([{id:1},{id:2},{id:3},{id:4}])
+    setMoviesRetry(false)
+    setMoviesLoading(true)
+    await getFirstMovies()
+  }
+
+
+
+  async function getRandomSample(){
+        if ( !userLoading && !auth ) {
+          setRandomMovies([])
+          setRandomMoviesLoading(false)
+    setRandomMoviesRetry(true)
+      return
+    } 
+    const url = `http://localhost:80/movies/sample/random`
+  const res = await fetch(url, {
+    headers: {
+      'authorization': `Bearer ${localStorage.getItem('access_token')}`
+    }
+  })
+    if (res.status == 200) {
+    const data = await res.json()
+    setRandomMovies(data)
+    setRandomMoviesLoading(false)
+  } else {
+      setRandomMovies([])
+      setRandomMoviesLoading(false)
+      setRandomMoviesRetry(true)
+  }
+  }
+  useEffect(()=> {
+    try{
+      getRandomSample()
+    } catch(e){
+      setRandomMovies([])
+      setRandomMoviesLoading(false)
+      setRandomMoviesRetry(true)
+    }
+  }, [])
+  async function retryRandomMovies(){
+    setRandomMovies([{id:1},{id:2},{id:3},{id:4}])
+    setRandomMoviesRetry(false)
+    setRandomMoviesLoading(true)
+    await getRandomSample()
+  }
+
+
+  async function getOldies(){
+            if ( !userLoading && !auth ) {
+          setOldMovies([])
+          setOldMoviesLoading(false)
+    setOldMoviesRetry(true)
+      return
+    } 
+      const url = `http://localhost:80/movies/sample/olddies`
     const res = await fetch(url, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
     })
-
-    setTimeout(async() => {
       if (res.status == 200) {
       const data = await res.json()
-      setTopMovies(data)
+      setOldMovies(data)
+      setOldMoviesLoading(false)
+    } else {
+       setOldMovies([])
+      setOldMoviesLoading(false)
+      setOldMoviesRetry(true)
     }
-    setTopMoviesLoading(false)
-    }, 2500);
+  }
+  useEffect(()=> {
+    try{
+      getOldies()
+    } catch(err){
+      setOldMovies([])
+      setOldMoviesLoading(false)
+      setOldMoviesRetry(true)
     }
-    getTopTen()
   }, [])
+  async function retryOldMovies(){
+    setOldMovies([{id:1},{id:2},{id:3},{id:4}])
+    setOldMoviesRetry(false)
+    setOldMoviesLoading(true)
+    await getOldies()
+  }
 
 
-  useEffect(()=>{
-    const getFirstMovies = async () => {
-      const url = `https://popfix.onrender.com/movies/${page}/genres?genre=${genre}`
-      const res = await fetch(url, {
-        headers: {
-          'authorization': `Bearer ${localStorage.getItem('access_token')}`
-        }
-      })
-      if (res.status == 200) {
-        const data = await res.json()
-       
-        if (data?.length < 20){
-          setEnd(true)
-        }       
-          setPage(prev_page => {return prev_page + 1})
-          setMovies(data)
-          setMoviesLoading(false)
-       
-      }
-    }
-    getFirstMovies()
-  }, [genre])
+
 
   const getMoreMovies = async () => {
     if (end) return
     console.log('geting more')
-    const res = await fetch(`https://popfix.onrender.com/movies/${page}/genres?genre=${genre}`, {
+    const res = await fetch(`http://localhost:80/movies/${page}/genres?genre=${genre}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
@@ -105,7 +207,7 @@ function MainPage() {
         setEnd(true)
       }
       setPage(prev_page => {return prev_page + 1})
-      setMovies([...movies, ...data])
+      setMovies([...movies.filter(movie => movie.title), ...data])
     }
   }
 
@@ -116,7 +218,7 @@ function MainPage() {
    
      
       <div 
-      style={{ width: '100%', height: '100%', overflowY:'scroll',paddingBottom: '20px'}}>
+      style={{ width: '100%', height: '100%',overflowX: 'hidden', overflowY:'scroll',paddingBottom: '50px'}}>
 
        <div style={{position: 'relative', width: '100vw', height: 'fit-content',  
        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px',
@@ -124,42 +226,7 @@ function MainPage() {
        }}>
 
 
-        <div style={{width: '100%', height: '220px', position: 'relative', overflow: 'hidden'}}>
 
-
-
-      
-      <div style={{width: '240px', borderRadius: '20px', height: '220px', background: 'blue', overflow: 'hidden', position: 'absolute',
-        inset: '0 0 0 0', margin: 'auto',
-        boxShadow: 'rgba(50, 50, 93, 0.4) 0px 50px 100px -20px, rgba(0, 0, 0, 0.5) 0px 30px 60px -30px',
-       }}>
-      <img
-      style={{width: '100%', height: '100%'}}
-      src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/F3A06E15EE141CF4BAC34B4FAB7FBE5F7E3757D0CE5EDF869800FA6A862D9368/scale?width=1200&amp;aspectRatio=1.78&amp;format=webp" alt="" />
-      </div>
-
-      <div style={{width: '225px', borderRadius: '20px', height: '180px', background: 'blue', overflow: 'hidden', position: 'absolute',
-        inset: '0 0 0 -160%', margin: 'auto'}}>
-      <img
-      style={{width: '100%', height: '100%'}}
-      src="https://rukminim2.flixcart.com/image/850/1000/kzzw5u80/poster/o/r/b/medium-joker-the-dark-knight-movie-on-fine-art-paper-hd-quality-original-imagbvmycjvpv5ph.jpeg?q=90&crop=false" alt="" />
-      </div>
-      <div style={{width: '225px', borderRadius: '20px', height: '180px', background: 'blue', overflow: 'hidden', position: 'absolute',
-        inset: '0 -160% 0 0%', margin: 'auto'}}>
-      <img
-      style={{width: '100%', height: '100%'}}
-      src="https://support.musicgateway.com/wp-content/uploads/2021/05/cyberpunk-movies-thumbnail-large-2.png" alt="" />
-      </div>
-
-      </div>
-
-      <div style={{width: '100%', height: '30px', display: 'flex', gap: '7px', alignItems: 'center', justifyContent: 'center'}}>
-        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
-        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
-        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: theme.palette.purple_normal}}></div>
-        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
-        <div style={{width: '8px', height: '8px', borderRadius: '50%', background: 'white'}}></div>
-      </div>
 
        </div>
 
@@ -174,21 +241,41 @@ See all
 </Typography>
 </Box> */}
 
-<TopMoviesContext.Provider value={{TopMovies, topMoviesLoading}}>
-
-
-<GenreCarrocel runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
-  <MovieCarrocel finite={false} loading={moviesLoading} movies={movies} getMoreMovies={getMoreMovies}/>
+<TopMoviesContext.Provider value={{TopMovies: randomMovies, topMoviesLoading: randomMoviesLoading}}>
 
   <Typography sx={{
-    padding: '10px',
+    paddingLeft: '12px',
+    paddingTop: '7px',
     color: 'white',
-    fontWeight: 700,
+    fontWeight: 600,
     fontSize: '1.5em'
-  }}>TOP 10</Typography>
-<MovieCarrocel loading={topMoviesLoading} movies={TopMovies}/>
+  }}>Categorias</Typography>
+<GenreCarrocel moviesRetry={moviesRetry} runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
+  <MovieCarrocel finite={false} loading={moviesLoading} moviesRetry={moviesRetry} retry={retry}
+   movies={movies} getMoreMovies={getMoreMovies}/>
 
-  <MovieScreen/>
+  <Typography sx={{
+    paddingLeft: '12px',
+    paddingTop: '7px',
+    color: 'white',
+    fontWeight: 600,
+    fontSize: '1.4em'
+  }}>Random Sample</Typography>
+<MovieCarrocel loading={randomMoviesLoading} movies={randomMovies} moviesRetry={randomMoviesRetry} retry={retryRandomMovies}/>
+
+
+<Typography sx={{
+  paddingLeft: '10px',
+  color: 'white',
+  fontWeight: 600,
+  paddingTop: '7px',
+    fontSize: '1.4em'
+  }}>Amostra de Antigos (1950)</Typography>
+<MovieCarrocel moviesRetry={oldMoviesRetry} retry={retryOldMovies} loading={oldMoviesLoading} movies={oldMovies}/>
+
+
+
+  <MovieScreen draggable='false'/>
 
 
   </TopMoviesContext.Provider>

@@ -3,6 +3,7 @@ export class Rating{
         readonly user_id: string,
         readonly movie_id: string,
         readonly comment: string,
+        readonly stars: Number,
     ){}
 }
 

@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 document.getElementById('root').style.width = '100%'
 document.getElementById('root').style.height = '100%'
 root.render(
-  <GoogleOAuthProvider clientId="483651865774-nt9c6up5vhk94roqmijr7kgdjd8jliud.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId="483651865774-cia2qbsqglugfhvkupj1reua0s4stgn9.apps.googleusercontent.com">
        <BrowserRouter>
   {/* <React.StrictMode> */}
     <App />

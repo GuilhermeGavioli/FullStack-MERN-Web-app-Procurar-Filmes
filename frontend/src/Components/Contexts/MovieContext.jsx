@@ -13,7 +13,7 @@ function MovieContextProvider ({ children }) {
       console.log(id)
         setMovieLoading(true)
         setIsMovieContainerOpen(true)
-        const url = `https://popfix.onrender.com/movie/${id}`
+        const url = `http://localhost:80/movie/${id}`
           const res = await fetch(url, {
             headers: {
               'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -23,6 +23,7 @@ function MovieContextProvider ({ children }) {
 
             if (res.status == 200) {
             const data = await res.json()
+            console.log(data)
             setMovie(data)
           }
           setMovieLoading(false)

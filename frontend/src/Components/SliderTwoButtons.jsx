@@ -107,13 +107,75 @@
 //   );
 // }
 
-
-
 import React from 'react';
 import Slider from '@mui/material/Slider';
+import styled from 'styled-components';
+import { ThemeContext } from './Contexts/ThemeContext';
+
+const PrettoSlider = styled(Slider)(({currentTheme}) => ({
+  color: '#52a000',
+  height: 8,
+  '& .MuiSlider-track': {
+    border: 'none',
+    color: currentTheme.palette.pink,
+  },
+  '& .MuiSlider-rail': {
+    border: 'none',
+    color: currentTheme.palette.light,
+  },
+  '& .MuiSlider-thumb': {
+    height: 18,
+    width: 18,
+    backgroundColor: currentTheme.palette.pink,
+    border: `2px solid white`,
+    '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+      boxShadow: 'inherit',
+    },
+    '&::before': {
+      display: 'none',
+    },
+  },
+  '& .MuiSlider-valueLabel': {
+    lineHeight: 1.2,
+    fontSize: 12,
+    background: 'unset',
+    padding: 0,
+    width: 32,
+    height: 32,
+    borderRadius: '50% 50% 50% 0',
+    backgroundColor: currentTheme.palette.pink,
+    transformOrigin: 'bottom left',
+    transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+    '&::before': { display: 'none' },
+    '&.MuiSlider-valueLabelOpen': {
+      transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+    },
+    '& > *': {
+      transform: 'rotate(45deg)',
+    },
+  },
+
+    '&.Mui-disabled': {
+    color: '#ccc', // overall color (affects track and thumb)
+    '& .MuiSlider-track': {
+      backgroundColor: '#ddd',
+    },
+    '& .MuiSlider-rail': {
+      backgroundColor: '#f0f0f0',
+    },
+    '& .MuiSlider-thumb': {
+      backgroundColor: '#e0e0e0',
+      borderColor: '#aaa',
+    },
+  }
+}));
+
+
+
 
 
 export default function SliderTwoButtons({v1,v2,setMin,setMax, min, max, start,gap, end, state}) {
+   const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
   const [value, setValue] = React.useState([v1, v2]);
 
   const handleChange = (event, newValue, activeThumb) => {
@@ -142,10 +204,26 @@ export default function SliderTwoButtons({v1,v2,setMin,setMax, min, max, start,g
 
   return (
     <div style={{
-      width: '250px',
-      margin: 'auto'
+      width: '100%',
+      margin: 'auto',
+      background: currentTheme.palette.darker,
+      margin: 0,
+      padding: '0 15px',
+      borderRadius: '10px'
     }}>
-      <Slider
+            <PrettoSlider
+            currentTheme={currentTheme}
+                   min={min}
+                   disabled={!state}
+      max={max}
+      value={value}
+      onChange={handleChange}
+      valueLabelDisplay="auto"
+      aria-labelledby="range-slider"
+      />
+
+      {/* <Slider
+      color='#fffff7'
       disabled={!state}
         value={value}
         min={min}
@@ -153,7 +231,7 @@ export default function SliderTwoButtons({v1,v2,setMin,setMax, min, max, start,g
         onChange={handleChange}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
-      />
+      /> */}
     </div>
   );
 }

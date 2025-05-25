@@ -9,17 +9,18 @@ import { RatingsContext } from './Screen/MovieScreen';
 import { theme } from '../theme';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { ThemeContext } from './Contexts/ThemeContext';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
-export default function SnackBar({state, setter, text}) {
+export default function ErrorSnackBar({text}) {
    const {currentTheme } = React.useContext(ThemeContext)
+   const {authErrorMessage,hideErrorMessage } = React.useContext(AuthContext)
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
-
-    setter(false);
-  };
+    hideErrorMessage()
+  }
 
   const action = (
         <div sx={{width: '100%', height: '100%', background: 'none'}}>
@@ -31,24 +32,24 @@ export default function SnackBar({state, setter, text}) {
   );
 
   return (
-    <div style={{background: currentTheme.palette.pink , width: '90%', maxWidth: '300px', height: 'fit-content', transition: '0.3s ease-in-out',
-    position: 'fixed', top: state?.open ? '25px' : '-50px', margin: 'auto', left: 0, right: 0, zIndex: 15, 
+    <div style={{background: currentTheme.palette.pink , width: '90%', maxWidth: '230px', height: 'fit-content', transition: '0.3s ease-in-out',
+    position: 'fixed', top: '25px', right: '10px', zIndex: 15, 
     alignItems: 'center', justifyContent: 'space-between', borderRadius: '5px', fontWeight: 400, fontSize: '1em', color: 'rgb(50,50,50)',
-    display: state?.visible ? 'flex' : 'none' , transition: '0.3s ease-in-out', alignContent: 'center'
+    display: authErrorMessage.display ? 'flex' : 'none' ,
+    opacity: authErrorMessage.opacity ? '100%' : '0%',
+    transition: '1.2s ease-in-out', alignContent: 'center'
     }}>
-      <div style={{position:'relative', width: '100%', gap: '5px', height: '100%', padding: '10px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+      <div style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start', position:'relative', width: '100%', height: '100%', padding: '8px 12px 8px 16px', gap: '7px'}}>
 
-  <CheckCircleOutlineIcon sx={{color: 'white'}}></CheckCircleOutlineIcon>
-<p style={{color: 'white', }}>
+  <ErrorOutlineIcon sx={{color: 'white'}}></ErrorOutlineIcon>
+<p style={{padding: 0, margin: 0, color: 'white', }}>
   {text}</p>
    
 <IconButton
 sx={{
-  position: 'absolute',
-  top: 0,
-  bottom: 0,
-  margin: 'auto',
-  right: '5px'
+    position: 'absolute',
+    top: 0,
+    right: 0
 }}
         size="small"
         onClick={handleClose}>

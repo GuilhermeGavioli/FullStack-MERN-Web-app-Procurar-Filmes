@@ -25,6 +25,7 @@ import SliderTwoButtons from '../SliderTwoButtons';
 import PinkSwitch from '../PinkSwitch';
 import FilterGenreCarrocel from '../FilterGenreCarrocel';
 import { theme } from '../../theme';
+import { ThemeContext } from '../Contexts/ThemeContext';
 
 const Item = styled.div`
     width: fit-content;
@@ -72,6 +73,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
   
   export default function FilterScreen() {
+     const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
+
+
   const  { availableGenres, changeGenre, isYearOn, setIsYearOn, isRuntimeOn, setIsRuntimeOn, applyFilters, minYear, maxYear, minRuntime,
     maxRuntime, setMinYear, setMaxYear, setMinRuntime, setMaxRuntime
    } = React.useContext(FilterContext)
@@ -102,7 +106,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <AppBar sx={{ position: 'relative', background: theme.palette.mid}}>
+          <AppBar sx={{ position: 'relative', background: currentTheme.palette.mid}}>
             <Toolbar>
               <IconButton
                 edge="start"
@@ -113,15 +117,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
                 <CloseIcon />
               </IconButton>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Filters
+                Filtros
               </Typography>
-              <Button sx={{color: 'white',background: `linear-gradient(${theme.palette.purple_light},${theme.palette.purple_mid})`}}  onClick={handleApplying}>
-                Apply
+              <Button sx={{color: 'white',background: `linear-gradient(${currentTheme.palette.pink},
+              ${currentTheme.palette.pink})`, textDecoration: 'none', textAlign: 'none', textTransform: 'none',
+              borderRadius: 0}}  onClick={handleApplying}>
+                Aplicar
               </Button>
             </Toolbar>
           </AppBar>
 
-          <div style={{background: theme.palette.dark, height: '100%', width: '100vw', margin: 0, padding: 0}}>
+          <div style={{background: currentTheme.palette.dark, height: '100%', width: '100vw', margin: 0, padding: 0}}>
 
 
 
@@ -132,9 +138,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         
          <List sx={style} aria-label="mailbox folders">
 
-         <Typography variant="h6" component="h2" sx={{color: 'white'}}>
-          Genre
-        </Typography>
+         <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.lighter, marginTop: '10px', marginBottom: '5px'}}>
+          Gênero:
+        </p>
        
         
           <FilterGenreCarrocel availableGenres={availableGenres} handleGenreChange={changeGenre}></FilterGenreCarrocel>
@@ -142,18 +148,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         
       
          
+            <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.lighter, marginTop: '20px', marginBottom: '5px'}}>
+          Ano:
+        </p>
 
-         <Typography variant="h6" component="h2" sx={{color: 'white'}}>
-          Year
-        </Typography>
-   
         <PinkSwitch state={isYearOn.temp} setter={setIsYearOn}></PinkSwitch>
          <SliderTwoButtons v1={minYear} v2={maxYear} min={1930} setMin={setMinYear} setMax={setMaxYear} max={2025} start={1990} end={2010} gap={20} state={isYearOn.temp}></SliderTwoButtons>
 
   
-      <Typography variant="h6" component="h2" sx={{color: 'white'}}>
-          Runtime
-        </Typography>
+ <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.lighter, marginTop: '20px', marginBottom: '5px'}}>
+          Duração:
+        </p>
         <PinkSwitch state={isRuntimeOn.temp} setter={setIsRuntimeOn}></PinkSwitch>
       <SliderTwoButtons v1={minRuntime} v2={maxRuntime} setMin={setMinRuntime} setMax={setMaxRuntime} min={10} max={400} start={180} end={260} gap={80} state={isRuntimeOn.temp}></SliderTwoButtons>
    

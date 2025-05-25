@@ -13,11 +13,92 @@ import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import { RatingsContext } from './MovieScreen';
 import Comment from '../Comment';
-import { Stack, styled as MUIStyled, Box, Fab } from '@mui/material';
+import { Stack, styled as MUIStyled, Box, Fab, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { theme } from '../../theme';
 import AddIcon from '@mui/icons-material/Add';
 import CreateRatingDialog from '../CreateRatingDialog';
 import ModeCommentIcon from '@mui/icons-material/ModeComment';
+import CommentWithMovieLink from '../CommentWithMovieLink';
+import { useState } from 'react';
+import { Fragment } from 'react';
+import SnackBar from '../SnackBar';
+import { ThemeContext } from '../Contexts/ThemeContext';
+
+
+// function AlertDialog({state, close, mainAction, currentTheme}) {
+//   return (
+//     <Fragment>
+//       <Dialog
+//         open={state}
+//         onClose={close}
+//         aria-labelledby="alert-dialog-title"
+//         aria-describedby="alert-dialog-description"
+//       >
+//         <div style={{
+//           borderRadius: '0px',
+//           width: '100%',
+//           height: '100%',
+//           background: currentTheme.palette.dark
+//         }}>
+//         <DialogTitle sx={{color: 'white'}} id="alert-dialog-title">
+//           {"Deletar Comentário?"}
+//         </DialogTitle>
+//         <DialogContent>
+//           <DialogContentText sx={{color: 'white'}} id="alert-dialog-description">
+//             Confirmar Remoção do comentário.
+//           </DialogContentText>
+//         </DialogContent>
+//         <DialogActions>
+//           <Button  sx={{color: 'white'}} onClick={close} autoFocus>
+//             Cancelar
+//           </Button>
+//           <Button onClick={mainAction} color="error" variant="text" >
+//         Deletar</Button>
+//         </DialogActions>
+//         </div>
+//       </Dialog>
+//     </Fragment>
+//   );
+// }
+
+function AlertDialog({state, close, mainAction, currentTheme}) {
+  return (
+    <Fragment>
+      <Dialog
+        open={state}
+        onClose={close}
+
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <div style={{
+          width: '100%',
+          height: '100%',
+          // background: `${currentTheme.palette.dark}`
+        }}>
+        <DialogTitle sx={{color: `${currentTheme.palette.darker}`}} id="alert-dialog-title">
+          {"Deletar Comentário?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{color: `${currentTheme.palette.dark}`}} id="alert-dialog-description">
+            Confirmar remoção do seu comentário?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button  sx={{color: currentTheme.palette.dark}} onClick={close} autoFocus>
+            Cancelar
+          </Button>
+          <Button onClick={mainAction}
+          sx={{color: currentTheme.palette.pink}}
+          
+            variant="text" >
+        Remover</Button>
+        </DialogActions>
+        </div>
+      </Dialog>
+    </Fragment>
+  );
+}
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -26,24 +107,51 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 const ColorButton = MUIStyled(Button)(() => ({
   color: 'white',
   width: '100%',
-  background: `linear-gradient(${theme.palette.purple_button_dark},${theme.palette.purple_button_light})`,
+  background: `linear-gradient(${(props) => props.currentTheme.palette.pink},${(props) => props.currentTheme.palette.pink})`,
   '&:hover': {
-    backgroundColor: theme.palette.lighter,
+    backgroundColor: `${(props) => props.currentTheme.palette.lighter}`,
   },
 }));
 
 export default function RattingsScreen() {
+ const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
+    // const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    // const [currentCommentId, setCurrentCommentId] = useState('')
+
+    // const openDialog = (c_id) => {
+    //   setCurrentCommentId(c_id)
+    //   setIsDeleteDialogOpen(true)
+    // }
+  
+    // const closeDialog = () => {
+    //   setIsDeleteDialogOpen(false)
+    // }
+
+    
+  
+
+
   const listRef = React.useRef(null);
   const {
     loadingMoreRatings,
-
     getMoreRatings, 
     isRatingsEnd,
      isRatingsContainerOpen, 
      setIsRatingsContainerOpen,
       ratings,
        handleOpenAndGetRatings,
-        handleCloseRatings
+        handleCloseRatings,
+        deleteComment,
+        openDialog, 
+        closeDialog,
+        isDeleteDialogOpen,
+        isRSnackBarOpen,
+        setIsRSnackBarOpen,
+        isCSnackBarOpen,
+        setIsCSnackBarOpen,
+        isRSnackBarVisible,
+        setIsRSnackBarVisible,
+        isCSnackBarVisible
        } = React.useContext(RatingsContext)
 
   const handleClickOpen = () => {
@@ -87,9 +195,9 @@ export default function RattingsScreen() {
  
     <div style={{padding: '0 10px 0 10px'}}>   
 
-    <div onClick={handleClickOpen} style={{height: '40px', width: '40px', background: 'rgba(51,46,89,0.7)', position: 'absolute', top: '15px', right: '10px', zIndex: 3, 
+    <div onClick={handleClickOpen} style={{height: '50px', width: '50px', opacity: '100%', background: currentTheme.palette.pink, position: 'absolute', top: '15px', right: '10px', zIndex: 3, 
   display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%'}}>
-      <ModeCommentIcon sx={{color: 'white', fontSize: '1em'}}></ModeCommentIcon>
+      <ModeCommentIcon sx={{color: 'white', fontSize: '1.3em'}}></ModeCommentIcon>
   </div>
     </div>
 
@@ -103,8 +211,13 @@ export default function RattingsScreen() {
         TransitionComponent={Transition}
       >
 
+             <AlertDialog currentTheme={currentTheme} mainAction={deleteComment} state={isDeleteDialogOpen} close={closeDialog}/>
 
-<AppBar position="static" sx={{background: theme.palette.mid}}>
+<SnackBar text={'Remoção Agendada!'} state={{open: isRSnackBarOpen, visible: isRSnackBarVisible}} setter={setIsRSnackBarOpen}/>
+<SnackBar text={'Criado com Sucesso!'} state={{open: isCSnackBarOpen, visible: isCSnackBarVisible}} setter={setIsCSnackBarOpen}/>
+
+
+<AppBar position="static" sx={{background: currentTheme.palette.mid}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between', gap: '5px', alignItems: 'center'}}>
            
     
@@ -124,7 +237,7 @@ export default function RattingsScreen() {
         <Box 
          ref={listRef}
          onScroll={handleFetchingMoreOnScroll}
-        sx={{width: '100%', height: '100%', background: theme.palette.dark, overflowY: 'scroll', padding: '10px 10px 20px 10px'}}>
+        sx={{width: '100%', height: '100%', background: currentTheme.palette.dark, overflowY: 'scroll', padding: '10px 10px 20px 10px'}}>
 
 
         
@@ -133,8 +246,8 @@ export default function RattingsScreen() {
         {
         isRatingsEnd && (ratings?.length == 0) &&
           <div style={{height: 'fit-content', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', position: 'absolute', margin: 'auto', inset: '0 0 30px 0'}}>
-            <img src="/popcorn.png" style={{width: '150px'}} alt="" />
-            <Typography sx={{fontSize: '1.2em', color: 'white', fontWeight: 700}}>No Comments Found...</Typography>
+     <Typography sx={{fontSize: '1.1em', color: currentTheme.palette.lighter, opacity: '50%'}}>Nenhum Comentário encontrado.</Typography>
+     <Typography sx={{fontSize: '1em', color: currentTheme.palette.lighter, opacity: '50%'}}>Seja o Primeiro a Comentar.</Typography>
           </div>
         }
         
@@ -143,7 +256,7 @@ export default function RattingsScreen() {
         <Stack spacing={'10px'} sx={{width: '100%', margin: "auto", }}>
           {ratings.map(rating => {
             return (
-              <Comment key={rating._id} comment={rating.comment} userid={rating.user?._id} username={rating?.user?.name} pic={rating?.user?.picture}></Comment>
+              <Comment openDialog={() => openDialog(rating._id)} c_id={rating._id} key={rating._id} comment={rating.comment} stars={rating.stars} userid={rating.user?._id} username={rating?.user?.name} pic={rating?.user?.picture}></Comment>
             )
           })}
          

@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { useContext } from 'react';
 import { MovieContext } from './Contexts/MovieContext';
 import { theme } from '../theme';
+import { ThemeContext } from './Contexts/ThemeContext';
 
 const Movie = styled.img`
     width: 150px;
@@ -20,6 +21,7 @@ const Movie = styled.img`
 `
 
 export default function MovieCard2({movie}) {
+   const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
   const { handleOpenAndGetMovie } = useContext(MovieContext)
 
 
@@ -31,8 +33,8 @@ return (
 
 
          
-    <div  onClick={viewMovie} key={movie._id} style={{width: '100%', background: theme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-    <img src={movie?.cover} style={{width: '80px', height: '100px', background: theme.palette.light, borderRadius: '15px'}} />
+    <div  onClick={viewMovie} key={movie._id} style={{width: '100%', background: currentTheme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+    <img src={movie?.cover} style={{width: '80px', height: '100px', background: currentTheme.palette.light, borderRadius: '15px'}} />
     <div style={{padding: '10px'}}>
       <p style={{color: 'white', fontWeight: 500}}>{movie?.title}</p>
       <p style={{color: 'white', fontWeight: 500, fontSize: '0.9em', marginTop: '5px'}}>{movie?.genres ? movie?.genres[0] : ''}</p>

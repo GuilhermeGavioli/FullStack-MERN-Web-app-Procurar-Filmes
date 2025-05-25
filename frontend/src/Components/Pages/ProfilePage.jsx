@@ -8,8 +8,10 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 
 import CircularProgress from '@mui/material/CircularProgress';
+import { ThemeContext } from '../Contexts/ThemeContext';
 
 export default function ProfilePage (){
+        const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
     const {user, userLoading, logout, loggingOutLoading} = React.useContext(AuthContext)
 
 
@@ -20,11 +22,11 @@ export default function ProfilePage (){
 
 {userLoading 
 ?
-<Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '50%'}} variant='rounded' width={'100px'} height={'100px'} />
+<Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '50%'}} variant='rounded' width={'100px'} height={'100px'} />
 :
 <div style={{display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center' }}>
     <div style={{width: '100px', height: '100px', borderRadius: '50%',
-    background: 'linear-gradient(180deg, rgb(118,77,202) 0%, rgba(70,70,175) 100%)', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    background: `linear-gradient(180deg, ${currentTheme.palette.pink} 0%,${currentTheme.palette.pink_light}`, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
     <img src={user?.picture} style={{width: '93px', height: '93px', borderRadius: '50%',
     background: 'white', margin: 'auto'}} alt="" />
     </div>
@@ -36,13 +38,13 @@ export default function ProfilePage (){
 {userLoading 
 ?
 <>
-<Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '50%'}} variant='rounded' width={'30px'} height={'30px'} />
-<Skeleton animation="wave" sx={{background: theme.palette.light,}} variant='rectangular' width={'200px'} height={'15px'} />
+<Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '50%'}} variant='rounded' width={'30px'} height={'30px'} />
+<Skeleton animation="wave" sx={{background: currentTheme.palette.light,}} variant='rectangular' width={'200px'} height={'15px'} />
 </>
 :
 
 <>
-<div style={{background: theme.palette.mid, borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center'}}>
+<div style={{background: currentTheme.palette.mid, borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center'}}>
     <EmailIcon sx={{margin: 'auto', color: 'white', fontSize: '1em'}}/>
 </div>
 <p style={{fontSize: '.9em', fontWeight: 400, color: 'white'}}>{user?.email}</p>
@@ -52,11 +54,11 @@ export default function ProfilePage (){
 
 {
     userLoading ?
-    <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '5px'}} variant='rectangular' width={'120px'} height={'35px'} />
+    <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '5px'}} variant='rectangular' width={'120px'} height={'35px'} />
     :
 
     !loggingOutLoading &&
-        <Button color="error" variant="text" onClick={logout}>
+        <Button color="error" sx={{color: currentTheme.palette.pink}} variant="text" onClick={logout}>
     <LogoutIcon sx={{marginRight: '5px'}}></LogoutIcon>
     Log out</Button>
     
@@ -66,7 +68,7 @@ export default function ProfilePage (){
 {
     loggingOutLoading &&
 <Button disabled loading variant="outlined" sx={{width: '100px', height: '40px'}}>
-<CircularProgress size={20} sx={{color: theme.palette.light}} />
+<CircularProgress size={20} sx={{color: currentTheme.palette.light}} />
 </Button>
 }
 

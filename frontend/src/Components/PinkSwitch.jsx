@@ -4,24 +4,28 @@ import { alpha, styled } from '@mui/material/styles';
 import { pink } from '@mui/material/colors';
 import Switch from '@mui/material/Switch';
 import { FilterContext } from './Pages/SearchPage';
+import { ThemeContext } from './Contexts/ThemeContext';
 
-const PinkSwitchMUI = styled(Switch)(({ theme }) => ({
+const PinkSwitchMUI = styled(Switch)(({currentTheme, theme }) => ({
     '& .MuiSwitch-switchBase.Mui-checked': {
-      color: pink[600],
+      color: currentTheme.palette.pink,
       '&:hover': {
-        backgroundColor: alpha(pink[600], theme.palette.action.hoverOpacity),
+        backgroundColor: currentTheme.palette.lighter,
       },
     },
     '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-      backgroundColor: pink[600],
+      backgroundColor: currentTheme.palette.pink
     },
   }));
 
-  const label = { inputProps: { 'aria-label': 'Color switch demo' } };
+  
 
 export default function PinkSwitch({state, setter}) {
-
+  const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
   return (
-    <PinkSwitchMUI {...label} checked={state} onChange={() => {setter(!state)}} />
+    <div >
+
+    <PinkSwitchMUI currentTheme={currentTheme}  checked={state} onChange={() => {setter(!state)}} />
+    </div>
   )
 }
