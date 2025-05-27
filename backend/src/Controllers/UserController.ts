@@ -2,11 +2,12 @@ import { UserService } from '../Services/user.service'
 import { Request, Response } from 'express';
 import { Authentication } from '../Services/authentication.service';
 import { Validator } from '../Services/validator.service';
-import { MongoUser } from '../DTOS/user.dto';
+import { MongoUser, User } from '../DTOS/user.dto';
 
 
 export interface UserController{
     authGoogle(request: Request, response: Response): Promise<any>;
+    authEmail(request: Request, response: Response): Promise<any>;
     getUserInfo(request: Request, response: Response): Promise<any>
 }
 
@@ -36,6 +37,21 @@ export class UserControllerImpl implements UserController{
         }
     }
 
+    public async authEmail(request: Request, response: Response): Promise<any>{
+        console.log(request.body)
+        const {email,password} : any = request.body
+        console.log(email)
+        console.log(password)
+        if (email != 'test@test' || password != 'test123'){
+            return response.status(404).end()
+        } 
+        const user = new User('Usuario de Teste', 'https://i.imgur.com/JMUdR0i.png', email, 'email')
+        const user_id = await this.userService.createUserIfNecessary(user)
+        if (!user_id) return response.status(404).end()
+        const access_token = this.authenticator.generateToken({...user, id: user_id})
+        response.json({ access_token })
+    }
+    
 
     public async getUserInfo(request: Request, response: Response): Promise<any>{
         const user_id = response.locals.user_id

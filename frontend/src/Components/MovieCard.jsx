@@ -19,10 +19,11 @@ const Movie = styled.img`
   }
 
   ${theme.breakpoints.down('md')} {
-      width: 115px;
-      height: 135px;
+      width: 135px;
+      height: 160px;
       max-width: 150px;
   }
+
   ${theme.breakpoints.up('md')} {
       width: 135px;
       height: 155px;
@@ -33,6 +34,8 @@ const Movie = styled.img`
     height: 185px;
 }
 `
+  // 115
+  // 135
 
 export default function MovieCard({movie}) {
   const { handleOpenAndGetMovie } = useContext(MovieContext)

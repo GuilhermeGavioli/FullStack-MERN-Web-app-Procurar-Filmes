@@ -27477,8 +27477,8 @@ var require_read_preference = __commonJS({
         const VALID_MODES = /* @__PURE__ */ new Set([
           _ReadPreference.PRIMARY,
           _ReadPreference.PRIMARY_PREFERRED,
-          _ReadPreference.SECONDARY,
-          _ReadPreference.SECONDARY_PREFERRED,
+          _ReadPreference.sec,
+          _ReadPreference.sec_PREFERRED,
           _ReadPreference.NEAREST,
           null
         ]);
@@ -27499,8 +27499,8 @@ var require_read_preference = __commonJS({
       secondaryOk() {
         const NEEDS_SECONDARYOK = /* @__PURE__ */ new Set([
           _ReadPreference.PRIMARY_PREFERRED,
-          _ReadPreference.SECONDARY,
-          _ReadPreference.SECONDARY_PREFERRED,
+          _ReadPreference.sec,
+          _ReadPreference.sec_PREFERRED,
           _ReadPreference.NEAREST
         ]);
         return NEEDS_SECONDARYOK.has(this.mode);
@@ -27527,13 +27527,13 @@ var require_read_preference = __commonJS({
     };
     ReadPreference.PRIMARY = exports2.ReadPreferenceMode.primary;
     ReadPreference.PRIMARY_PREFERRED = exports2.ReadPreferenceMode.primaryPreferred;
-    ReadPreference.SECONDARY = exports2.ReadPreferenceMode.secondary;
-    ReadPreference.SECONDARY_PREFERRED = exports2.ReadPreferenceMode.secondaryPreferred;
+    ReadPreference.sec = exports2.ReadPreferenceMode.sec;
+    ReadPreference.sec_PREFERRED = exports2.ReadPreferenceMode.secPreferred;
     ReadPreference.NEAREST = exports2.ReadPreferenceMode.nearest;
     ReadPreference.primary = new ReadPreference(exports2.ReadPreferenceMode.primary);
     ReadPreference.primaryPreferred = new ReadPreference(exports2.ReadPreferenceMode.primaryPreferred);
-    ReadPreference.secondary = new ReadPreference(exports2.ReadPreferenceMode.secondary);
-    ReadPreference.secondaryPreferred = new ReadPreference(exports2.ReadPreferenceMode.secondaryPreferred);
+    ReadPreference.sec = new ReadPreference(exports2.ReadPreferenceMode.sec);
+    ReadPreference.secPreferred = new ReadPreference(exports2.ReadPreferenceMode.secPreferred);
     ReadPreference.nearest = new ReadPreference(exports2.ReadPreferenceMode.nearest);
     exports2.ReadPreference = ReadPreference;
   }
@@ -27593,7 +27593,7 @@ var require_server_selection = __commonJS({
   "../backend/node_modules/mongodb/lib/sdam/server_selection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.readPreferenceServerSelector = exports2.secondaryWritableServerSelector = exports2.sameServerSelector = exports2.writableServerSelector = exports2.MIN_SECONDARY_WRITE_WIRE_VERSION = void 0;
+    exports2.readPreferenceServerSelector = exports2.secWritableServerSelector = exports2.sameServerSelector = exports2.writableServerSelector = exports2.MIN_SECONDARY_WRITE_WIRE_VERSION = void 0;
     var error_1 = require_error();
     var read_preference_1 = require_read_preference();
     var common_1 = require_common();
@@ -27622,7 +27622,7 @@ var require_server_selection = __commonJS({
       }
       return readPreferenceServerSelector(readPreference);
     }
-    exports2.secondaryWritableServerSelector = secondaryWritableServerSelector;
+    exports2.secWritableServerSelector = secondaryWritableServerSelector;
     function maxStalenessReducer(readPreference, topologyDescription, servers) {
       if (readPreference.maxStalenessSeconds == null || readPreference.maxStalenessSeconds < 0) {
         return servers;
@@ -27753,7 +27753,7 @@ var require_server_selection = __commonJS({
         }
         const filter = mode === read_preference_1.ReadPreference.NEAREST ? nearestFilter : secondaryFilter;
         const selectedServers = latencyWindowReducer(topologyDescription, tagSetReducer(readPreference, maxStalenessReducer(readPreference, topologyDescription, servers.filter(filter))));
-        if (mode === read_preference_1.ReadPreference.SECONDARY_PREFERRED && selectedServers.length === 0) {
+        if (mode === read_preference_1.ReadPreference.sec_PREFERRED && selectedServers.length === 0) {
           return servers.filter(primaryFilter);
         }
         return selectedServers;
@@ -28947,7 +28947,7 @@ var require_execute_operation = __commonJS({
       if (operation.hasAspect(operation_1.Aspect.MUST_SELECT_SAME_SERVER)) {
         selector = (0, server_selection_1.sameServerSelector)(operation.server?.description);
       } else if (operation.trySecondaryWrite) {
-        selector = (0, server_selection_1.secondaryWritableServerSelector)(topology.commonWireVersion, readPreference);
+        selector = (0, server_selection_1.secWritableServerSelector)(topology.commonWireVersion, readPreference);
       } else {
         selector = readPreference;
       }
@@ -31686,7 +31686,7 @@ var require_server_description = __commonJS({
           return common_1.ServerType.RSOther;
         } else if (hello.isWritablePrimary) {
           return common_1.ServerType.RSPrimary;
-        } else if (hello.secondary) {
+        } else if (hello.sec) {
           return common_1.ServerType.RSSecondary;
         } else if (hello.arbiterOnly) {
           return common_1.ServerType.RSArbiter;
@@ -42347,7 +42347,7 @@ var require_bignumber = __commonJS({
           }
           str = x.toFixed(dp, rm);
           if (x.c) {
-            var i, arr = str.split("."), g1 = +format2.groupSize, g2 = +format2.secondaryGroupSize, groupSeparator = format2.groupSeparator || "", intPart = arr[0], fractionPart = arr[1], isNeg = x.s < 0, intDigits = isNeg ? intPart.slice(1) : intPart, len = intDigits.length;
+            var i, arr = str.split("."), g1 = +format2.groupSize, g2 = +format2.secGroupSize, groupSeparator = format2.groupSeparator || "", intPart = arr[0], fractionPart = arr[1], isNeg = x.s < 0, intDigits = isNeg ? intPart.slice(1) : intPart, len = intDigits.length;
             if (g2) {
               i = g1;
               g1 = g2;
@@ -43008,13 +43008,13 @@ var require_src5 = __commonJS({
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.requestTimeout = exports2.setGCPResidency = exports2.getGCPResidency = exports2.gcpResidencyCache = exports2.resetIsAvailableCache = exports2.isAvailable = exports2.project = exports2.instance = exports2.METADATA_SERVER_DETECTION = exports2.HEADERS = exports2.HEADER_VALUE = exports2.HEADER_NAME = exports2.SECONDARY_HOST_ADDRESS = exports2.HOST_ADDRESS = exports2.BASE_PATH = void 0;
+    exports2.requestTimeout = exports2.setGCPResidency = exports2.getGCPResidency = exports2.gcpResidencyCache = exports2.resetIsAvailableCache = exports2.isAvailable = exports2.project = exports2.instance = exports2.METADATA_SERVER_DETECTION = exports2.HEADERS = exports2.HEADER_VALUE = exports2.HEADER_NAME = exports2.sec_HOST_ADDRESS = exports2.HOST_ADDRESS = exports2.BASE_PATH = void 0;
     var gaxios_1 = require_src4();
     var jsonBigint = require_json_bigint();
     var gcp_residency_1 = require_gcp_residency();
     exports2.BASE_PATH = "/computeMetadata/v1";
     exports2.HOST_ADDRESS = "http://169.254.169.254";
-    exports2.SECONDARY_HOST_ADDRESS = "http://metadata.google.internal.";
+    exports2.sec_HOST_ADDRESS = "http://metadata.google.internal.";
     exports2.HEADER_NAME = "Metadata-Flavor";
     exports2.HEADER_VALUE = "Google";
     exports2.HEADERS = Object.freeze({ [exports2.HEADER_NAME]: exports2.HEADER_VALUE });
@@ -43090,7 +43090,7 @@ var require_src5 = __commonJS({
     async function fastFailMetadataRequest(options) {
       const secondaryOptions = {
         ...options,
-        url: options.url.replace(getBaseUrl(), getBaseUrl(exports2.SECONDARY_HOST_ADDRESS))
+        url: options.url.replace(getBaseUrl(), getBaseUrl(exports2.sec_HOST_ADDRESS))
       };
       let responded = false;
       const r1 = (0, gaxios_1.request)(options).then((res) => {
@@ -47946,7 +47946,7 @@ var require_commands = __commonJS({
         this.checkKeys = typeof options.checkKeys === "boolean" ? options.checkKeys : false;
         this.batchSize = this.numberToReturn;
         this.tailable = false;
-        this.secondaryOk = typeof options.secondaryOk === "boolean" ? options.secondaryOk : false;
+        this.secOk = typeof options.secOk === "boolean" ? options.secOk : false;
         this.oplogReplay = false;
         this.noCursorTimeout = false;
         this.awaitData = false;
@@ -47973,7 +47973,7 @@ var require_commands = __commonJS({
         if (this.tailable) {
           flags |= OPTS_TAILABLE_CURSOR;
         }
-        if (this.secondaryOk) {
+        if (this.secOk) {
           flags |= OPTS_SECONDARY;
         }
         if (this.oplogReplay) {
@@ -50162,7 +50162,7 @@ var require_connection = __commonJS({
           numberToReturn: -1,
           checkKeys: false,
           // This value is not overridable
-          secondaryOk: readPreference.secondaryOk(),
+          secondaryOk: readPreference.secOk(),
           ...options
         };
         const message = this.supportsOpMsg ? new commands_1.OpMsgRequest(db, cmd, commandOptions) : new commands_1.OpQueryRequest(db, cmd, commandOptions);

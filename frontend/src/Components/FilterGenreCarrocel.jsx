@@ -92,7 +92,7 @@ const SelectedItem = styled.div`
     gap: 8px;
     padding: 5px 10px 5px 10px;
     border-radius: 15px;
-    background: linear-gradient(${(props) => props.currentTheme.palette.pink},${(props) => props.currentTheme.palette.pink});
+    background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
     font-weight: 600;
     color: white;
     font-family: roboto;

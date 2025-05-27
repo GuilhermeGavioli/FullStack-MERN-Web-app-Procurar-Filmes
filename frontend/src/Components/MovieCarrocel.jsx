@@ -9,12 +9,13 @@ import { ThemeContext } from './Contexts/ThemeContext';
 
 
 import ReplayIcon from '@mui/icons-material/Replay';
+import { AuthContext } from './Contexts/AuthContext';
 const MasterWrapper = styled.div`
   width: 100vw;
   position: relative;
 
   ${theme.breakpoints.down('md')} {
-    height: 145px;
+    height: 180px;
   }
 
   ${theme.breakpoints.up('md')} {
@@ -41,7 +42,7 @@ const Wrapper = styled.div`
     overflow-x: scroll;
     scrollbar-width: 2px;
     ${theme.breakpoints.down('md')} {
-      height: 145px;
+      height: 180px;
     }
 
     ${theme.breakpoints.up('md')} {
@@ -92,6 +93,7 @@ const LeftMask = styled.div`
 `
 
 export default function MovieCarrocel({ finite = true, movies, loading, getMoreMovies, moviesRetry, retry }){
+    const {userLoading, auth} = useContext(AuthContext)
     const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
     const [fetchinmore, setFetchingmore ] = useState(false)
 
@@ -118,28 +120,38 @@ export default function MovieCarrocel({ finite = true, movies, loading, getMoreM
 
 {
 
-moviesRetry ?
+moviesRetry &&
  <div style={{position: 'absolute', inset: '0 0 0 0', width: 'fit-content', margin: 'auto', height: 'fit-content',
     display: 'flex', flexDirection: 'column', alignItems:'center'
   }}>
 <p style={{color: currentTheme.palette.lighter, fontSize: '.9em'}}>Erro durante Carregamento.</p>
 <p style={{color: currentTheme.palette.lighter, fontSize: '.8em'}}>Retentar.</p>
   <button onClick={() => retry()} style={{
-    background: 'none', color: currentTheme.palette.pink, border: 'none', marginTop: '8px'
+    background: 'none', color: currentTheme.palette.sec, border: 'none', marginTop: '8px'
   }}>
     <ReplayIcon style={{fontSize: '2.2em'}}/>
   </button>
     </div>
-    :
-    <></>
 }
+
+{
+!userLoading && !auth && !moviesRetry &&
+  <div style={{position: 'absolute', inset: '0 0 0 0', width: 'fit-content', margin: 'auto', height: 'fit-content',
+    display: 'flex', flexDirection: 'column', alignItems:'center'
+  }}>
+<p style={{color: currentTheme.palette.lighter, fontSize: '.9em'}}>Permissão Negada.</p>
+<p style={{color: currentTheme.palette.lighter, fontSize: '.8em'}}>Faça Login.</p>
+    </div>
+}
+
+
 <CardsWrapper>
         {
           movies?.map((movie) => {
             return(
               loading
                 ? 
-              <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'115px'} height={'135px'} /> 
+              <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'135px'} height={'160px'} /> 
                 : 
               <MovieCard draggable='false' style={{  userSelect: 'unset', draggable: 'false'}} key={movie?._id} movie={movie} alt="" />
             )

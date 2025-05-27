@@ -12,13 +12,14 @@ import { Database } from './database';
 
 
 
-import https from 'https';
-import fs from 'fs';
 
-const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/fullchain.pem')
-};
+//*****************************PROD***********************************//
+// import https from 'https';
+// import fs from 'fs';
+// const options = {
+//   key: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/fullchain.pem')
+// };
 
 // import { authGuard } from './objects.instances';
 // import { movieController } from "./objects.instances";
@@ -92,6 +93,7 @@ app.get('/movies/sample/olddies', (rq,rs,nx) => authGuard.protect(rq,rs,nx), (rq
 app.get('/movies/results/:page', (rq,rs,nx) => authGuard.protect(rq,rs,nx), (rq:any,rs:any) => movieController.getMoviesByText(rq,rs))
 // app.use(userapp)
 app.get('/auth/google/:oauth_access_token', (rq:any,rs:any) => userController.authGoogle(rq,rs))
+app.post('/auth/email', (rq:any,rs:any) => userController.authEmail(rq,rs))
 app.get('/auth/user/getinfo', (rq,rs,nx) => authGuard.protect(rq,rs,nx), (rq:any,rs:any) => userController.getUserInfo(rq,rs))
 // app.use(ratingapp)
 app.post('/ratings/create/for_movie/:movie_id', (rq,rs,nx) => authGuard.protect(rq,rs,nx), (rq:any,rs:any) => ratingController.createRating(rq,rs))
@@ -104,6 +106,10 @@ app.get('/health', (req,res)=> {
     res.send('ok')
 })
 
-https.createServer(options, app).listen(process.env.PORT, () => {
-  console.log('Server is Up and Running on 443');
+app.listen(process.env.PORT, () => {
+  console.log('Server is Up and Running on 80');
 });
+//*****************************PROD***********************************//
+// https.createServer(options, app).listen(process.env.PORT, () => {
+//   console.log('UpOn443');
+// });

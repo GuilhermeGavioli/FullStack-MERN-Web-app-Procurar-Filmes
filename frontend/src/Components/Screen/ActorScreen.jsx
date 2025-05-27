@@ -173,10 +173,10 @@ export default function ActorScreen() {
 
           <div style={{width: '90%', alignItems: 'start'}}>
 
-          <p style={{fontSize: '1.3em', color: currentTheme.palette.pink}}>{actorName}</p>
+          <p style={{fontSize: '1.3em', color: currentTheme.palette.sec}}>{actorName}</p>
 
-         <p style={{color: 'white', fontSize: '.9em', marginTop: '10px'}}>Idade: {actorAge} anos</p>
-         <p style={{color: 'white', fontSize: '.9em', marginTop: '10px'}}>Nacionalidade: {actorNac}</p>
+         <p style={{color: currentTheme.palette.contra, fontSize: '.9em', marginTop: '10px'}}>Idade: {actorAge} anos</p>
+         <p style={{color: currentTheme.palette.contra, fontSize: '.9em', marginTop: '10px'}}>Nacionalidade: {actorNac}</p>
        
 
           </div>
@@ -218,7 +218,7 @@ const MovieTopicContainer = MUIStyled(Typography)`
 
 const MovieTopicTitle = MUIStyled(Typography)`
 font-weight: 600;
- color: ${(props) => props.currentTheme.palette.pink};
+ color: ${(props) => props.currentTheme.palette.sec};
 
      ${(props) => props.currentTheme.breakpoints.down('md')} {
       }

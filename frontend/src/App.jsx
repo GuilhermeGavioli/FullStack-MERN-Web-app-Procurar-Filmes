@@ -29,7 +29,7 @@ function App() {
                 <Route element={<BarsWrapper />}>
 
     
-                  <Route path="/"       element={ <MovieContextProvider><MainPage/></MovieContextProvider> }></Route>
+                  <Route path="/"       element={ <MovieContextProvider><AuthContextProvider><MainPage/></AuthContextProvider></MovieContextProvider> }></Route>
                   <Route path="/mycomments" element={ <MovieContextProvider><AuthContextProvider><MyComments /></AuthContextProvider></MovieContextProvider>}></Route>
                   <Route path="/results"  element={ <MovieContextProvider><SearchPage /></MovieContextProvider> }></Route>
                   <Route path="/profile/me"  element={ <AuthContextProvider><ProfilePage/></AuthContextProvider> }></Route>

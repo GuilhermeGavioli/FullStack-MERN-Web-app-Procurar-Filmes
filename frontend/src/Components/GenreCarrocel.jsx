@@ -115,7 +115,7 @@ const Item = styled.div`
    
     ${(props) => props.currentTheme.breakpoints.down('md')} {
         padding: 5px 10px 5px 10px;
-        font-size: 0.9em;
+        font-size: 1em;
     }
 
     ${(props) => props.currentTheme.breakpoints.up('md')} {
@@ -152,13 +152,13 @@ align-items: center;
 gap: 8px;
 border-radius: 15px;
 font-weight: 600;
-background: linear-gradient(${(props) => props.currentTheme.palette.pink},${(props) => props.currentTheme.palette.pink});
+background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
     color: white;
 
 
     ${(props) => props.currentTheme.breakpoints.down('md')} {
         padding: 5px 10px 5px 10px;
-        font-size: 0.9em;
+        font-size: 1em;
     }
 
     ${(props) => props.currentTheme.breakpoints.up('md')} {

@@ -44,7 +44,7 @@ export class JWTAuthImpl implements Authentication{
             return null
         } else {
             const user: any = await response.json()
-            return new User(user.name, user.picture, user.email)
+            return new User(user.name, user.picture, user.email, user.type)
         }
     }
 }

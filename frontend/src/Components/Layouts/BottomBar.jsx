@@ -1,41 +1,24 @@
-import * as React from 'react';
+
 import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import FolderIcon from '@mui/icons-material/Folder';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
-
 import HomeIcon from '@mui/icons-material/Home';
-
-import { grey, amber, pink } from '@mui/material/colors';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
-
 import SearchIcon from '@mui/icons-material/Search';
-import { Avatar, Box, Skeleton } from '@mui/material';
-import { theme } from '../../theme';
-
-
-import { AuthContext } from '../Contexts/AuthContext';
+import {  Box } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { ThemeContext } from '../Contexts/ThemeContext';
-import { useLocation } from 'react-router-dom';
 
+import { ThemeContext } from '../Contexts/ThemeContext';
+import { LocationContext } from '../Contexts/LocationContext';
+
+import { useLocation } from 'react-router-dom';
+import { useContext } from 'react';
 
 export default function BottomBar() {
-    const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
-
-const location = useLocation();
-  const {user, userLoading, iconInitialState, goTo } = React.useContext(AuthContext)
-
-  
+    const {currentTheme} = useContext(ThemeContext)
+    
+    const location = useLocation()
+    const {iconInitialState, goTo } = useContext(LocationContext)
 
   return (
-
- 
 
     <div style={{
         position: 'fixed', width: '100%', zIndex: 10, display: 'flex', 
@@ -69,8 +52,8 @@ const location = useLocation();
       onClick={() => {goTo('/')}}>
        
         <HomeIcon sx={{
-          fontSize: iconInitialState == 0 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 0 && location.pathname !== '/profile/me'  ? currentTheme.palette.pink : currentTheme.palette.dark,
+          fontSize: iconInitialState == 0 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
+          color: iconInitialState == 0 && location.pathname !== '/profile/me'  ? currentTheme.palette.sec : currentTheme.palette.darker,
           // background: iconInitialState == 0 ? 'rgb(245,238,255)' : 'none',
           }}/>
       </Box>
@@ -79,16 +62,16 @@ const location = useLocation();
       onClick={()=> {goTo('/mycomments')}}>
         <InsertCommentIcon  
         sx={{
-          fontSize: iconInitialState == 1 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 1 && location.pathname !== '/profile/me' ? currentTheme.palette.pink : currentTheme.palette.dark
+          fontSize: iconInitialState == 1 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
+          color: iconInitialState == 1 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.darker
           }}/>
       </Box>
   
       <Box value={2} sx={{display: 'flex', justifyContent:'center', alignItems: 'center', width: '25%'}}
        onClick={()=> {goTo('/results')}}>
         <SearchIcon  sx={{
-          fontSize: iconInitialState == 2 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 2 && location.pathname !== '/profile/me' ? currentTheme.palette.pink : currentTheme.palette.dark
+          fontSize: iconInitialState == 2 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
+          color: iconInitialState == 2 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.darker
           }}/>
       </Box>
 
@@ -98,8 +81,8 @@ const location = useLocation();
    
         <SettingsIcon
         sx={{
-          fontSize: iconInitialState == 3 && location.pathname !== '/profile/me' ? '1.5em' : '1.4em', 
-          color: iconInitialState == 3 && location.pathname !== '/profile/me' ? currentTheme.palette.pink : currentTheme.palette.dark
+          fontSize: iconInitialState == 3 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
+          color: iconInitialState == 3 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.darker
           }}
       />
       

@@ -119,9 +119,9 @@ const Transition = React.forwardRef(function Transition(props, ref) {
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 Filtros
               </Typography>
-              <Button sx={{color: 'white',background: `linear-gradient(${currentTheme.palette.pink},
-              ${currentTheme.palette.pink})`, textDecoration: 'none', textAlign: 'none', textTransform: 'none',
-              borderRadius: 0}}  onClick={handleApplying}>
+              <Button sx={{color: 'white',background: `linear-gradient(${currentTheme.palette.sec},
+              ${currentTheme.palette.sec})`, textDecoration: 'none', textAlign: 'none', textTransform: 'none',
+              borderRadius: '8px', fontSize: '1em', padding: '5px 15px'}}  onClick={handleApplying}>
                 Aplicar
               </Button>
             </Toolbar>

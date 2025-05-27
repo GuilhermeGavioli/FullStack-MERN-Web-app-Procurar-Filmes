@@ -93,7 +93,7 @@ export default function CreateRatingDialog() {
       try{
         if (starvalue == 0) setstarvalue(1)
         console.log(commentValue)
-        const res = await fetch(`https://procurarfilmes.xyz/ratings/create/for_movie/${movie?._id}`, {
+        const res = await fetch(`http://localhost:80/ratings/create/for_movie/${movie?._id}`, {
             method: 'POST',
             body: JSON.stringify({comment: commentValue, stars: starvalue}),
         
@@ -115,10 +115,10 @@ export default function CreateRatingDialog() {
   return (
     <React.Fragment>
            <Fab onClick={handleClickOpen} size="large" aria-label="add" sx={{position: 'absolute', bottom: 15, right: 15,
-background: `linear-gradient(${currentTheme.palette.pink},${currentTheme.palette.pink})`,
-color: 'white'
+background: `linear-gradient(${currentTheme.palette.sec},${currentTheme.palette.sec})`,
+color: currentTheme.palette.contra
         }}>
-  <AddIcon style={{fontSize: '2em'}} />
+  <AddIcon style={{fontSize: '2em', color: 'white'}} />
 </Fab>
       <Dialog
         open={open}
@@ -137,12 +137,12 @@ color: 'white'
       >
         <div   style={{borderRadius: '0px', background: currentTheme.palette.darker, width: '100%', height: '100%'}}>
 
-        <DialogTitle sx={{color: 'white', fontSize: '1.4em'}}>Comentário</DialogTitle>
+        <DialogTitle sx={{color: currentTheme.palette.contra, fontSize: '1.4em'}}>Comentário</DialogTitle>
 
 <div style={{padding: '0 20px 0 20px'}}>
 
               <Rating
-              sx={{color: currentTheme.palette.pink}}
+              sx={{color: currentTheme.palette.sec}}
         emptyIcon={<StarIcon style={{ opacity: 0.85 }} fontSize="inherit" />}
         value={starvalue}
         defaultValue={starvalue}
@@ -161,7 +161,7 @@ placeholder="Escreva seu comentário..."  autoFocus value={commentValue} onChang
         </DialogContent>
         <DialogActions>
           <Button  style={{color: currentTheme.palette.lighter}} onClick={handleClose}>Cancelar</Button>
-          <Button style={{color: currentTheme.palette.pink}} onClick={createComment}>Comentar</Button>
+          <Button style={{color: currentTheme.palette.sec}} onClick={createComment}>Comentar</Button>
         </DialogActions>
         </div>
       </Dialog>

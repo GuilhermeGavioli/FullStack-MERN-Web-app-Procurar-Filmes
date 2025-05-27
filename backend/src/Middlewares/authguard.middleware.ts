@@ -18,10 +18,7 @@ export class AuthGuardImpl implements AuthGuard{
     ){}
 
     public protect(request: Request, response: Response, next: NextFunction){
-        console.log('running auth guard')
-
         const token = request.headers['authorization'] as string
-        console.log(token)
         if (!token) return response.status(403).end()
         const formated_token = token.split(' ')[1]
 

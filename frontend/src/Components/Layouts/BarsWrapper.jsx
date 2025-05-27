@@ -6,9 +6,10 @@ import AuthContextProvider from '../Contexts/AuthContext';
 import { ThemeContext } from '../Contexts/ThemeContext';
 import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import LocationContextProvider from '../Contexts/LocationContext';
 
 export default function BarsWrapper () {
-  const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
+  const {currentTheme} = useContext(ThemeContext)
 const location = useLocation();
 const [hide,sethide] = useState(false)
 
@@ -22,9 +23,11 @@ const [hide,sethide] = useState(false)
   return (
     <>
         <AuthContextProvider>
+          <LocationContextProvider>
           {hide?
         <></> : 
           <TopBar />
+        
         }
    
 
@@ -41,7 +44,9 @@ msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch',
 </div>
 
 
+
       <BottomBar />
+</LocationContextProvider>
 </AuthContextProvider>
     </>
   )

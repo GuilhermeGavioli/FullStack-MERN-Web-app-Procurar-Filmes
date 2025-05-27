@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {  grey, pink } from '@mui/material/colors';
-import {  useSearchParams } from 'react-router-dom';
+
 import styled  from 'styled-components';
 import Box from '@mui/material/Box';
 import MovieCard from '../MovieCard';
 import { createContext, useState, useEffect } from 'react';
 import MovieScreen from '../Screen/MovieScreen';
+
 
 import SearchInput from '../SearchInput';
 import FilterScreen from '../Screen/FilterScreen';
@@ -20,6 +20,9 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ThemeContext } from '../Contexts/ThemeContext';
 
 import { useLocation } from 'react-router-dom';
+import { AuthContext } from '../Contexts/AuthContext';
+import { LocationContext } from '../Contexts/LocationContext';
+import { useContext } from 'react';
 
 export const MovieContext = createContext()
 export const RatingsContext = createContext()
@@ -35,19 +38,19 @@ const MyGrid = styled.div`
   row-gap: 10px;
 `
 
-const Search = styled('div')(() => ({
+const Search = styled('div')((props) => ({
   position: 'relative',
   display: 'flex',
   gap: '5px',
-  backgroundColor: (props) => props.currentTheme.palette.mid,
+  backgroundColor: props.currentTheme.palette.mid,
 
   width: '100%',
   height: '40px',
-  color: 'white',
+  color: props.currentTheme.palette.contra,
 
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(() => ({
   height: '100%',
   width: '50px',
   pointerEvents: 'none',
@@ -56,21 +59,19 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   margin: '0',
   padding: '0 0px 0 10px',
-
 }));
 
-const StyledInputBase = styled('input')({
+const StyledInputBase = styled('input')((props) => ({
   width: '100%',
   height: '100%',
-  color: 'white',
   margin: 0,
   padding: 0,
   paddingLeft: '10px',
   border: 'none',
   outline: 'none',
   background: 'none',
-
-})
+  color: props.currentTheme.palette.contra,
+}))
 
 export const FilterContext = createContext()
 
@@ -79,7 +80,9 @@ export default function SearchPage() {
   const queryParams = new URLSearchParams(location.search);
 
   const search = queryParams.get('search');
-  const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
+  const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
+
+  const {auth, userLoading} = useContext(AuthContext)
 
   const [isYearOn, setIsYearOn] = useState(false)
   const [minYear, setMinYear] = useState(1990)
@@ -207,6 +210,7 @@ export default function SearchPage() {
     }
   })
 
+
   const [loadingMovies, setLoadingMovies] = useState(false)
 
 
@@ -295,6 +299,10 @@ function disableGenresSnapshot(){
   }
 
   const handleFetchingMoreOnScroll = async (e) => {
+      if ( !userLoading && !auth ) {
+          setLoadingMovies(false)
+      return
+          }
     const { scrollHeight, clientHeight, scrollTop } = listRef.current;
     setScrollpos(scrollTop)
     const isNearEnd = scrollTop + clientHeight >= scrollHeight - 100; // Adjust threshold
@@ -306,13 +314,20 @@ function disableGenresSnapshot(){
   }
 
   async function queryMovies(){
+      if ( !userLoading && !auth ) {
+          setLoadingMovies(false)
+      return
+          }
     setForceUpdate(!forceUpdate)
     setPage(p => {return 1})
     console.log(page)
   }
 
   useEffect(() => { // handle older stored values
-    console.log('USE EFFECT 1 RUNNIG')
+      if ( !userLoading && !auth ) {
+          setLoadingMovies(false)
+      return
+          }
     if(search){
       console.log(search)
             setSearchQuery(search)
@@ -363,7 +378,7 @@ function disableGenresSnapshot(){
 
     async function getMovies(){
       console.log('getting')
-      let url = `https://procurarfilmes.xyz/movies/results/${page}?query=${searchQuery}`
+      let url = `http://localhost:80/movies/results/${page}?query=${searchQuery}`
       console.log(url)
       if (filtersSnapshot.year.on) url = url.concat(`&year=1&min_year=${filtersSnapshot.year.min}&max_year=${filtersSnapshot.year.max}`)
       if (filtersSnapshot.runtime.on) url = url.concat(`&runtime=1&min_runtime=${filtersSnapshot.runtime.min}&max_runtime=${filtersSnapshot.runtime.max}`)
@@ -418,7 +433,7 @@ function disableGenresSnapshot(){
 
 {
       scrollpos > 400 &&
-    <Fab onClick={scrollToTop} size="small" sx={{transition: '0.3s ease-in-out', background: currentTheme.palette.pink, position: 'fixed', bottom: '95px', right: '15px', zIndex: 2,
+    <Fab onClick={scrollToTop} size="small" sx={{transition: '0.3s ease-in-out', background: currentTheme.palette.sec, position: 'fixed', bottom: '95px', right: '15px', zIndex: 2,
     }}>
               <KeyboardArrowUpIcon sx={{fontSize: '2em', color: currentTheme.palette.darker}}/>
           </Fab>
@@ -439,13 +454,14 @@ function disableGenresSnapshot(){
       <div style={{padding: '0 0px 0 0px', width: '100%' }}>
       <Search currentTheme={currentTheme}>
       <SearchIconWrapper>
-              <SearchIcon />
+              <SearchIcon sx={{color: 'white'}} />
             </SearchIconWrapper>
             <StyledInputBase
             autoFocus
             placeholder='Procurar...'
             value={searchQuery}
             onChange={(e) => {setSearchQuery(e.target.value)}}
+            currentTheme={currentTheme}
            
             />
 
@@ -479,7 +495,7 @@ function disableGenresSnapshot(){
       
               <button onClick={queryMovies}
               style={{ borderRadius: '0', fontSize: '1em', fontWeight: '600', color: 'white',border: 'none', padding: '0 20px 0 20px', 
-               background: `linear-gradient(${currentTheme.palette.pink},${currentTheme.palette.pink})`,
+               background: `linear-gradient(${currentTheme.palette.sec},${currentTheme.palette.sec})`,
                borderRadius: '0' }}>
                 Buscar</button>
 

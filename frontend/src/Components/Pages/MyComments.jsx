@@ -53,7 +53,7 @@ function AlertDialog({state, close, mainAction, currentTheme}) {
             Cancelar
           </Button>
           <Button onClick={mainAction}
-          sx={{color: currentTheme.palette.pink}}
+          sx={{color: currentTheme.palette.sec}}
           
             variant="text" >
         Remover</Button>
@@ -67,7 +67,7 @@ function AlertDialog({state, close, mainAction, currentTheme}) {
 export default function MyComments(){
   
   const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
-  const {user, userLoading } = useContext(AuthContext)
+  const {user, userLoading, auth } = useContext(AuthContext)
 
   const listRef = useRef(null);
 
@@ -93,7 +93,7 @@ export default function MyComments(){
  
 
     const getMyComments = async () => {
-      const url = `https://procurarfilmes.xyz/myratings?page=${page}`
+      const url = `http://localhost:80/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -118,17 +118,26 @@ export default function MyComments(){
       setLoading(false)
     }
   useEffect(() => {
+      if ( !userLoading && !auth ) {
+          setLoading(false)
+  
+      return
+    } 
     getMyComments()
   }, [])
 
 
   const getMoreComments = async () => {
+          if ( !userLoading && !auth ) {
+          setLoading(false)
+      return
+          }
     if (end || loadingMore) {
       return    
     }
     console.log(page)
       setLoadingMore(true)
-      const url = `https://procurarfilmes.xyz/myratings?page=${page}`
+      const url = `http://localhost:80/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -170,6 +179,10 @@ export default function MyComments(){
   }
 
   async function reloading(){
+              if ( !userLoading && !auth ) {
+          setLoading(false)
+      return
+          }
     setLoading(true)
     await getMyComments()
 
@@ -188,7 +201,7 @@ export default function MyComments(){
     setTimeout(()=>{
       setIsRSnackBarOpen(false)
     },2500)
-      const url = `https://procurarfilmes.xyz/ratings/delete/${currentCommentId}`
+      const url = `http://localhost:80/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {
@@ -216,13 +229,13 @@ export default function MyComments(){
 
           <Typography sx={{
       
-            color: 'white',
+            color: currentTheme.palette.contra,
             fontWeight: 600,
             fontSize: '1.5em'
           }}>Meus Comentários</Typography>
 
 {!loading ? 
-          <ReplayIcon onClick={reloading}style={{color: 'white', fontSize: '1.6em'}}/>
+          <ReplayIcon onClick={reloading}style={{color: currentTheme.palette.contra, fontSize: '1.6em'}}/>
 : <></>}
           </div>
 
@@ -280,7 +293,7 @@ export default function MyComments(){
 
 {
       scrollpos > 200 &&
-    <Fab onClick={scrollToTop} size="small" sx={{transition: '0.3s ease-in-out', background: currentTheme.palette.pink, position: 'fixed', bottom: '95px', right: '15px', zIndex: 2,
+    <Fab onClick={scrollToTop} size="small" sx={{transition: '0.3s ease-in-out', background: currentTheme.palette.sec, position: 'fixed', bottom: '95px', right: '15px', zIndex: 2,
     }}>
               <KeyboardArrowUpIcon sx={{fontSize: '2em', color: currentTheme.palette.darker}}/>
           </Fab>

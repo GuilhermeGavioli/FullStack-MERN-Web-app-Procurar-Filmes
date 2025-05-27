@@ -50,10 +50,10 @@ const CardsWrapper = styled.div`
 const Item = styled.div`
     width: fit-content;
     height: 70%;
-    background: linear-gradient(${(props) => props.currentTheme.palette.pink},${(props) => props.currentTheme.palette.pink});
-    border: 2px solid ${(props) => props.currentTheme.palette.pink};
+    background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
+    border: 2px solid ${(props) => props.currentTheme.palette.sec};
     background: none;
-    color: white;
+    color: ${(props) => props.currentTheme.palette.contra};
     display: flex;
     align-items: center;
     gap: 8px;
@@ -83,10 +83,10 @@ const Item = styled.div`
 const RuntimeItem = styled.p`
     width: fit-content;
     height: 70%;
-    background: linear-gradient(${(props) => props.currentTheme.palette.pink},${(props) => props.currentTheme.palette.pink});
-      border: 2px solid ${(props) => props.currentTheme.palette.pink};
+    background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
+      border: 2px solid ${(props) => props.currentTheme.palette.sec};
     background: none;
-    color: white;
+    color: ${(props) => props.currentTheme.palette.contra};
     display: flex;
     align-items: center;
     gap: 8px;
@@ -106,10 +106,10 @@ const RuntimeItem = styled.p`
 const YearItem = styled.div`
     width: fit-content;
     height: 70%;
-    background: linear-gradient(${(props) => props.currentTheme.palette.pink},${(props) => props.currentTheme.palette.pink});
-      border: 2px solid ${(props) => props.currentTheme.palette.pink};
+    background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
+      border: 2px solid ${(props) => props.currentTheme.palette.sec};
     background: none;
-    color: white;
+    color: ${(props) => props.currentTheme.palette.contra};
     display: flex;
     align-items: center;
     gap: 8px;
@@ -132,7 +132,7 @@ const MovieTitle = MUIStyled(Typography)`
     padding: 0;
     font-weight: 700;
     ${(props) => props.currentTheme.breakpoints.down('md')} {
-       color: white;
+       color: ${(props) => props.currentTheme.palette.contra};
     }
 
     ${(props) => props.currentTheme.breakpoints.up('md')} {
@@ -149,10 +149,10 @@ const MovieDescription = MUIStyled(Typography)`
   text-align: justify;
   word-spacing: 1px; 
 
-  color: rgb(227,226,230);
+  color: ${(props) => props.currentTheme.palette.contra};
   ${(props) => props.currentTheme.breakpoints.down('md')} {
     line-height: 22px;
-    font-size: .8em;
+    font-size: 1em;
     }
     
     ${(props) => props.currentTheme.breakpoints.up('md')} {
@@ -189,7 +189,7 @@ const MovieTopicContainer = MUIStyled(Typography)`
 
 const MovieTopicTitle = MUIStyled(Typography)`
 font-weight: 600;
- color: ${(props) => props.currentTheme.palette.pink};
+ color: ${(props) => props.currentTheme.palette.sec};
 
      ${(props) => props.currentTheme.breakpoints.down('md')} {
       }
@@ -329,7 +329,7 @@ export default function MovieScreen() {
     setRatingsLoading(true)
     setLoadingMoreRatings(true)
     setIsRatingsContainerOpen(true)
-    const url = `https://procurarfilmes.xyz/ratings/${movie?._id}?page=${ratingsPage}`
+    const url = `http://localhost:80/ratings/${movie?._id}?page=${ratingsPage}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -359,7 +359,7 @@ export default function MovieScreen() {
     console.log('firing gettting more ratings')
     if (isRatingsEnd || loadingMoreRatings) return
     setLoadingMoreRatings(true)
-    const res = await fetch(`https://procurarfilmes.xyz/ratings/${movie?._id}?page=${ratingsPage}`, {
+    const res = await fetch(`http://localhost:80/ratings/${movie?._id}?page=${ratingsPage}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
@@ -391,7 +391,7 @@ export default function MovieScreen() {
       return prev.filter((c) => { return c._id !== currentCommentId})
     })
     handleShowingRFeedback()
-      const url = `https://procurarfilmes.xyz/ratings/delete/${currentCommentId}`
+      const url = `http://localhost:80/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

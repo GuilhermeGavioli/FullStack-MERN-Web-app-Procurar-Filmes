@@ -8,13 +8,13 @@ import { ThemeContext } from './Contexts/ThemeContext';
 
 const PinkSwitchMUI = styled(Switch)(({currentTheme, theme }) => ({
     '& .MuiSwitch-switchBase.Mui-checked': {
-      color: currentTheme.palette.pink,
+      color: currentTheme.palette.sec,
       '&:hover': {
         backgroundColor: currentTheme.palette.lighter,
       },
     },
     '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-      backgroundColor: currentTheme.palette.pink
+      backgroundColor: currentTheme.palette.sec
     },
   }));
 

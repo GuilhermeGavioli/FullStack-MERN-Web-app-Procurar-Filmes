@@ -5,6 +5,7 @@ export class User{
         readonly name: string,
         readonly picture: string,
         readonly email: string,
+        readonly type: string,
     ){}
 }
 
@@ -13,6 +14,7 @@ export interface MongoUser {
     name: string,
     picture: string,
     email: string,
+    type: string,
 }
 
 

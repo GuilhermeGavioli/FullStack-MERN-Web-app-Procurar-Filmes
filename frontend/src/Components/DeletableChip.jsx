@@ -14,7 +14,7 @@ const StyledDeletableChip = styled(Chip)((currentTheme) => ({
   margin: '0px',
   fontSize: '0.7em',
   '& .MuiSvgIcon-root': {
-    background: `${(props) => props.currentTheme.palette.pink}`,
+    background: `${(props) => props.currentTheme.palette.sec}`,
     borderRadius: '50%',
     fontSize: '1.4em',
   },
@@ -31,7 +31,7 @@ export default function DeletableChip({name, action, click_action}) {
 
   return (
     <StyledDeletableChip currentTheme={currentTheme} onClick={()=> fireClickAction()} sx={{
-      background: currentTheme.palette.pink, color: 'white',
+      background: currentTheme.palette.sec, color: currentTheme.palette.contra,
       padding: '2px 0px', margin: 0,
       fontSize: '.8em',
       height: 'fit-content'

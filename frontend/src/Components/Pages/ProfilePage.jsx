@@ -6,6 +6,7 @@ import { Skeleton } from '@mui/material';
 import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import EditIcon from '@mui/icons-material/Edit';
 
 import CircularProgress from '@mui/material/CircularProgress';
 import { ThemeContext } from '../Contexts/ThemeContext';
@@ -14,6 +15,10 @@ export default function ProfilePage (){
         const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
     const {user, userLoading, logout, loggingOutLoading} = React.useContext(AuthContext)
 
+
+function enterEditMode(){
+
+}
 
     return(
         <React.Fragment>
@@ -26,11 +31,11 @@ export default function ProfilePage (){
 :
 <div style={{display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center' }}>
     <div style={{width: '100px', height: '100px', borderRadius: '50%',
-    background: `linear-gradient(180deg, ${currentTheme.palette.pink} 0%,${currentTheme.palette.pink_light}`, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+    background: `linear-gradient(180deg, ${currentTheme.palette.sec} 0%,${currentTheme.palette.sec_light}`, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
     <img src={user?.picture} style={{width: '93px', height: '93px', borderRadius: '50%',
-    background: 'white', margin: 'auto'}} alt="" />
+    background: currentTheme.palette.contra, margin: 'auto'}} alt="" />
     </div>
-    <h1 style={{fontSize: '1.5em', fontWeight: 500, color: 'white'}}>{user?.name}</h1>
+    <h1 style={{fontSize: '1.5em', fontWeight: 500, color: currentTheme.palette.contra}}>{user?.name}</h1>
 </div>
 }
 
@@ -44,10 +49,10 @@ export default function ProfilePage (){
 :
 
 <>
-<div style={{background: currentTheme.palette.mid, borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center'}}>
-    <EmailIcon sx={{margin: 'auto', color: 'white', fontSize: '1em'}}/>
-</div>
-<p style={{fontSize: '.9em', fontWeight: 400, color: 'white'}}>{user?.email}</p>
+{/* <div style={{background: currentTheme.palette.mid, borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center'}}>
+    <EmailIcon sx={{margin: 'auto', color: currentTheme.palette.contra, fontSize: '1em'}}/>
+</div> */}
+<p style={{fontSize: '.9em', fontWeight: 400, color: currentTheme.palette.contra}}>{user?.email}</p>
 </>
 }
 </div>
@@ -58,10 +63,15 @@ export default function ProfilePage (){
     :
 
     !loggingOutLoading &&
-        <Button color="error" sx={{color: currentTheme.palette.pink}} variant="text" onClick={logout}>
-    <LogoutIcon sx={{marginRight: '5px'}}></LogoutIcon>
+    <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
+    <Button sx={{color: currentTheme.palette.lighter, border: `1px solid ${currentTheme.palette.lighter}` }} variant="outlined" onClick={logout}>
+     <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.lighter, fontSize: '1.2em', marginRight: '5px'}}/>
+    Editar Nome</Button>
+
+        <Button sx={{backgroundColor: currentTheme.palette.sec}} variant="contained" onClick={logout}>
+    <LogoutIcon sx={{marginRight: '5px',fontSize: '1.2em'}}></LogoutIcon>
     Log out</Button>
-    
+    </div>
 
 }
 
@@ -72,7 +82,7 @@ export default function ProfilePage (){
 </Button>
 }
 
-{/* <Button sx={{color: 'white'}} variant="text" >
+{/* <Button sx={{color: currentTheme.palette.contra}} variant="text" >
     <ModeEditOutlineIcon sx={{marginRight: '5px'}}></ModeEditOutlineIcon>
     Edit
     </Button> */}

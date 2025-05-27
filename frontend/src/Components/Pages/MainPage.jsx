@@ -14,17 +14,19 @@ import GenreCarrocel from "../GenreCarrocel";
 
 
 import MovieScreen from "../Screen/MovieScreen";
-import { theme } from '../../theme';
+
 
 import { AuthContext } from '../Contexts/AuthContext';
 import { useContext } from 'react';
+import { ThemeContext } from '../Contexts/ThemeContext';
 export const TopMoviesContext = createContext()
 export const MoviesContext = createContext()
 
 
 
 function MainPage() {
-  const {user, userLoading, goTo, auth} = useContext(AuthContext)
+  const {user, userLoading, auth} = useContext(AuthContext)
+  const {currentTheme} = useContext(ThemeContext)
   const [movies, setMovies] = useState([{id:1},{id:2},{id:3},{id:4},])
   const [moviesLoading, setMoviesLoading] = useState(true)
   const [moviesRetry, setMoviesRetry] = useState(false)
@@ -55,13 +57,7 @@ function MainPage() {
   }
 
     const getFirstMovies = async () => {
-    if ( !userLoading && !auth ) {
-          setMovies([])
-          setMoviesLoading(false)
-    setMoviesRetry(true)
-      return
-    } 
-    const url = `https://procurarfilmes.xyz/movies/${page}/genres?genre=${genre}`
+    const url = `http://localhost:80/movies/${page}/genres?genre=${genre}`
     const res = await fetch(url, {
     headers: {
       'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -92,10 +88,17 @@ function MainPage() {
   }
   }
   useEffect(()=>{
-       setGenre(localStorage.getItem('genre_from_main'))
+        if ( !userLoading && !auth ) {
+          setMovies([])
+          setMoviesLoading(false)
+      return
+    } 
+    console.log('main page use effect')
+       setGenre(localStorage.getItem('genre_from_main') || 'Animation')
     try{
       getFirstMovies()
     } catch(err){
+      console.log('catchinggg')
        setMovies([])
         setMoviesLoading(false)
         setMoviesRetry(true)
@@ -111,13 +114,8 @@ function MainPage() {
 
 
   async function getRandomSample(){
-        if ( !userLoading && !auth ) {
-          setRandomMovies([])
-          setRandomMoviesLoading(false)
-    setRandomMoviesRetry(true)
-      return
-    } 
-    const url = `https://procurarfilmes.xyz/movies/sample/random`
+
+    const url = `http://localhost:80/movies/sample/random`
   const res = await fetch(url, {
     headers: {
       'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -134,6 +132,11 @@ function MainPage() {
   }
   }
   useEffect(()=> {
+            if ( !userLoading && !auth ) {
+          setRandomMovies([])
+          setRandomMoviesLoading(false)
+      return
+    } 
     try{
       getRandomSample()
     } catch(e){
@@ -151,13 +154,8 @@ function MainPage() {
 
 
   async function getOldies(){
-            if ( !userLoading && !auth ) {
-          setOldMovies([])
-          setOldMoviesLoading(false)
-    setOldMoviesRetry(true)
-      return
-    } 
-      const url = `https://procurarfilmes.xyz/movies/sample/olddies`
+
+      const url = `http://localhost:80/movies/sample/olddies`
     const res = await fetch(url, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -174,6 +172,11 @@ function MainPage() {
     }
   }
   useEffect(()=> {
+                if ( !userLoading && !auth ) {
+          setOldMovies([])
+          setOldMoviesLoading(false)
+      return
+    } 
     try{
       getOldies()
     } catch(err){
@@ -195,7 +198,7 @@ function MainPage() {
   const getMoreMovies = async () => {
     if (end) return
     console.log('geting more')
-    const res = await fetch(`https://procurarfilmes.xyz/movies/${page}/genres?genre=${genre}`, {
+    const res = await fetch(`http://localhost:80/movies/${page}/genres?genre=${genre}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
@@ -246,9 +249,9 @@ See all
   <Typography sx={{
     paddingLeft: '12px',
     paddingTop: '7px',
-    color: 'white',
+    color: currentTheme.palette.contra,
     fontWeight: 600,
-    fontSize: '1.5em'
+    fontSize: '1.6em'
   }}>Categorias</Typography>
 <GenreCarrocel moviesRetry={moviesRetry} runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
   <MovieCarrocel finite={false} loading={moviesLoading} moviesRetry={moviesRetry} retry={retry}
@@ -257,19 +260,19 @@ See all
   <Typography sx={{
     paddingLeft: '12px',
     paddingTop: '7px',
-    color: 'white',
+    color: currentTheme.palette.contra,
     fontWeight: 600,
-    fontSize: '1.4em'
+    fontSize: '1.5em'
   }}>Random Sample</Typography>
 <MovieCarrocel loading={randomMoviesLoading} movies={randomMovies} moviesRetry={randomMoviesRetry} retry={retryRandomMovies}/>
 
 
 <Typography sx={{
   paddingLeft: '10px',
-  color: 'white',
+  color: currentTheme.palette.contra,
   fontWeight: 600,
   paddingTop: '7px',
-    fontSize: '1.4em'
+    fontSize: '1.5em'
   }}>Amostra de Antigos (1950)</Typography>
 <MovieCarrocel moviesRetry={oldMoviesRetry} retry={retryOldMovies} loading={oldMoviesLoading} movies={oldMovies}/>
 

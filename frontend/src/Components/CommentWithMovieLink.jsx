@@ -55,7 +55,7 @@ aria-label="settings" aria-controls={open ? 'basic-menu' : undefined}  aria-hasp
 onClick={handleClick}
 >
 
-              <MoreVertIcon sx={{color: 'white'}} />
+              <MoreVertIcon sx={{color: currentTheme.palette.contra}} />
 
             </IconButton>
 
@@ -108,7 +108,7 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
 
   async function updateCommentFetch(){
  try{
-        const res = await fetch(`https://procurarfilmes.xyz/ratings/update/${c_id}`, {
+        const res = await fetch(`http://localhost:80/ratings/update/${c_id}`, {
             method: 'PUT',
             body: JSON.stringify({comment: editMode.newText, stars: editMode.newStars, movie_id: movie_id}),
         
@@ -142,7 +142,7 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
       {
         (user._id == userid) &&
           <div style={{position: 'absolute', top: 0, right: 0, display: 'flex', alignItems: 'center', gap: '5px'}} aria-label="settings">
-               <EditIcon onClick={()=> enterEditMode()} style={{color: 'white', fontSize: '1.2em'}}/>
+               <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.contra, fontSize: '1.2em'}}/>
           <ThreeDotsPainel movie_id={movie_id} currentTheme={currentTheme} openDialog={openDialog} c_id={c_id} aria-label="settings" />
           </div>
           }
@@ -162,14 +162,14 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
         
         }
         title={
-            <Typography variant="body1" style={{color: 'white', fontWeight: 600}}>{username}</Typography>
+            <Typography variant="body1" style={{color: currentTheme.palette.contra, fontWeight: 600}}>{username}</Typography>
         }
         subheader={
           <>
           {
             editMode.editMode ?
                <Rating
-                  sx={{color: currentTheme.palette.pink}}
+                  sx={{color: currentTheme.palette.sec}}
             emptyIcon={<StarIcon style={{ opacity: 0.85 }} fontSize="inherit" />}
             value={editMode.newStars}
             defaultValue={editMode.newStars}
@@ -180,7 +180,7 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
             :
                  <Rating size="small" name="read-only"
                   value={stars2}
-                   readOnly sx={{color: currentTheme.palette.pink, marginTop: '3px'}} emptyIcon={<StarIcon style={{ opacity: 0.85 }} fontSize="inherit" />}
+                   readOnly sx={{color: currentTheme.palette.sec, marginTop: '3px'}} emptyIcon={<StarIcon style={{ opacity: 0.85 }} fontSize="inherit" />}
                               />
           }
           </>
@@ -195,11 +195,11 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
           </div>
                   <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'end', gap: '0'}}>
                     <Button  style={{color: currentTheme.palette.lighter}} onClick={()=> exitEditMode()}>Cancelar</Button>
-                    <Button style={{color: currentTheme.palette.pink}} onClick={()=> saveEditMode()}>Salvar</Button>
+                    <Button style={{color: currentTheme.palette.sec}} onClick={()=> saveEditMode()}>Salvar</Button>
                   </DialogActions>  
       </>
           :
-          <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: 'white', margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
+          <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: currentTheme.palette.contra, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
               {comment2}
           </Typography>
         }

@@ -38,13 +38,13 @@
 //       top: -6,
       
 //       backgroundColor: 'unset',
-//       color: 'white',
+//       color: currentTheme.palette.contra,
 //       '&::before': {
 //         display: 'none',
 //       },
 //       '& *': {
 //         background: 'transparent',
-//         color: 'white',
+//         color: currentTheme.palette.contra,
 //       },
 //     },
 //     '& .MuiSlider-track': {
@@ -117,7 +117,7 @@ const PrettoSlider = styled(Slider)(({currentTheme}) => ({
   height: 8,
   '& .MuiSlider-track': {
     border: 'none',
-    color: currentTheme.palette.pink,
+    color: currentTheme.palette.sec,
   },
   '& .MuiSlider-rail': {
     border: 'none',
@@ -126,7 +126,7 @@ const PrettoSlider = styled(Slider)(({currentTheme}) => ({
   '& .MuiSlider-thumb': {
     height: 18,
     width: 18,
-    backgroundColor: currentTheme.palette.pink,
+    backgroundColor: currentTheme.palette.sec,
     border: `2px solid white`,
     '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
       boxShadow: 'inherit',
@@ -143,7 +143,7 @@ const PrettoSlider = styled(Slider)(({currentTheme}) => ({
     width: 32,
     height: 32,
     borderRadius: '50% 50% 50% 0',
-    backgroundColor: currentTheme.palette.pink,
+    backgroundColor: currentTheme.palette.sec,
     transformOrigin: 'bottom left',
     transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
     '&::before': { display: 'none' },

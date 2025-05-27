@@ -40,16 +40,16 @@ import { ThemeContext } from '../Contexts/ThemeContext';
 //           height: '100%',
 //           background: currentTheme.palette.dark
 //         }}>
-//         <DialogTitle sx={{color: 'white'}} id="alert-dialog-title">
+//         <DialogTitle sx={{color: currentTheme.palette.contra}} id="alert-dialog-title">
 //           {"Deletar Comentário?"}
 //         </DialogTitle>
 //         <DialogContent>
-//           <DialogContentText sx={{color: 'white'}} id="alert-dialog-description">
+//           <DialogContentText sx={{color: currentTheme.palette.contra}} id="alert-dialog-description">
 //             Confirmar Remoção do comentário.
 //           </DialogContentText>
 //         </DialogContent>
 //         <DialogActions>
-//           <Button  sx={{color: 'white'}} onClick={close} autoFocus>
+//           <Button  sx={{color: currentTheme.palette.contra}} onClick={close} autoFocus>
 //             Cancelar
 //           </Button>
 //           <Button onClick={mainAction} color="error" variant="text" >
@@ -89,7 +89,7 @@ function AlertDialog({state, close, mainAction, currentTheme}) {
             Cancelar
           </Button>
           <Button onClick={mainAction}
-          sx={{color: currentTheme.palette.pink}}
+          sx={{color: currentTheme.palette.sec}}
           
             variant="text" >
         Remover</Button>
@@ -104,14 +104,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ColorButton = MUIStyled(Button)(() => ({
-  color: 'white',
-  width: '100%',
-  background: `linear-gradient(${(props) => props.currentTheme.palette.pink},${(props) => props.currentTheme.palette.pink})`,
-  '&:hover': {
-    backgroundColor: `${(props) => props.currentTheme.palette.lighter}`,
-  },
-}));
+
 
 export default function RattingsScreen() {
  const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
@@ -195,7 +188,7 @@ export default function RattingsScreen() {
  
     <div style={{padding: '0 10px 0 10px'}}>   
 
-    <div onClick={handleClickOpen} style={{height: '50px', width: '50px', opacity: '100%', background: currentTheme.palette.pink, position: 'absolute', top: '15px', right: '10px', zIndex: 3, 
+    <div onClick={handleClickOpen} style={{height: '50px', width: '50px', opacity: '100%', background: currentTheme.palette.sec, position: 'absolute', top: '15px', right: '10px', zIndex: 3, 
   display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%'}}>
       <ModeCommentIcon sx={{color: 'white', fontSize: '1.3em'}}></ModeCommentIcon>
   </div>
