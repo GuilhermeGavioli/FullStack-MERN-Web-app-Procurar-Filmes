@@ -55,7 +55,7 @@ aria-label="settings" aria-controls={open ? 'basic-menu' : undefined}  aria-hasp
 onClick={handleClick}
 >
 
-              <MoreVertIcon sx={{color: currentTheme.palette.contra}} />
+              <MoreVertIcon sx={{color: currentTheme.palette.font_color}} />
 
             </IconButton>
 
@@ -136,13 +136,14 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
   return (
     <React.Fragment>
     <Card  sx={{boxShadow: 'none', height: 'fit-content', background: currentTheme.palette.dark, width: '100%', padding: '10px', borderRadius: '0', position: 'relative',
+    maxWidth: '340px'
     }}>
 
    
       {
         (user._id == userid) &&
           <div style={{position: 'absolute', top: 0, right: 0, display: 'flex', alignItems: 'center', gap: '5px'}} aria-label="settings">
-               <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.contra, fontSize: '1.2em'}}/>
+               <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.font_color, fontSize: '1.2em'}}/>
           <ThreeDotsPainel movie_id={movie_id} currentTheme={currentTheme} openDialog={openDialog} c_id={c_id} aria-label="settings" />
           </div>
           }
@@ -162,7 +163,7 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
         
         }
         title={
-            <Typography variant="body1" style={{color: currentTheme.palette.contra, fontWeight: 600}}>{username}</Typography>
+            <Typography variant="body1" style={{color: currentTheme.palette.font_color, fontWeight: 600}}>{username}</Typography>
         }
         subheader={
           <>
@@ -194,12 +195,12 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
        value={editMode.newText} onChange={(e) => setNewCommentValue(e.target.value)}/>
           </div>
                   <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'end', gap: '0'}}>
-                    <Button  style={{color: currentTheme.palette.lighter}} onClick={()=> exitEditMode()}>Cancelar</Button>
+                    <Button  style={{color: currentTheme.palette.editnomebtn}} onClick={()=> exitEditMode()}>Cancelar</Button>
                     <Button style={{color: currentTheme.palette.sec}} onClick={()=> saveEditMode()}>Salvar</Button>
                   </DialogActions>  
       </>
           :
-          <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: currentTheme.palette.contra, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
+          <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: currentTheme.palette.font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
               {comment2}
           </Typography>
         }

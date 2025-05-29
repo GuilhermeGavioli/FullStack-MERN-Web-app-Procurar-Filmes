@@ -8,6 +8,7 @@ export interface Validator{
     isPageValid(page: string): number | false;
     isCommentValid(c: string): string | false;
     isQueryValid(q: string): string | false
+    isNameValid(n: string): string | false
     isStarsValid(s: number): boolean;
     isGenresValid(la: string): string[] | boolean; //#genre array#
 }
@@ -105,6 +106,14 @@ export class ValidatorImpl{
         const r = /[^a-zA-Z0-9À-ÿ \.!?:,()@&\[\]\-_]/g;
         if (q.length > 30 || q.length < 1) return false
         return q.toString().replace(r, " ")
+    }
+
+    public isNameValid(n: string): string | false{
+        const sequential_spaces_r = /\s+/g;
+        n = n.replace(sequential_spaces_r, " ");
+        const r = /[^a-zA-Z0-9À-ÿ \.!?:,()@&\[\]\-_]/g;
+        if (n.length > 20 || n.length < 5) return false
+        return n.toString().replace(r, " ")
     }
 
     public isStarsValid(s: number): boolean{

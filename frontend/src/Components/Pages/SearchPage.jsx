@@ -39,14 +39,6 @@ const MyGrid = styled.div`
 `
 
 const Search = styled('div')((props) => ({
-  position: 'relative',
-  display: 'flex',
-  gap: '5px',
-  backgroundColor: props.currentTheme.palette.mid,
-
-  width: '100%',
-  height: '40px',
-  color: props.currentTheme.palette.contra,
 
 }));
 
@@ -62,10 +54,11 @@ const SearchIconWrapper = styled('div')(() => ({
 }));
 
 const StyledInputBase = styled('input')((props) => ({
-  width: '100%',
+  width: '70%',
   height: '100%',
   margin: 0,
   padding: 0,
+  fontSize: '1.1em',
   paddingLeft: '10px',
   border: 'none',
   outline: 'none',
@@ -348,7 +341,6 @@ function disableGenresSnapshot(){
   },[])
 
   useEffect(() => {
-
     async function run(){
       console.log('use effect')
       console.log(page)
@@ -428,7 +420,7 @@ function disableGenresSnapshot(){
       <div 
          ref={listRef}
          onScroll={handleFetchingMoreOnScroll}
-      style={{background: currentTheme.palette.dark, width: '100%', height: '100%', overflowY:'scroll',paddingBottom: '0px',position: 'relative' }}>
+      style={{background: currentTheme.palette.bg, width: '100%', height: '100%', overflowY:'scroll',paddingBottom: '0px',position: 'relative' }}>
 
 
 {
@@ -448,14 +440,14 @@ function disableGenresSnapshot(){
 
       <Box sx={{ flexGrow: 1 }}>
 
-<div style={{width: '100vw', padding: '0px 0px',
- position: 'fixed', top: '0', left: 0, background: currentTheme.palette.mid, zIndex: 5}}>
+<div style={{width: '100vw', padding: '0p', height: '56px', padding: '10px',
+ position: 'fixed', top: '0', left: 0, background: currentTheme.palette.bars, zIndex: 5}}>
 
-      <div style={{padding: '0 0px 0 0px', width: '100%' }}>
-      <Search currentTheme={currentTheme}>
-      <SearchIconWrapper>
+      <div style={{padding: '0', width: '100%', height: '100%',background: currentTheme.palette.bars, display: 'flex', alignItems: 'center' }}>
+
+      {/* <SearchIconWrapper>
               <SearchIcon sx={{color: 'white'}} />
-            </SearchIconWrapper>
+            </SearchIconWrapper> */}
             <StyledInputBase
             autoFocus
             placeholder='Procurar...'
@@ -465,7 +457,8 @@ function disableGenresSnapshot(){
            
             />
 
-<div style={{  display: 'flex', alignItems: 'center', padding: '0 5px 0 5px' }}>
+<div style={{  display: 'flex', alignItems: 'center', padding: '0',  width: '40px', marginRight: '5px'  }}>
+
 <FilterContext.Provider
       value={{
         minYear, 
@@ -490,18 +483,24 @@ function disableGenresSnapshot(){
         >
         <FilterScreen/>
       </FilterContext.Provider>
-      </div>
+      </div> 
 
       
+     
+
+      <div style={{height: '100%', width: '30%', background: currentTheme.palette.sec}}>
               <button onClick={queryMovies}
-              style={{ borderRadius: '0', fontSize: '1em', fontWeight: '600', color: 'white',border: 'none', padding: '0 20px 0 20px', 
-               background: `linear-gradient(${currentTheme.palette.sec},${currentTheme.palette.sec})`,
-               borderRadius: '0' }}>
-                Buscar</button>
+              style={{ borderRadius: '0',background: 'none', textTransform: 'none', color: 'white',border: 'none', height: '100%', width: '100%',
+            margin: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'
+              }}>
+              <SearchIcon sx={{color: 'white', fontSize: '1.8em'}} />
+                </button>
+                  </div>
+             
 
               
        
-          </Search>
+  
 
               </div>
 
@@ -538,36 +537,36 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
 
 
   <Stack sx={{padding: '10px', paddingTop: 
-    filtersSnapshot.year.on || filtersSnapshot.runtime.on || filtersSnapshot.genres.on ? '65px' : '50px'
+    filtersSnapshot.year.on || filtersSnapshot.runtime.on || filtersSnapshot.genres.on ? '83px' : '65px'
     , width: '100vw'}} direction='column' spacing={1}>
   {
     loadingMovies ?
     <React.Fragment>
-        <div style={{width: '100%', background: currentTheme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-    <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+        <div style={{width: '100%', background: currentTheme.palette.movie2_loading_bg, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+    <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
     <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'150px'} height={'20px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
     </div>
 </div>
-        <div style={{width: '100%', background: currentTheme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-    <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+        <div style={{width: '100%', background: currentTheme.palette.movie2_loading_bg, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+    <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
     <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'150px'} height={'20px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
     </div>
 </div>
-        <div style={{width: '100%', background: currentTheme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-    <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
+        <div style={{width: '100%', background: currentTheme.palette.movie2_loading_bg, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
+    <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
     <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-      <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'150px'} height={'20px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band}} variant="rectangular" width={'115px'} height={'12px'} /> 
     </div>
 </div>
       
@@ -629,8 +628,8 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
 <div style={{height: 'fit-content', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', position: 'absolute', margin: 'auto', inset: '0 0 0 0'}}>
               
        
-              <Typography sx={{fontSize: '1.1em', color: currentTheme.palette.lighter, opacity: '50%'}}>Nenhum filme encontrado com</Typography>
-              <Typography sx={{fontSize: '1.1em', color: currentTheme.palette.lighter, opacity: '50%'}}>'{localStorage.getItem('last_query')}'</Typography>
+              <Typography sx={{userSelect: 'none', fontSize: '1.1em', color: currentTheme.palette.lighter, opacity: '50%'}}>Nenhum filme encontrado com</Typography>
+              <Typography sx={{userSelect: 'none', fontSize: '1.1em', color: currentTheme.palette.lighter, opacity: '50%'}}>'{localStorage.getItem('last_query')}'</Typography>
             </div>
             }
 </div>

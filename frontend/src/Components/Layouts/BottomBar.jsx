@@ -44,7 +44,7 @@ export default function BottomBar() {
        boxShadow: 'none',
       margin: 'auto',
       padding: '0px',
-       background: currentTheme.palette.mid,
+       background: currentTheme.palette.bars,
        overflow: 'hidden'
        }}>
      
@@ -53,7 +53,7 @@ export default function BottomBar() {
        
         <HomeIcon sx={{
           fontSize: iconInitialState == 0 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
-          color: iconInitialState == 0 && location.pathname !== '/profile/me'  ? currentTheme.palette.sec : currentTheme.palette.darker,
+          color: iconInitialState == 0 && location.pathname !== '/profile/me'  ? currentTheme.palette.sec : currentTheme.palette.bottom_bar_icon,
           // background: iconInitialState == 0 ? 'rgb(245,238,255)' : 'none',
           }}/>
       </Box>
@@ -63,7 +63,7 @@ export default function BottomBar() {
         <InsertCommentIcon  
         sx={{
           fontSize: iconInitialState == 1 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
-          color: iconInitialState == 1 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.darker
+          color: iconInitialState == 1 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.bottom_bar_icon
           }}/>
       </Box>
   
@@ -71,7 +71,7 @@ export default function BottomBar() {
        onClick={()=> {goTo('/results')}}>
         <SearchIcon  sx={{
           fontSize: iconInitialState == 2 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
-          color: iconInitialState == 2 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.darker
+          color: iconInitialState == 2 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.bottom_bar_icon
           }}/>
       </Box>
 
@@ -82,7 +82,7 @@ export default function BottomBar() {
         <SettingsIcon
         sx={{
           fontSize: iconInitialState == 3 && location.pathname !== '/profile/me' ? '1.8em' : '1.7em', 
-          color: iconInitialState == 3 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.darker
+          color: iconInitialState == 3 && location.pathname !== '/profile/me' ? currentTheme.palette.sec : currentTheme.palette.bottom_bar_icon
           }}
       />
       

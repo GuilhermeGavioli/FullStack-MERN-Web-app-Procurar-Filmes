@@ -48,12 +48,13 @@ const CardsWrapper = styled.div`
 `
 
 const Item = styled.div`
+user-select: none;
     width: fit-content;
     height: 70%;
     background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
     border: 2px solid ${(props) => props.currentTheme.palette.sec};
     background: none;
-    color: ${(props) => props.currentTheme.palette.contra};
+    color: ${(props) => props.currentTheme.palette.font_color};
     display: flex;
     align-items: center;
     gap: 8px;
@@ -83,10 +84,11 @@ const Item = styled.div`
 const RuntimeItem = styled.p`
     width: fit-content;
     height: 70%;
+    user-select: none;
     background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
       border: 2px solid ${(props) => props.currentTheme.palette.sec};
     background: none;
-    color: ${(props) => props.currentTheme.palette.contra};
+    color: ${(props) => props.currentTheme.palette.font_color};
     display: flex;
     align-items: center;
     gap: 8px;
@@ -105,11 +107,12 @@ const RuntimeItem = styled.p`
 `
 const YearItem = styled.div`
     width: fit-content;
+    user-select: none;
     height: 70%;
     background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
       border: 2px solid ${(props) => props.currentTheme.palette.sec};
     background: none;
-    color: ${(props) => props.currentTheme.palette.contra};
+    color: ${(props) => props.currentTheme.palette.font_color};
     display: flex;
     align-items: center;
     gap: 8px;
@@ -145,11 +148,12 @@ const MovieTitle = MUIStyled(Typography)`
 `
 
 const MovieDescription = MUIStyled(Typography)`
+user-select: none;
   font-weight: 400;
   text-align: justify;
   word-spacing: 1px; 
 
-  color: ${(props) => props.currentTheme.palette.contra};
+  color: ${(props) => props.currentTheme.palette.darker_font_color};
   ${(props) => props.currentTheme.breakpoints.down('md')} {
     line-height: 22px;
     font-size: 1em;
@@ -166,6 +170,7 @@ const MovieDescription = MUIStyled(Typography)`
 `
 
 const MovieTopicContainer = MUIStyled(Typography)`
+user-select: none;
   padding: 0 20px 0 20px;
   width: 100%;
   display: flex;
@@ -188,6 +193,7 @@ const MovieTopicContainer = MUIStyled(Typography)`
 `
 
 const MovieTopicTitle = MUIStyled(Typography)`
+user-select: none;
 font-weight: 600;
  color: ${(props) => props.currentTheme.palette.sec};
 
@@ -429,7 +435,7 @@ export default function MovieScreen() {
     role="presentation"
     sx={{ width:'100vw', height: '100vh', overflowY: 'scroll', overflowX: 'hidden', background: currentTheme.palette.dark }}>
 
-<div draggable='false' style={{height: '40px', width: '40px',opacity: '100%', background: currentTheme.palette.mid, position: 'absolute', top: '15px', left: '10px', zIndex: 3, 
+<div draggable='false' style={{height: '45px', width: '45px',opacity: '100%', background: currentTheme.palette.mid, position: 'absolute', top: '15px', left: '10px', zIndex: 3, 
 display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%'}}>
     <ChevronLeftIcon onClick={toggleDrawer(false)}  sx={{color: 'white', fontSize: '2.3em'}}></ChevronLeftIcon>
 </div>
@@ -494,7 +500,7 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
 
 
   <div style={{borderRadius: '0 0 0 0', width: '100%', height: '100%',
-  maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 40%, transparent 100%)', position: 'absolute',
+  maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1.0) 100%, transparent 100%)', position: 'absolute',
   inset: '0 0 0 0', margin: 'auto', zIndex: '1'
 }}>
   <img draggable='false' src={`${movie?.cover}`} style={{width: '100%', height: '100%',}} alt="" />
@@ -515,7 +521,7 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
      
 
 <MovieTopicContainer currentTheme={currentTheme} style={{marginTop: '5px'}}>
-        <MovieTopicTitle gutterBottom currentTheme={currentTheme} style={{color:"white", fontSize: '1.6em'}}>
+        <MovieTopicTitle gutterBottom currentTheme={currentTheme} style={{color:currentTheme.palette.darker_font_color, fontSize: '1.6em'}}>
           {movie?.title}
       </MovieTopicTitle>
      </MovieTopicContainer>

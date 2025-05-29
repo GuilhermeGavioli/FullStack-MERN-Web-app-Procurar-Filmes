@@ -249,9 +249,10 @@ See all
   <Typography sx={{
     paddingLeft: '12px',
     paddingTop: '7px',
-    color: currentTheme.palette.contra,
+    color: currentTheme.palette.font_color,
     fontWeight: 600,
-    fontSize: '1.6em'
+    fontSize: '1.6em',
+    userSelect: 'none'
   }}>Categorias</Typography>
 <GenreCarrocel moviesRetry={moviesRetry} runGenreChange={runGenreChange} genre={genre} loading={moviesLoading}></GenreCarrocel>
   <MovieCarrocel finite={false} loading={moviesLoading} moviesRetry={moviesRetry} retry={retry}
@@ -260,19 +261,21 @@ See all
   <Typography sx={{
     paddingLeft: '12px',
     paddingTop: '7px',
-    color: currentTheme.palette.contra,
+    color: currentTheme.palette.font_color,
     fontWeight: 600,
-    fontSize: '1.5em'
-  }}>Random Sample</Typography>
+    fontSize: '1.5em',
+    userSelect: 'none'
+  }}>Amostra Aleatória</Typography>
 <MovieCarrocel loading={randomMoviesLoading} movies={randomMovies} moviesRetry={randomMoviesRetry} retry={retryRandomMovies}/>
 
 
 <Typography sx={{
   paddingLeft: '10px',
-  color: currentTheme.palette.contra,
+  color: currentTheme.palette.font_color,
   fontWeight: 600,
   paddingTop: '7px',
-    fontSize: '1.5em'
+    fontSize: '1.5em',
+    userSelect: 'none'
   }}>Amostra de Antigos (1950)</Typography>
 <MovieCarrocel moviesRetry={oldMoviesRetry} retry={retryOldMovies} loading={oldMoviesLoading} movies={oldMovies}/>
 

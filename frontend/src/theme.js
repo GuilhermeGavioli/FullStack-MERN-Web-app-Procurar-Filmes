@@ -20,7 +20,25 @@ import { createTheme } from '@mui/material/styles';
       light: 'rgb(40,45,45)',
       lighter: 'rgb(55,50,55)',
 
-      sec: 'rgb(255,47,47)',
+      bars: 'rgb(35,35,35)', //mid
+      bg: 'rgb(23,22,28)', //dark
+      font_color: 'rgb(255,255,255)',
+      genre_bg: 'rgb(35,35,35)', //mid
+      genre_color: 'rgb(255,255,255)', //mid
+      bottom_bar_icon: 'rgb(23,22,28)', //dark
+      movie2_bg: 'rgb(35,35,35)', //dark
+      loading_1: 'rgb(40,45,45)', //dark
+      cover_l: 'linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%)',
+      cover_r: 'linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%)',
+      editnomebtn: 'rgb(55,50,55)',
+
+      movie2_loading_bg: 'rgb(35,35,35)', //mid
+      movie2_loading_band: 'rgb(40,45,45)', //light
+
+      slider_bg: 'rgb(20,20,20)', //light
+
+      sec: 'rgb(47, 255, 227)',
+      // sec: 'rgb(255,47,47)',
     }
   })
 
@@ -95,4 +113,4 @@ breakpoints: {
   })
 
   
-export { theme, theme2, theme3 }
+export { theme }

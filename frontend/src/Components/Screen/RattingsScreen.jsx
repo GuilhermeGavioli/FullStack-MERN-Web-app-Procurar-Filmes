@@ -7,7 +7,6 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
@@ -23,43 +22,12 @@ import { useState } from 'react';
 import { Fragment } from 'react';
 import SnackBar from '../SnackBar';
 import { ThemeContext } from '../Contexts/ThemeContext';
+import { ProfileContext } from '../Contexts/ProfileContext';
+import ProfileContextProvider from '../Contexts/ProfileContext';
+import ProfileScreen from './ProfileScreen';
 
-
-// function AlertDialog({state, close, mainAction, currentTheme}) {
-//   return (
-//     <Fragment>
-//       <Dialog
-//         open={state}
-//         onClose={close}
-//         aria-labelledby="alert-dialog-title"
-//         aria-describedby="alert-dialog-description"
-//       >
-//         <div style={{
-//           borderRadius: '0px',
-//           width: '100%',
-//           height: '100%',
-//           background: currentTheme.palette.dark
-//         }}>
-//         <DialogTitle sx={{color: currentTheme.palette.contra}} id="alert-dialog-title">
-//           {"Deletar Comentário?"}
-//         </DialogTitle>
-//         <DialogContent>
-//           <DialogContentText sx={{color: currentTheme.palette.contra}} id="alert-dialog-description">
-//             Confirmar Remoção do comentário.
-//           </DialogContentText>
-//         </DialogContent>
-//         <DialogActions>
-//           <Button  sx={{color: currentTheme.palette.contra}} onClick={close} autoFocus>
-//             Cancelar
-//           </Button>
-//           <Button onClick={mainAction} color="error" variant="text" >
-//         Deletar</Button>
-//         </DialogActions>
-//         </div>
-//       </Dialog>
-//     </Fragment>
-//   );
-// }
+import IconButton from '@mui/material/IconButton';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function AlertDialog({state, close, mainAction, currentTheme}) {
   return (
@@ -74,18 +42,18 @@ function AlertDialog({state, close, mainAction, currentTheme}) {
         <div style={{
           width: '100%',
           height: '100%',
-          // background: `${currentTheme.palette.dark}`
+          background: `${currentTheme.palette.bg}`
         }}>
-        <DialogTitle sx={{color: `${currentTheme.palette.darker}`}} id="alert-dialog-title">
+        <DialogTitle sx={{color: `${currentTheme.palette.darker_font_color}`}} id="alert-dialog-title">
           {"Deletar Comentário?"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{color: `${currentTheme.palette.dark}`}} id="alert-dialog-description">
+          <DialogContentText sx={{color: `${currentTheme.palette.font_color}`}} id="alert-dialog-description">
             Confirmar remoção do seu comentário?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button  sx={{color: currentTheme.palette.dark}} onClick={close} autoFocus>
+          <Button  sx={{color: currentTheme.palette.font_color}} onClick={close} autoFocus>
             Cancelar
           </Button>
           <Button onClick={mainAction}
@@ -170,6 +138,13 @@ export default function RattingsScreen() {
 
   return (
     <React.Fragment>
+            <ProfileContextProvider>
+               <ProfileScreen/>
+               
+      
+      
+               
+    
 
 {/* <div 
       ref={listRef}
@@ -188,9 +163,17 @@ export default function RattingsScreen() {
  
     <div style={{padding: '0 10px 0 10px'}}>   
 
-    <div onClick={handleClickOpen} style={{height: '50px', width: '50px', opacity: '100%', background: currentTheme.palette.sec, position: 'absolute', top: '15px', right: '10px', zIndex: 3, 
+    <div onClick={handleClickOpen} style={{height: '45px', width: '45px', opacity: '100%', background: currentTheme.palette.sec, position: 'absolute', top: '15px', right: '10px', zIndex: 3, 
   display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%'}}>
-      <ModeCommentIcon sx={{color: 'white', fontSize: '1.3em'}}></ModeCommentIcon>
+    <IconButton 
+    aria-label="settings"  aria-haspopup="true"  
+
+    >
+    
+                  <MoreVertIcon sx={{fontSize: '1.4em',color: 'white'}} />
+    
+                </IconButton>
+      {/* <ModeCommentIcon sx={{color: 'white', fontSize: '1.3em'}}></ModeCommentIcon> */}
   </div>
     </div>
 
@@ -210,7 +193,7 @@ export default function RattingsScreen() {
 <SnackBar text={'Criado com Sucesso!'} state={{open: isCSnackBarOpen, visible: isCSnackBarVisible}} setter={setIsCSnackBarOpen}/>
 
 
-<AppBar position="static" sx={{background: currentTheme.palette.mid}}>
+<AppBar position="static" sx={{background: currentTheme.palette.bars}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between', gap: '5px', alignItems: 'center'}}>
            
     
@@ -230,7 +213,7 @@ export default function RattingsScreen() {
         <Box 
          ref={listRef}
          onScroll={handleFetchingMoreOnScroll}
-        sx={{width: '100%', height: '100%', background: currentTheme.palette.dark, overflowY: 'scroll', padding: '10px 10px 20px 10px'}}>
+        sx={{width: '100%', height: '100%', background: currentTheme.palette.bg, overflowY: 'scroll', padding: '10px 10px 20px 10px'}}>
 
 
         
@@ -260,7 +243,7 @@ export default function RattingsScreen() {
         </Box>
       </Dialog>
 
-
+        </ProfileContextProvider>
     </React.Fragment>
   );
 }

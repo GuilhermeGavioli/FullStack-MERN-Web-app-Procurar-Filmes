@@ -50,7 +50,7 @@ export default function TopBar() {
     boxShadow: 'none'
       // boxShadow: 'rgba(0, 0, 0, 0.05) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px',
   }}>
-      <AppBar position="static" sx={{background: currentTheme.palette.mid, boxShadow: 'none'}}>
+      <AppBar position="static" sx={{background: currentTheme.palette.bars, boxShadow: 'none'}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between', gap: '5px', alignItems: 'center'}}>
            
             <div draggable='false'>
@@ -70,7 +70,7 @@ export default function TopBar() {
             
                   :
             
-                <Avatar draggable='false' onClick={() => decideWhereToGo()} alt={user.name} src={user.picture}  sx={{p:0,m:0, width: '40px', height: '40px',bgcolor: grey[800] }} />
+                <Avatar draggable='false' onClick={() => decideWhereToGo()} alt={user.name} src={user.picture}  sx={{p:0,m:0, width: '40px', height: '40px' }} />
               
                 }
 

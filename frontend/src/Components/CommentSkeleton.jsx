@@ -7,7 +7,9 @@ import { useContext } from "react"
 export default function CommentSkeleton (){
       const {currentTheme} = useContext(ThemeContext)
     return (
-        <Card sx={{ background: currentTheme.palette.dark, width: '100%', padding: '10px', borderRadius: '0'}}>
+        <Card sx={{ background: currentTheme.palette.dark, width: '100%', padding: '10px', borderRadius: '0',
+          boxShadow: 'none'
+        }}>
         <CardHeader sx={{padding:0}}
           avatar={
 <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '50%', marginBottom: '10px'}} variant="rectangular" width={'45px'} height={'45px'} /> 

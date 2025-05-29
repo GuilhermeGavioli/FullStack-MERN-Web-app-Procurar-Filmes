@@ -56,10 +56,12 @@ const CardsWrapper = styled.div`
     align-items: center;
     gap: 8px;
 `
+
 const Item = styled.div`
     width: fit-content;
     height: 100%;
-    background: ${(props) => props.currentTheme.palette.mid};
+    background: ${(props) => props.currentTheme.palette.genre_bg};
+    color: ${(props) => props.currentTheme.palette.genre_color};
     display: flex;
     align-items: center;
     gap: 8px;
@@ -70,7 +72,7 @@ const Item = styled.div`
    
     ${(props) => props.currentTheme.breakpoints.down('md')} {
         padding: 5px 10px 5px 10px;
-        font-size: 0.9em;
+        font-size: 1em;
     }
 
     ${(props) => props.currentTheme.breakpoints.up('md')} {
@@ -85,26 +87,37 @@ const Item = styled.div`
 `
 
 const SelectedItem = styled.div`
-    width: fit-content;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 10px 5px 10px;
-    border-radius: 15px;
-    background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
-    font-weight: 600;
+width: fit-content;
+height: 100%;
+display: flex;
+align-items: center;
+gap: 8px;
+border-radius: 15px;
+font-weight: 600;
+background: linear-gradient(${(props) => props.currentTheme.palette.sec},${(props) => props.currentTheme.palette.sec});
     color: white;
-    font-family: roboto;
-    font-size: 0.9em;
+
+
+    ${(props) => props.currentTheme.breakpoints.down('md')} {
+        padding: 5px 10px 5px 10px;
+        font-size: 1em;
+    }
+
+    ${(props) => props.currentTheme.breakpoints.up('md')} {
+        fontSize: 1em;
+        padding: 5px 20px 5px 20px;
+    }
+
+    ${(props) => props.currentTheme.breakpoints.up('lg')} {
+        fontSize: 1em;
+        padding: 5px 20px 5px 20px;
+    }
 `
 
 
 export default function FilterGenreCarrocel({availableGenres, handleGenreChange }){
     const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
-    const genres = [
-        'Animation','Comedy', 'Horror', 'Action', 'Epic', 'SciFi', 'Romance', 'Drama'
-    ]
+  
     
 
     return (
@@ -118,14 +131,25 @@ export default function FilterGenreCarrocel({availableGenres, handleGenreChange 
                     return (
                     g.selected ?
                         <SelectedItem currentTheme={currentTheme} key={g.genre} onClick={() => handleGenreChange(g.genre)}>
-                            <p>{g.genre}</p>
+                            <p style={{color: 'white',userSelect: 'none', wordBreak: 'keep-all', whiteSpace: 'nowrap'}}>{
+                                
+                   
+
+                             g.genre == 'Thriller' ? 'Suspense' : g.genre == 'Fantasy' ? 'Fantasia' : g.genre == 'PostApocaliptycal' ? 'Pós-Apocaliptico' :      g.genre == 'Animation' ? 'Animação' : g.genre == 'Comedy' ? 'Comedia' : g.genre == 'Horror' ? 'Terror' :
+                    g.genre == 'Action' ? 'Ação' : g.genre == 'Epic' ? 'Épico' : g.genre == 'SciFi' ? 'Sci-Fi' :
+                     g.genre == 'Anime' ? g.genre : g.genre == 'Drama' ? g.genre : g.genre == 'Romance' && g.genre
+                                }</p>
                         </SelectedItem>
                     :
       
                         <Item currentTheme={currentTheme} key={g.genre} onClick={() => handleGenreChange(g.genre)}>
 
                      
-                        <p>{g.genre}</p>
+                        <p style={{color:currentTheme.palette.genre_color, userSelect: 'none', wordBreak: 'keep-all', whiteSpace: 'nowrap'}}>{
+                              g.genre == 'Thriller' ? 'Suspense' : g.genre == 'Fantasy' ? 'Fantasia' : g.genre == 'PostApocaliptycal' ? 'Pós-Apocaliptico' :   g.genre == 'Animation' ? 'Animação' : g.genre == 'Comedy' ? 'Comedia' : g.genre == 'Horror' ? 'Terror' :
+                    g.genre == 'Action' ? 'Ação' : g.genre == 'Epic' ? 'Épico' : g.genre == 'SciFi' ? 'Sci-Fi' :
+                     g.genre == 'Anime' ? g.genre : g.genre == 'Drama' ? g.genre : g.genre == 'Romance' && g.genre
+                     }</p>
                     </Item> 
                     )
                     })

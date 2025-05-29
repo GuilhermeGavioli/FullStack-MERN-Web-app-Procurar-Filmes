@@ -97,7 +97,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return (
       <React.Fragment>
  
-        <FilterListIcon sx={{color: 'white', fontSize: '1.5em'}} onClick={handleClickOpen}></FilterListIcon>
+        <FilterListIcon sx={{color: currentTheme.palette.font_color, fontSize: '1.7em',}} onClick={handleClickOpen}></FilterListIcon>
        
         <Dialog
             sx={{width: '100vw'}}
@@ -106,7 +106,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <AppBar sx={{ position: 'relative', background: currentTheme.palette.mid}}>
+          <AppBar sx={{ position: 'relative', background: currentTheme.palette.mid, boxShadow: 'none'}}>
             <Toolbar>
               <IconButton
                 edge="start"
@@ -138,7 +138,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         
          <List sx={style} aria-label="mailbox folders">
 
-         <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.lighter, marginTop: '10px', marginBottom: '5px'}}>
+         <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.font_color, marginTop: '10px', marginBottom: '5px'}}>
           Gênero:
         </p>
        
@@ -148,7 +148,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
         
       
          
-            <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.lighter, marginTop: '20px', marginBottom: '5px'}}>
+            <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.font_color, marginTop: '20px', marginBottom: '5px'}}>
           Ano:
         </p>
 
@@ -156,7 +156,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
          <SliderTwoButtons v1={minYear} v2={maxYear} min={1930} setMin={setMinYear} setMax={setMaxYear} max={2025} start={1990} end={2010} gap={20} state={isYearOn.temp}></SliderTwoButtons>
 
   
- <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.lighter, marginTop: '20px', marginBottom: '5px'}}>
+ <p style={{fontSize: '.9em', fontWeight: 500, color: currentTheme.palette.font_color, marginTop: '20px', marginBottom: '5px'}}>
           Duração:
         </p>
         <PinkSwitch state={isRuntimeOn.temp} setter={setIsRuntimeOn}></PinkSwitch>

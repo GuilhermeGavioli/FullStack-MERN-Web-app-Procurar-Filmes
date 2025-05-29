@@ -127,7 +127,7 @@ const PrettoSlider = styled(Slider)(({currentTheme}) => ({
     height: 18,
     width: 18,
     backgroundColor: currentTheme.palette.sec,
-    border: `2px solid white`,
+    
     '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
       boxShadow: 'inherit',
     },
@@ -206,7 +206,7 @@ export default function SliderTwoButtons({v1,v2,setMin,setMax, min, max, start,g
     <div style={{
       width: '100%',
       margin: 'auto',
-      background: currentTheme.palette.darker,
+      background: currentTheme.palette.slider_bg,
       margin: 0,
       padding: '0 15px',
       borderRadius: '10px'

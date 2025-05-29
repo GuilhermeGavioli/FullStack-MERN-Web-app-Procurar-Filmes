@@ -6,6 +6,7 @@ import { UserRepository } from '../Repository/user.repository';
 export interface UserService{
   createUserIfNecessary(user: User): Promise<string | undefined>
   getUser(id: string): Promise<MongoUser | undefined>
+  editUser(id: string, name: string): Promise<Boolean>
 }
 
 export class UserServiceImpl {
@@ -27,5 +28,11 @@ export class UserServiceImpl {
   async getUser(id: string): Promise<MongoUser | undefined>{
     const found_user = await this.userRepository.findUserById(id)
     return found_user as MongoUser | undefined
+  }
+
+  async editUser(id: string, name: string): Promise<Boolean>{
+    const was_name_updated = await this.userRepository.editUserNameById(id, name)
+    if (was_name_updated) return true
+    return false
   }
 }

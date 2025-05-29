@@ -15,6 +15,7 @@ import { ThemeContext } from './Contexts/ThemeContext';
 import { MovieContext } from './Contexts/MovieContext';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, DialogActions, DialogContent, Fab, TextareaAutosize } from '@mui/material';
+import { ProfileContext } from './Contexts/ProfileContext';
 
 function ThreeDotsPainel({openDialog, c_id, currentTheme}){
     const [anchorEl, setAnchorEl] = useState(null);
@@ -35,10 +36,10 @@ function ThreeDotsPainel({openDialog, c_id, currentTheme}){
 
 <IconButton 
 aria-label="settings" aria-controls={open ? 'basic-menu' : undefined}  aria-haspopup="true"  aria-expanded={open ? 'true' : undefined}
-onClick={handleClick}
+onClick={handleClick} 
 >
 
-              <MoreVertIcon sx={{color: currentTheme.palette.contra}} />
+              <MoreVertIcon sx={{color: currentTheme.palette.font_color}} />
 
             </IconButton>
 
@@ -53,8 +54,8 @@ onClick={handleClick}
           'aria-labelledby': 'basic-button',
         }}
         >
-          <div style={{width: '100%', height: '100%', background: currentTheme.palette.contra}}>
-      <MenuItem  onClick={() => both()}>Remover</MenuItem>
+          <div style={{width: '100%', height: '100%', background: 'white'}}>
+      <MenuItem sx={{fontColor: 'black'}}  onClick={() => both()}>Remover</MenuItem>
           </div>
 
     </Menu>
@@ -69,6 +70,7 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
     const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
     const {movie} = React.useContext(MovieContext)
   const {user} = React.useContext(AuthContext)
+  const {openProfilePage} = React.useContext(ProfileContext)
 
     const [editMode, setEditMode] = useState({editMode: false, newText: null, stars: null})
 
@@ -121,7 +123,7 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
 
   return (
     <Card  sx={{height: 'fit-content', background: currentTheme.palette.dark, width: '100%', padding: '10px', borderRadius: '0', position: 'relative',
-      boxShadow: 'none'
+      boxShadow: 'none',  maxWidth: '340px'
     }}>
 
    
@@ -129,7 +131,7 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
         (user._id == userid) &&
 
           <div style={{position: 'absolute', top: 0, right: 0, display: 'flex', alignItems: 'center', gap: '5px'}} aria-label="settings">
-                       <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.contra, fontSize: '1.2em'}}/>
+                       <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.font_color, fontSize: '1.2em'}}/>
                   <ThreeDotsPainel movie_id={movie._id} currentTheme={currentTheme} openDialog={openDialog} c_id={c_id} aria-label="settings" />
                   </div>
        
@@ -149,12 +151,14 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
             <Avatar sx={{ width: '40px', height: '40px',bgcolor: currentTheme.palette.dark }}
             alt={username}
             src={pic}
+            onClick={() => openProfilePage(username, pic)}
             />
             </div>
            
         }
         title={
-            <Typography variant="body1" style={{color: currentTheme.palette.contra, fontWeight: 600}}>{username}</Typography>
+            <Typography onClick={() => openProfilePage(username, pic)} variant="body1" style={{
+              userSelect: 'none', color: currentTheme.palette.font_color, fontWeight: 600}}>{username}</Typography>
         }
         subheader={
         <>
@@ -199,12 +203,12 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
                  value={editMode.newText} onChange={(e) => setNewCommentValue(e.target.value)}/>
                     </div>
                             <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'end', gap: '0'}}>
-                              <Button  style={{color: currentTheme.palette.lighter}} onClick={()=> exitEditMode()}>Cancelar</Button>
+                              <Button  style={{color: currentTheme.palette.editnomebtn}} onClick={()=> exitEditMode()}>Cancelar</Button>
                               <Button style={{color: currentTheme.palette.sec}} onClick={()=> saveEditMode()}>Salvar</Button>
                             </DialogActions>  
                 </>
                     :
-                    <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: currentTheme.palette.contra, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
+                    <Typography variant="body2"  component="p" sx={{userSelect: 'none', textAlign: 'justify', color: currentTheme.palette.font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
                         {comment2}
                     </Typography>
                   }

@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Box, Fab, Rating } from '@mui/material';
+import { Box, Fab, Rating, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { theme } from '../theme';
 import StarIcon from '@mui/icons-material/Star';
@@ -24,7 +24,7 @@ import { ThemeContext } from './Contexts/ThemeContext';
 
 
 const TextareaAutosize = styled(BaseTextareaAutosize)(
-  () => `
+  ({currentTheme}) => `
   box-sizing: border-box;
   width: 100%;
   resize: unset;
@@ -35,10 +35,11 @@ const TextareaAutosize = styled(BaseTextareaAutosize)(
   line-height: 1.5;
   padding: 8px 12px;
   border-radius: 8px;
-  color: ${(props) => props.currentTheme.palette.mode === 'dark' ? grey[300] : grey[900]};
-  background: ${(props) => props.currentTheme.palette.lighter};
-  border: 1px solid ${(props) => props.currentTheme.palette.mode === 'dark' ? grey[700] : grey[200]};
+  color: ${currentTheme.palette.contra};
+  background: ${currentTheme.palette.dark};
   box-shadow: none;
+  border: none;
+  border: 1px solid ${currentTheme.palette.light};
 
   &:hover {
     border-color: ${blue[400]};
@@ -49,9 +50,8 @@ const TextareaAutosize = styled(BaseTextareaAutosize)(
     box-shadow: 0 0 0 3px ${(props) => props.currentTheme.palette.mode === 'dark' ? blue[600] : blue[200]};
   }
 
-  // firefox
   &:focus-visible {
-    outline: 0;
+    outline: none;
   }
 `,
 );
@@ -120,25 +120,85 @@ color: currentTheme.palette.contra
         }}>
   <AddIcon style={{fontSize: '2em', color: 'white'}} />
 </Fab>
+
+
       <Dialog
         open={open}
         onClose={handleClose}
-        // PaperProps={{
-        //   component: 'form',
-        //   onSubmit: (event) => {
-        //     event.preventDefault();
-        //     const formData = new FormData(event.currentTarget);
-        //     const formJson = Object.fromEntries(formData.entries());
-        //     const email = formJson.email;
-        //     console.log(email);
-        //     handleClose();
-        //   },
-        // }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <div   style={{borderRadius: '0px', background: currentTheme.palette.darker, width: '100%', height: '100%'}}>
+             <DialogContent style={{height: '700px', maxHeight: '90%', background: currentTheme.palette.dark, padding: 0}}>
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', padding: '5px 20px', gap: '0px'}}>
 
-        <DialogTitle sx={{color: currentTheme.palette.contra, fontSize: '1.4em'}}>Comentário</DialogTitle>
+            
+              <Typography  sx={{width: '350px', maxWidth: '100%',
+userSelect: 'none',
+    paddingTop: '7px',
+    color: currentTheme.palette.contra,
+    fontWeight: 600,
+    fontSize: '1.6em',
+                margin: 0
+              }}>
+          Deixe seu Comentário
+        </Typography>
+        <Typography id="alert-dialog-title" sx={{ 
+    color: currentTheme.palette.contra,
+    fontWeight: 500,
+    marign: 0,
+    userSelect: 'none',
+    fontSize: '1em'}}>
+          Qual a sua opinião sobre esse Filme?
+        </Typography>
+        <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+        <img draggable='false' src={movie.cover} style={{height: '150px', width: '120px',
+   }} alt="" />
+    </div>
 
+     <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+          <Rating
+              sx={{color: currentTheme.palette.sec, fontSize: '2.5em'}}
+        emptyIcon={<StarIcon style={{ opacity: 0.85, color: currentTheme.palette.lighter }} fontSize="inherit" />}
+        value={starvalue}
+        defaultValue={starvalue}
+        onChange={(event, newValue) => {
+          setstarvalue(newValue);
+        }}
+        />
+        </div>
+
+         <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
+
+        <TextareaAutosize currentTheme={currentTheme}  aria-label="empty textarea" 
+placeholder="Escreva seu comentário..."  autoFocus value={commentValue} onChange={(e) => setCommentValue(e.target.value)}/>
+</div>
+  
+  </div>
+</DialogContent>
+
+
+
+        <DialogActions sx={{padding: 0}}>
+          <div style={{width: '100%', background: currentTheme.palette.dark, padding: '15px', display: 'flex', justifyContent: 'flex-end'}}>
+          <Button  style={{color: currentTheme.palette.lighter, marginRight: '10px'}} onClick={handleClose}>Cancelar</Button>
+          <Button variant='contained' style={{backgroundColor: currentTheme.palette.sec, boxShadow: 'none'}} onClick={createComment}>Comentar</Button>
+          </div>
+        </DialogActions>
+      </Dialog>
+
+  
+
+        {/* <div style={{background: 'blue',zIndex: '20',height: '100%', width:'100%'}}>
+        <h1>Oi</h1>
+        </div>
+        <h1>Oi</h1> */}
+
+
+
+        {/* <div   style={{borderRadius: '0px', background: currentTheme.palette.darker, width: '100vw', height: '100%', background: 'red'}}>
+
+        <DialogTitle sx={{color: currentTheme.palette.contra, fontSize: '1.4em'}}>O que Acha do Filme?</DialogTitle>
+   <img src={movie.cover} style={{height: '150px', width: '120px'}} alt="" />
 <div style={{padding: '0 20px 0 20px'}}>
 
               <Rating
@@ -163,7 +223,57 @@ placeholder="Escreva seu comentário..."  autoFocus value={commentValue} onChang
           <Button  style={{color: currentTheme.palette.lighter}} onClick={handleClose}>Cancelar</Button>
           <Button style={{color: currentTheme.palette.sec}} onClick={createComment}>Comentar</Button>
         </DialogActions>
-        </div>
+
+     
+        </div> */}
+    
+    </React.Fragment>
+  );
+}
+
+
+
+function AlertDialog() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <React.Fragment>
+      <Button variant="outlined" onClick={handleClickOpen}>
+        Open alert dialog
+      </Button>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+              <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        <h1>cool</h1>
+        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {"Use Google's location service?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Let Google help apps determine location. This means sending anonymous
+            location data to Google, even when no apps are running.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Disagree</Button>
+          <Button onClick={handleClose} autoFocus>
+            Agree
+          </Button>
+        </DialogActions>
       </Dialog>
     </React.Fragment>
   );

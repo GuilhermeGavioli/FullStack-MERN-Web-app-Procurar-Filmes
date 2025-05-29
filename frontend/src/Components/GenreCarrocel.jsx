@@ -44,7 +44,13 @@ export default function GenreCarrocel({runGenreChange,genre, loading, moviesRetr
                     <SelectedItem currentTheme={currentTheme} key={g}>
 
                    
-                    <p>{g}</p>
+                    <p style={{color: 'white',userSelect: 'none', wordBreak: 'keep-all', whiteSpace: 'nowrap'}}>
+                        {
+                    g == 'Animation' ? 'Animação' : g == 'Comedy' ? 'Comedia' : g == 'Horror' ? 'Terror' :
+                    g == 'Action' ? 'Ação' : g == 'Epic' ? 'Épico' : g == 'SciFi' ? 'Sci-fi' :
+                     g == 'Anime' ? g : g == 'Drama' ? g : g == 'Romance' && g 
+                        
+                        }</p>
                 </SelectedItem> 
                     :
                     <Item  currentTheme={currentTheme} key={g} onClick={() => runGenreChange(g)}>
@@ -52,7 +58,16 @@ export default function GenreCarrocel({runGenreChange,genre, loading, moviesRetr
           
 {/* <Image currentTheme={currentTheme} draggable='false' width={'100%'} style={{background: 'none'}} src={`${g}.svg`} alt="" /> */}
     
-                    <p>{g}</p>
+                    <p style={{color:currentTheme.palette.genre_color, userSelect: 'none', wordBreak: 'keep-all', whiteSpace: 'nowrap'}}>
+                         {
+                    g == 'Animation' ? 'Animação' : g == 'Comedy' ? 'Comedia' : g == 'Horror' ? 'Terror' :
+                    g == 'Action' ? 'Ação' : g == 'Epic' ? 'Épico' : g == 'SciFi' ? 'Sci-fi' :
+                     g == 'Anime' ? g : g == 'Drama' ? g : g == 'Romance' && g 
+                        
+                        }
+                        
+                        
+                        </p>
              
                     </Item>
                 )
@@ -104,7 +119,8 @@ const CardsWrapper = styled.div`
 const Item = styled.div`
     width: fit-content;
     height: 100%;
-    background: ${(props) => props.currentTheme.palette.mid};
+    background: ${(props) => props.currentTheme.palette.genre_bg};
+    color: ${(props) => props.currentTheme.palette.genre_color};
     display: flex;
     align-items: center;
     gap: 8px;

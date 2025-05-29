@@ -7,6 +7,7 @@ export interface UserRepository {
     insertUser(user: User): Promise<ObjectId | undefined>
     findOneByEmail(email: string): Promise<MongoUser | undefined>
     findUserById(id: string): Promise<User | undefined>
+    editUserNameById(id: string, new_name: string): Promise<Boolean>
 }
 
 export class UserRepositoryImpl implements UserRepository{
@@ -24,6 +25,12 @@ export class UserRepositoryImpl implements UserRepository{
 
     public async findUserById(id: string): Promise<User | undefined>{
         return await db?.db?.collection('User').findOne({  _id: new ObjectId(id)}) as User | undefined
+    }
+
+    public async editUserNameById(id: string, new_name: string): Promise<Boolean>{
+        const result = await db?.db?.collection('User').updateOne({  _id: new ObjectId(id)}, {$set: {name: new_name}})
+        if (result?.modifiedCount == 1) return true
+        return false
     }
 
 }

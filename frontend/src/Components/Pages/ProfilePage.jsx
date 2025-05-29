@@ -2,7 +2,7 @@ import * as React from 'react'
 import { AuthContext } from '../Contexts/AuthContext'
 import EmailIcon from '@mui/icons-material/Email';
 import { theme } from '../../theme';
-import { Skeleton } from '@mui/material';
+import { DialogActions, Skeleton, TextareaAutosize } from '@mui/material';
 import Button from '@mui/material/Button';
 import LogoutIcon from '@mui/icons-material/Logout';
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
@@ -14,10 +14,37 @@ import { ThemeContext } from '../Contexts/ThemeContext';
 export default function ProfilePage (){
         const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
     const {user, userLoading, logout, loggingOutLoading} = React.useContext(AuthContext)
-
+    const [isEditMode, setIsEditMode] = React.useState(false)
+    const [name2, setName2] = React.useState(user.name)
+    const [newNameValue, setNewNameValue] = React.useState(name2)
 
 function enterEditMode(){
+    setIsEditMode(true)
+}
 
+async function runEdtiFetch(){
+    const res = await fetch(`http://localhost:80/user/edit?name=${encodeURIComponent(newNameValue)}`, {
+    method: 'GET',
+     headers: {
+            'Content-Type': 'application/json',
+             'authorization': `Bearer ${localStorage.getItem('access_token')}`
+        }
+    })
+    if (res.status == 200){
+        setName2(newNameValue)
+        setIsEditMode(false)
+    } else {
+        const {msg} = await res.json()
+        alert('err' +msg)
+    }
+}
+
+async function saveEditMode(){
+    await runEdtiFetch()
+    
+}
+function exitEditMode(){
+    setIsEditMode(false)
 }
 
     return(
@@ -30,12 +57,26 @@ function enterEditMode(){
 <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '50%'}} variant='rounded' width={'100px'} height={'100px'} />
 :
 <div style={{display: 'flex', flexDirection: 'column', gap: '5px', alignItems: 'center' }}>
-    <div style={{width: '100px', height: '100px', borderRadius: '50%',
-    background: `linear-gradient(180deg, ${currentTheme.palette.sec} 0%,${currentTheme.palette.sec_light}`, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+   
     <img src={user?.picture} style={{width: '93px', height: '93px', borderRadius: '50%',
-    background: currentTheme.palette.contra, margin: 'auto'}} alt="" />
-    </div>
-    <h1 style={{fontSize: '1.5em', fontWeight: 500, color: currentTheme.palette.contra}}>{user?.name}</h1>
+     margin: 'auto'}} alt="" />
+    
+
+    {
+        isEditMode ? 
+        <>
+            <div style={{marginTop: '10px'}}> 
+                <TextareaAutosize style={{border: 'none', width: '100%',width: 'fit-content', padding: '5px'}}
+            value={newNameValue} onChange={(e) => setNewNameValue(e.target.value)}/>
+            </div>
+                                        <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'center', gap: '0'}}>
+                              <Button  style={{color: currentTheme.palette.editnomebtn}} onClick={()=> exitEditMode()}>Cancelar</Button>
+                              <Button style={{color: currentTheme.palette.sec}} onClick={()=> saveEditMode()}>Salvar</Button>
+                            </DialogActions>  
+            </>
+        :
+        <h1 style={{fontSize: '1.5em', fontWeight: 500, color: currentTheme.palette.darker_font_color}}>{name2}</h1>
+    }
 </div>
 }
 
@@ -52,7 +93,7 @@ function enterEditMode(){
 {/* <div style={{background: currentTheme.palette.mid, borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center'}}>
     <EmailIcon sx={{margin: 'auto', color: currentTheme.palette.contra, fontSize: '1em'}}/>
 </div> */}
-<p style={{fontSize: '.9em', fontWeight: 400, color: currentTheme.palette.contra}}>{user?.email}</p>
+<p style={{fontSize: '.9em', fontWeight: 400, color: currentTheme.palette.darker_font_color}}>{user?.email}</p>
 </>
 }
 </div>
@@ -63,14 +104,17 @@ function enterEditMode(){
     :
 
     !loggingOutLoading &&
-    <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
-    <Button sx={{color: currentTheme.palette.lighter, border: `1px solid ${currentTheme.palette.lighter}` }} variant="outlined" onClick={logout}>
-     <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.lighter, fontSize: '1.2em', marginRight: '5px'}}/>
+
+
+        <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
+    <Button onClick={enterEditMode} disabled={isEditMode} sx={{color: currentTheme.palette.editnomebtn, border: `1px solid ${currentTheme.palette.editnomebtn}` }} variant="outlined">
+     <EditIcon style={{color: currentTheme.palette.editnomebtn, fontSize: '1.2em', marginRight: '5px'}}/>
     Editar Nome</Button>
+    
 
         <Button sx={{backgroundColor: currentTheme.palette.sec}} variant="contained" onClick={logout}>
     <LogoutIcon sx={{marginRight: '5px',fontSize: '1.2em'}}></LogoutIcon>
-    Log out</Button>
+    Sair</Button>
     </div>
 
 }

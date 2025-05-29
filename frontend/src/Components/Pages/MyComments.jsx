@@ -40,16 +40,16 @@ function AlertDialog({state, close, mainAction, currentTheme}) {
           height: '100%',
           // background: `${currentTheme.palette.dark}`
         }}>
-        <DialogTitle sx={{color: `${currentTheme.palette.darker}`}} id="alert-dialog-title">
+        <DialogTitle sx={{color: `${currentTheme.palette.darker_font_color}`}} id="alert-dialog-title">
           {"Deletar Comentário?"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{color: `${currentTheme.palette.dark}`}} id="alert-dialog-description">
+          <DialogContentText sx={{color: `${currentTheme.palette.font_color}`}} id="alert-dialog-description">
             Confirmar remoção do seu comentário?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button  sx={{color: currentTheme.palette.dark}} onClick={close} autoFocus>
+          <Button  sx={{color: currentTheme.palette.font_color}} onClick={close} autoFocus>
             Cancelar
           </Button>
           <Button onClick={mainAction}
@@ -229,13 +229,13 @@ export default function MyComments(){
 
           <Typography sx={{
       
-            color: currentTheme.palette.contra,
+            color: currentTheme.palette.font_color,
             fontWeight: 600,
             fontSize: '1.5em'
           }}>Meus Comentários</Typography>
 
 {!loading ? 
-          <ReplayIcon onClick={reloading}style={{color: currentTheme.palette.contra, fontSize: '1.6em'}}/>
+          <ReplayIcon onClick={reloading}style={{color: currentTheme.palette.font_color, fontSize: '1.6em'}}/>
 : <></>}
           </div>
 

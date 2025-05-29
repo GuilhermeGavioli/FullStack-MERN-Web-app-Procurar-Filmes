@@ -72,8 +72,8 @@ const LeftMask = styled.div`
   z-index: 3;
   position: absolute;
   width: 80px;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%);
-  height: 93%;
+  background: ${({ currentTheme }) => currentTheme.palette.cover_l};
+  height: 89%;
   margin: auto 0;
   bottom: 0;
   top: 0;
@@ -85,8 +85,8 @@ const LeftMask = styled.div`
   z-index: 3;
   position: absolute;
   width: 60px;
-  background: linear-gradient(270deg,  rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%);
-  height: 93%;
+  background: ${({ currentTheme }) => currentTheme.palette.cover_r};
+  height: 89%;
   margin: auto 0;
   bottom: 0;
   top: 0;
@@ -114,8 +114,8 @@ export default function MovieCarrocel({ finite = true, movies, loading, getMoreM
  
  <MasterWrapper>
  <WrapperF>
-  <LeftMask/>
-  <RightMask/>
+  <LeftMask currentTheme={currentTheme}/>
+  <RightMask currentTheme={currentTheme}/>
 <Wrapper onScroll={(e) => fetchMoreMovies(e)}>
 
 {
@@ -151,7 +151,7 @@ moviesRetry &&
             return(
               loading
                 ? 
-              <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'135px'} height={'160px'} /> 
+              <Skeleton animation="wave" sx={{background: currentTheme.palette.loading_1, borderRadius: '15px'}} variant="rectangular" width={'135px'} height={'160px'} /> 
                 : 
               <MovieCard draggable='false' style={{  userSelect: 'unset', draggable: 'false'}} key={movie?._id} movie={movie} alt="" />
             )

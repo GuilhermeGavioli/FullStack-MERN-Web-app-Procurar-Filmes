@@ -9,6 +9,7 @@ export interface UserController{
     authGoogle(request: Request, response: Response): Promise<any>;
     authEmail(request: Request, response: Response): Promise<any>;
     getUserInfo(request: Request, response: Response): Promise<any>
+    editUserName(request: Request, response: Response): Promise<any>
 }
 
 export class UserControllerImpl implements UserController{
@@ -58,6 +59,33 @@ export class UserControllerImpl implements UserController{
         const user = await this.userService.getUser(user_id)
         if (!user) return response.status(404).end()
         return response.json(user).end()
+    }
+
+    public async editUserName(request: Request, response: Response): Promise<any>{
+        console.log('rota')
+        const {name}: any = request.query
+        console.log(name)
+        if (!name) {
+            return response.status(404).json({msg: 'Nome não providenciado.'})
+        }
+        const is_new_name_valid = this.validator.isNameValid(name.toString())
+        if (!is_new_name_valid){
+            return response.status(404).json({msg: 'Nome invalido. Min=3, Max=20'})
+        }
+        const user_id = response.locals.user_id
+        const user = await this.userService.getUser(user_id)
+        if (!user) return response.status(404).end()
+        if (user.name == name){
+            return response.status(404).json({msg: 'Nome é o mesmo.'})
+        }
+        if (user.email == 'test@test') {
+            return response.status(404).json({msg: 'Nome do usuario de teste não pode ser editado'})
+        }
+        const edited = await this.userService.editUser(user_id, name)
+        if (!edited){
+            return response.status(404).json({msg: 'Erro inesperado. Tente novamente.'})
+        }
+        return response.status(200).end()
     }
 
 }

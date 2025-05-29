@@ -32,9 +32,10 @@ export default function DeletableChip({name, action, click_action}) {
   return (
     <StyledDeletableChip currentTheme={currentTheme} onClick={()=> fireClickAction()} sx={{
       background: currentTheme.palette.sec, color: currentTheme.palette.contra,
-      padding: '2px 0px', margin: 0,
+      padding: '5px 3px', margin: 0,
       fontSize: '.8em',
-      height: 'fit-content'
+      height: 'fit-content',
+      color: 'white'
       
     }} label={name} onDelete={action} />
   )
