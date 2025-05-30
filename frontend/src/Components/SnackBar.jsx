@@ -32,14 +32,16 @@ export default function SnackBar({state, setter, text}) {
 
   return (
     <div style={{background: currentTheme.palette.sec , width: '90%', maxWidth: '300px', height: 'fit-content', transition: '0.3s ease-in-out',
-    position: 'fixed', top: state?.open ? '25px' : '-50px', margin: 'auto', left: 0, right: 0, zIndex: 15, 
+    position: 'fixed',  margin: 'auto', left: 0, right: 0, zIndex: 150, 
     alignItems: 'center', justifyContent: 'space-between', borderRadius: '5px', fontWeight: 400, fontSize: '1em', color: 'rgb(50,50,50)',
-    display: state?.visible ? 'flex' : 'none' , transition: '0.3s ease-in-out', alignContent: 'center'
+    transition: '0.3s ease-in-out', alignContent: 'center',
+    display: state?.visible ? 'flex' : 'none' , 
+    top: state?.open ? '25px' : '-50px',
     }}>
       <div style={{position:'relative', width: '100%', gap: '5px', height: '100%', padding: '10px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
 
-  <CheckCircleOutlineIcon sx={{color: currentTheme.palette.contra}}></CheckCircleOutlineIcon>
-<p style={{color: currentTheme.palette.contra, }}>
+  <CheckCircleOutlineIcon sx={{color: 'white'}}></CheckCircleOutlineIcon>
+<p style={{color: 'white', fontWeight: 600 }}>
   {text}</p>
    
 <IconButton
@@ -54,8 +56,7 @@ sx={{
         onClick={handleClose}>
         <CloseIcon fontSize="small"     
           sx={{
-       
-            color: currentTheme.palette.contra
+            color: 'white'
       }} />
       </IconButton>
     

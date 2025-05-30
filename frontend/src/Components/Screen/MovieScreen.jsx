@@ -59,12 +59,12 @@ user-select: none;
     align-items: center;
     gap: 8px;
     font-family: roboto;
+    font-size: 1.1em;
     
     ${(props) => props.currentTheme.breakpoints.down('md')} {
       padding: 12px 15px 12px 15px;
       border-radius: 20px;
       font-weight: 500;
-      font-size: .9em;
        
       }
       
@@ -97,12 +97,12 @@ const RuntimeItem = styled.p`
     font-size: .9em;
     font-weight: 500;
     font-family: roboto;
+    font-size: 1.1em;
 
           ${(props) => props.currentTheme.breakpoints.up('lg')} {
        padding: 20px 35px 20px 35px;
       border-radius: 30px;
       font-weight: 600;
-      font-size: 1.2em;
       }
 `
 const YearItem = styled.div`
@@ -121,12 +121,13 @@ const YearItem = styled.div`
     font-size: .9em;
     font-weight: 500;
     font-family: roboto;
+ font-size: 1.1em;
 
           ${(props) => props.currentTheme.breakpoints.up('lg')} {
        padding: 20px 35px 20px 35px;
       border-radius: 30px;
       font-weight: 600;
-      font-size: 1.2em;
+
       }
 `
 
@@ -153,9 +154,9 @@ user-select: none;
   text-align: justify;
   word-spacing: 1px; 
 
+  line-height: 26px;
   color: ${(props) => props.currentTheme.palette.darker_font_color};
   ${(props) => props.currentTheme.breakpoints.down('md')} {
-    line-height: 22px;
     font-size: 1em;
     }
     
@@ -195,6 +196,7 @@ user-select: none;
 const MovieTopicTitle = MUIStyled(Typography)`
 user-select: none;
 font-weight: 600;
+ font-size: 1.3em;
  color: ${(props) => props.currentTheme.palette.sec};
 
      ${(props) => props.currentTheme.breakpoints.down('md')} {
@@ -215,8 +217,8 @@ const MovieCoverContainer = styled.div`
   width: 100%;
 
    ${(props) => props.currentTheme.breakpoints.down('md')} {
-        max-width: 300px;
-        height: 350px;
+        max-width: 400px;
+        height: 390px;
       }
       
       ${(props) => props.currentTheme.breakpoints.up('md')} {
@@ -456,7 +458,7 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
 
 {
   movieLoading ?
-  <Skeleton animation="wave" sx={{background: grey[900], borderRadius: '0 0 25px 25px'}} variant="rectangular" width={'100%'} height={'280px'} />
+  <Skeleton animation="wave" sx={{background: currentTheme.palette.mid,borderRadius: '0 0 0 0', width:'100%', height:'390px'}} variant="rectangular"  />
   :
 
   <MovieCoverContainer currentTheme={currentTheme}>
@@ -533,9 +535,9 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
       {
         movieLoading || !movie?.genres ?
         <>
-        <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
-      <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'60px'} height={'100%'} />
-      <Skeleton animation="wave" sx={{background: grey[400],padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'80px'} height={'100%'} />
+        <Skeleton animation="wave" sx={{background: currentTheme.palette.mid,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'100px'} height={'100%'} />
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.mid,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'60px'} height={'100%'} />
+      <Skeleton animation="wave" sx={{background: currentTheme.palette.mid,padding: '0 15px 0 15px', borderRadius: '13px'}} variant="rectangular" width={'80px'} height={'100%'} />
         </>
         :
         
@@ -563,10 +565,10 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
 
 {movieLoading ? 
   <div style={{padding: '0 10px 0 10px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
-            <Skeleton animation="wave" height={14} width={'100%'} style={{ marginBottom: 3 }} />
-            <Skeleton animation="wave" height={14} width={'70%'} style={{ marginBottom: 3 }}/>
-            <Skeleton animation="wave" height={14} width={'60%'}  style={{ marginBottom: 3 }}/>
-            <Skeleton animation="wave" height={14} width={'80%'}  style={{ marginBottom: 3 }}/>
+            <Skeleton animation="wave" height={32} width={'100%'} style={{ marginBottom: 2, maxWidth: '400px' }} />
+            <Skeleton animation="wave" height={32} width={'70%'} style={{ marginBottom: 2 , maxWidth: '400px'}}/>
+            <Skeleton animation="wave" height={32} width={'60%'}  style={{ marginBottom: 2, maxWidth: '400px' }}/>
+            <Skeleton animation="wave" height={32} width={'80%'}  style={{ marginBottom: 2, maxWidth: '400px' }}/>
             </div>
     
 :
@@ -583,27 +585,6 @@ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '
 
 }
 
-{/* <MovieTopicContainer style={{marginTop: '5px'}} currentTheme={currentTheme}>
-        <MovieTopicTitle style={{marginTop: '5px'}} gutterBottom currentTheme={currentTheme}>
-          Cenas
-      </MovieTopicTitle>
- <div  draggable='false' style={{padding: '0 15px 0 15px', width: '100%', overflowX: 'scroll', marginTop: '5px'}}>
-  <div  draggable='false' style={{width: 'fit-content', display: 'flex', gap: '5px',}}>
-  <img draggable='false'
-  style={{width: '80px', height: '60px'}}
-  src="https://ew.com/thmb/xiMgSzvxc-O9C5d11EF0zbWS2HA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/chernabog-349f5355c81d4fb795f736952557eab7.jpg" alt="" />
-  <img draggable='false'
-  style={{width: '80px', height: '60px'}}
-  src="https://platform.polygon.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/24396832/FantasiaMickey.jpg?quality=90&strip=all&crop=13.055555555556,0,73.888888888889,100" alt="" />
-  <img draggable='false'
-  style={{width: '80px', height: '60px'}}
-  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsd3zlzN8BCSeC11n9-7a3bc0N0D76u4nDWg&s" alt="" />
-  <img draggable='false'
-  style={{width: '80px', height: '60px'}}
-  src="https://ew.com/thmb/xiMgSzvxc-O9C5d11EF0zbWS2HA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/chernabog-349f5355c81d4fb795f736952557eab7.jpg" alt="" />
-  </div>
- </div>
-</MovieTopicContainer> */}
 
 
 

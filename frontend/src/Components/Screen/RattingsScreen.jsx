@@ -26,6 +26,8 @@ import { ProfileContext } from '../Contexts/ProfileContext';
 import ProfileContextProvider from '../Contexts/ProfileContext';
 import ProfileScreen from './ProfileScreen';
 
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+
 import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
@@ -44,16 +46,16 @@ function AlertDialog({state, close, mainAction, currentTheme}) {
           height: '100%',
           background: `${currentTheme.palette.bg}`
         }}>
-        <DialogTitle sx={{color: `${currentTheme.palette.darker_font_color}`}} id="alert-dialog-title">
+        <DialogTitle sx={{color: `${currentTheme.palette.bottom_bar_icon}`}} id="alert-dialog-title">
           {"Deletar Comentário?"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{color: `${currentTheme.palette.font_color}`}} id="alert-dialog-description">
+          <DialogContentText sx={{color: `${currentTheme.palette.bottom_bar_icon}`}} id="alert-dialog-description">
             Confirmar remoção do seu comentário?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button  sx={{color: currentTheme.palette.font_color}} onClick={close} autoFocus>
+          <Button  sx={{color: currentTheme.palette.bottom_bar_icon}} onClick={close} autoFocus>
             Cancelar
           </Button>
           <Button onClick={mainAction}
@@ -170,7 +172,7 @@ export default function RattingsScreen() {
 
     >
     
-                  <MoreVertIcon sx={{fontSize: '1.4em',color: 'white'}} />
+                  <MoreHorizIcon sx={{fontSize: '1.4em',color: 'white'}} />
     
                 </IconButton>
       {/* <ModeCommentIcon sx={{color: 'white', fontSize: '1.3em'}}></ModeCommentIcon> */}
@@ -247,3 +249,6 @@ export default function RattingsScreen() {
     </React.Fragment>
   );
 }
+
+
+

@@ -40,16 +40,16 @@ function AlertDialog({state, close, mainAction, currentTheme}) {
           height: '100%',
           // background: `${currentTheme.palette.dark}`
         }}>
-        <DialogTitle sx={{color: `${currentTheme.palette.darker_font_color}`}} id="alert-dialog-title">
+        <DialogTitle sx={{color: `${currentTheme.palette.bottom_bar_icon}`}} id="alert-dialog-title">
           {"Deletar Comentário?"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{color: `${currentTheme.palette.font_color}`}} id="alert-dialog-description">
+          <DialogContentText sx={{color: `${currentTheme.palette.bottom_bar_icon}`}} id="alert-dialog-description">
             Confirmar remoção do seu comentário?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button  sx={{color: currentTheme.palette.font_color}} onClick={close} autoFocus>
+          <Button  sx={{color: currentTheme.palette.bottom_bar_icon}} onClick={close} autoFocus>
             Cancelar
           </Button>
           <Button onClick={mainAction}
@@ -188,8 +188,36 @@ export default function MyComments(){
 
   }
 
-  const [isCSnackBarOpen, setIsCSnackBarOpen] = useState(false)
+const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
+  const [isEdSnackBarVisible, setIsEdSnackBarVisible] = useState(false)
+
   const [isRSnackBarOpen, setIsRSnackBarOpen] = useState(false)
+  const [isRSnackBarVisible, setIsRSnackBarVisible] = useState(false)
+  function handleShowingRFeedback(){
+    setIsRSnackBarVisible(true)
+    setTimeout(() => {
+      setIsRSnackBarOpen(true)
+    }, 300);
+    setTimeout(()=>{
+      setIsRSnackBarOpen(false)
+    },3500)
+    setTimeout(() => {
+      setIsRSnackBarVisible(false)
+    }, 4000);
+  }
+
+  function handleShowingEdFeedback(){
+    setIsEdSnackBarVisible(true)
+    setTimeout(() => {
+      setIsEdSnackBarOpen(true)
+    }, 300);
+    setTimeout(()=>{
+      setIsEdSnackBarOpen(false)
+    },3500)
+    setTimeout(() => {
+      setIsEdSnackBarVisible(false)
+    }, 4000);
+  }
 
   async function deleteComment(){
     console.log('deleting')
@@ -197,10 +225,7 @@ export default function MyComments(){
     setMyComments(prev => {
       return myComments.filter((c) => { return c._id !== currentCommentId})
     })
-    setIsRSnackBarOpen(true)
-    setTimeout(()=>{
-      setIsRSnackBarOpen(false)
-    },2500)
+    handleShowingRFeedback()
       const url = `http://localhost:80/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
@@ -229,19 +254,19 @@ export default function MyComments(){
 
           <Typography sx={{
       
-            color: currentTheme.palette.font_color,
+            color: currentTheme.palette.darker_font_color,
             fontWeight: 600,
             fontSize: '1.5em'
           }}>Meus Comentários</Typography>
 
 {!loading ? 
-          <ReplayIcon onClick={reloading}style={{color: currentTheme.palette.font_color, fontSize: '1.6em'}}/>
+          <ReplayIcon onClick={reloading}style={{color: currentTheme.palette.darker_font_color, fontSize: '1.6em'}}/>
 : <></>}
           </div>
 
 {myComments.length == 0 && !loadingMore && end &&
 <div style={{height: 'fit-content', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', position: 'absolute', margin: 'auto', inset: '0 0 30px 0'}}>
-                  <Typography sx={{fontSize: '1.1em', color: currentTheme.palette.lighter, opacity: '50%'}}>Nenhum Comentário encontrado</Typography>
+                  <Typography sx={{fontSize: '1.1em', color: currentTheme.palette.font_color, opacity: '50%'}}>Nenhum Comentário encontrado</Typography>
             </div>
             }
 
@@ -258,8 +283,11 @@ export default function MyComments(){
 
          <AlertDialog currentTheme={currentTheme} mainAction={deleteComment} state={isDeleteDialogOpen} close={closeDialog}/>
    
-<SnackBar text={'Criado com Sucesso!'} state={isCSnackBarOpen} setter={setIsCSnackBarOpen}/>
-<SnackBar text={'Remoção Agendada!'}  state={isRSnackBarOpen} setter={setIsRSnackBarOpen}/>
+{/* <SnackBar text={'Criado com Sucesso!'} state={isCSnackBarOpen} setter={setIsCSnackBarOpen}/>
+<SnackBar text={'Remoção Agendada!'}  state={isRSnackBarOpen} setter={setIsRSnackBarOpen}/> */}
+
+<SnackBar text={'Remoção Agendada!'} state={{open: isRSnackBarOpen, visible: isRSnackBarVisible}} setter={setIsRSnackBarOpen}/>
+<SnackBar text={'Editado com Sucesso!'} state={{open: isEdSnackBarOpen, visible: isEdSnackBarVisible}} setter={setIsEdSnackBarOpen}/>
      
       {
         loading ? 
@@ -273,7 +301,7 @@ export default function MyComments(){
         myComments?.map(c => {
           console.log(c)
             return (
-              <CommentWithMovieLink key={c?._id} openDialog={openDialog}
+              <CommentWithMovieLink handleShowingEdFeedback={handleShowingEdFeedback} key={c?._id} openDialog={openDialog}
                 c_id={c?._id} comment={c?.comment} userid={c?.user_id} username={user?.name} stars={c?.stars} pic={user?.picture} movie_id={c?.movie_id}></CommentWithMovieLink>
             )
         })

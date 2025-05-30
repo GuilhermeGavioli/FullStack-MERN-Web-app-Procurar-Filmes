@@ -249,7 +249,7 @@ See all
   <Typography sx={{
     paddingLeft: '12px',
     paddingTop: '7px',
-    color: currentTheme.palette.font_color,
+    color: currentTheme.palette.darker_font_color,
     fontWeight: 600,
     fontSize: '1.6em',
     userSelect: 'none'
@@ -261,7 +261,7 @@ See all
   <Typography sx={{
     paddingLeft: '12px',
     paddingTop: '7px',
-    color: currentTheme.palette.font_color,
+    color: currentTheme.palette.darker_font_color,
     fontWeight: 600,
     fontSize: '1.5em',
     userSelect: 'none'
@@ -271,7 +271,7 @@ See all
 
 <Typography sx={{
   paddingLeft: '10px',
-  color: currentTheme.palette.font_color,
+  color: currentTheme.palette.darker_font_color,
   fontWeight: 600,
   paddingTop: '7px',
     fontSize: '1.5em',

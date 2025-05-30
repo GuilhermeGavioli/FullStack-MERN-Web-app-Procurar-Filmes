@@ -511,9 +511,9 @@ function disableGenresSnapshot(){
      
             padding: 
   filtersSnapshot.year.on || filtersSnapshot.runtime.on || filtersSnapshot.genres.on ? 
-  '7px 10px' : '0', 
+  '7px 10px' : '0',
    display: filtersSnapshot.year.on || filtersSnapshot.runtime.on || filtersSnapshot.genres.on ? 'flex' : 'none',
-  margin: '0', height: 'fit-content',
+  margin: '0', marginTop: '10px', height: 'fit-content',
   background: currentTheme.palette.dark}} direction='row' spacing={1}>
 {
   filtersSnapshot.year.on && <DeletableChip  name={'Year'} action={() => { disableYearSnapshot() }} />
@@ -537,7 +537,7 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
 
 
   <Stack sx={{padding: '10px', paddingTop: 
-    filtersSnapshot.year.on || filtersSnapshot.runtime.on || filtersSnapshot.genres.on ? '83px' : '65px'
+    filtersSnapshot.year.on || filtersSnapshot.runtime.on || filtersSnapshot.genres.on ? '90px' : '65px'
     , width: '100vw'}} direction='column' spacing={1}>
   {
     loadingMovies ?

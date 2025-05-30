@@ -82,13 +82,16 @@ onClick={handleClick}
 
 
 
-export default function CommentWithMovieLink({c_id, userid, username, pic, comment, openDialog, movie_id, stars}) {
+export default function CommentWithMovieLink({handleShowingEdFeedback, c_id, userid, username, pic, comment, openDialog, movie_id, stars}) {
       const {currentTheme} = React.useContext(ThemeContext)
   const {user} = useContext(AuthContext)
   const [editMode, setEditMode] = useState({editMode: false, newText: null, stars: null})
 
   const [stars2, setstars2] = useState(stars)
   const [comment2, setcomment2] = useState(comment)
+
+    const [imgSrc, setImgSrc] = useState(pic);
+    const fallbackSrc = 'https://smartcitybusiness.com.br/wp-content/uploads/2025/03/default-avatar-icon-of-social-media-user-vector.jpg';
 
   function enterEditMode(){
     setEditMode({editMode: true, newText: comment2, newStars: stars2})
@@ -97,6 +100,7 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
     setEditMode({editMode: false, newText: null, newStars: null})
   }
  async function saveEditMode(){
+  handleShowingEdFeedback()
     await updateCommentFetch()
   }
   function setNewCommentValue(v){
@@ -157,13 +161,14 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
          }}>
             <Avatar sx={{ width: '40px', height: '40px',bgcolor: currentTheme.palette.dark }}
             alt={username}
-            src={pic}
+                            src={imgSrc || fallbackSrc}  
+                 onError={() => setImgSrc(fallbackSrc)}
             />
             </div>
         
         }
         title={
-            <Typography variant="body1" style={{color: currentTheme.palette.font_color, fontWeight: 600}}>{username}</Typography>
+            <Typography variant="body1" style={{color: currentTheme.palette.darker_font_color, fontWeight: 600}}>{username}</Typography>
         }
         subheader={
           <>
@@ -181,7 +186,9 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
             :
                  <Rating size="small" name="read-only"
                   value={stars2}
-                   readOnly sx={{color: currentTheme.palette.sec, marginTop: '3px'}} emptyIcon={<StarIcon style={{ opacity: 0.85 }} fontSize="inherit" />}
+                   readOnly sx={{color: currentTheme.palette.sec, marginTop: '3px'}} 
+                   
+                   emptyIcon={<StarIcon style={{ opacity: 0.85 }} fontSize="inherit" />}
                               />
           }
           </>
@@ -200,7 +207,7 @@ export default function CommentWithMovieLink({c_id, userid, username, pic, comme
                   </DialogActions>  
       </>
           :
-          <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: currentTheme.palette.font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
+          <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: currentTheme.palette.darker_font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
               {comment2}
           </Typography>
         }

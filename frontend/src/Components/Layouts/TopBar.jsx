@@ -25,6 +25,9 @@ export default function TopBar() {
   const [searchInput, setSearchInput] = useState(null)
   const [isSearchOn, setIsSearchOn] = useState(false)
 
+    const [imgSrc, setImgSrc] = useState(user.picture);
+    const fallbackSrc = 'https://smartcitybusiness.com.br/wp-content/uploads/2025/03/default-avatar-icon-of-social-media-user-vector.jpg';
+
   function decideWhereToGo(){
     if (!userLoading && !auth){
       goTo('/login')
@@ -70,7 +73,10 @@ export default function TopBar() {
             
                   :
             
-                <Avatar draggable='false' onClick={() => decideWhereToGo()} alt={user.name} src={user.picture}  sx={{p:0,m:0, width: '40px', height: '40px' }} />
+                <Avatar draggable='false' onClick={() => decideWhereToGo()} alt={user.name} 
+                src={imgSrc || fallbackSrc}  
+                 onError={() => setImgSrc(fallbackSrc)}
+                sx={{p:0,m:0, width: '40px', height: '40px' }} />
               
                 }
 

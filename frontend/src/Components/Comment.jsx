@@ -72,6 +72,9 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
   const {user} = React.useContext(AuthContext)
   const {openProfilePage} = React.useContext(ProfileContext)
 
+  const [imgSrc, setImgSrc] = useState(pic);
+  const fallbackSrc = 'https://smartcitybusiness.com.br/wp-content/uploads/2025/03/default-avatar-icon-of-social-media-user-vector.jpg';
+
     const [editMode, setEditMode] = useState({editMode: false, newText: null, stars: null})
 
      const [stars2, setstars2] = useState(stars)
@@ -150,7 +153,8 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
          }}>
             <Avatar sx={{ width: '40px', height: '40px',bgcolor: currentTheme.palette.dark }}
             alt={username}
-            src={pic}
+                 src={imgSrc || fallbackSrc}
+          onError={() => setImgSrc(fallbackSrc)}
             onClick={() => openProfilePage(username, pic)}
             />
             </div>

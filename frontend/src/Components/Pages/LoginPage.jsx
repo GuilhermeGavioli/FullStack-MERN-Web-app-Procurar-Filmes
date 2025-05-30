@@ -6,11 +6,12 @@ import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../Contexts/ThemeContext';
 import { useState } from 'react';
 import { Button } from '@mui/material';
+import PinkSwitch from '../PinkSwitch';
 
 
 export default function LoginPage() {
     
-    const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
+    const {currentTheme, setCurrentTheme, changeDarkMode, isDarkMode} = useContext(ThemeContext)
       const {authErrorMessage,hideErrorMessageImediatly, loginWithEmail,loginButtonActive } = useContext(AuthContext)
 
       const [email, setEmail] = useState("test@test")
@@ -30,19 +31,43 @@ export default function LoginPage() {
        
     justifyContent: 'center'}}>
 
+
+<div style={{
+  position: 'absolute', top: '15px', left: '15px',
+}}>
+
+       <PinkSwitch style={{
+        }} state={isDarkMode} setter={() => changeDarkMode(isDarkMode ? 'l' : 'd')}></PinkSwitch>
+        </div>
+
+        <div style={{
+  position: 'absolute', bottom: '15px', left: '15px',
+}}>
+
+       <p style={{color: currentTheme.palette.darker_font_color, fontSize: '0.8em', 
+        opacity: isDarkMode ? '0.4' : '100%'
+        }}>Demo App</p>
+        </div>
+
 <div style={{display: 'flex', alignItems: 'center', gap: '8px', flexDirection: 'column'}}>
  <h1 style={{fontSize: '2.2em', fontWeight: 400, color: currentTheme.palette.contra, marginBottom: '15px'}}>Login</h1>
  {/* <img style={{width: '30px', height: '30px'}} src="/Logo.png" alt="" /> */}
-  <input placeholder='Email' style={{border: 'none', outline: 'none', height: '30px', padding: '12px', fontSize: '1.1em'}} 
+  <input placeholder='Email' style={{
+    outline: 'none', height: '30px', padding: '18px 12px', fontSize: '1.1em',
+      border: isDarkMode ? 'none' : '1px solid rgb(225,225,225)',
+  }} 
   value={email} type="email" onChange={(e) => setEmail(e.target.value)}/>
-  <input placeholder='Senha' style={{border: 'none', outline: 'none', height: '30px', padding: '12px', fontSize: '1.1em'}}
+  <input placeholder='Senha' style={{
+ outline: 'none', height: '30px', padding: '18px 12px', fontSize: '1.1em',
+  border: isDarkMode ? 'none' : '1px solid rgb(225,225,225)'
+}}
    value={password} type="password" onChange={(e) => setPassword(e.target.value)}/>
   {/* <button >login</button> */}
   <Button disabled={!loginButtonActive} onClick={() => loginWithEmail(email, password)} 
   sx={{background: currentTheme.palette.sec,marginTop: '15px', width: '100%',
     '&.Mui-disabled': {
-      backgroundColor: currentTheme.palette.lighter, 
-      color: currentTheme.palette.darker
+      background: currentTheme.palette.movie2_loading_bg, 
+      color: currentTheme.palette.movie2_loading_band
     },
   }} variant="contained">Login</Button>
 

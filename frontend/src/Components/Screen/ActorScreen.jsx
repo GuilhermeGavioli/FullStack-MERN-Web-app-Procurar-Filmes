@@ -70,9 +70,9 @@ export default function ActorScreen() {
         {
         movieLoading ? 
         <>
-        <Skeleton animation="wave" height={'200px'} width={'100px'} /> 
-        <Skeleton animation="wave" height={'200px'} width={'100px'} /> 
-        <Skeleton animation="wave" height={'200px'} width={'100px'} /> 
+        <Skeleton animation="wave" height={'50px'} width={'50px'} /> 
+        <Skeleton animation="wave" height={'50px'} width={'50px'} /> 
+        <Skeleton animation="wave" height={'50px'} width={'50px'} /> 
         </>
         :
      

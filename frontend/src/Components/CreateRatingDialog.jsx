@@ -42,22 +42,22 @@ const TextareaAutosize = styled(BaseTextareaAutosize)(
   border: 1px solid ${currentTheme.palette.light};
 
   &:hover {
-    border-color: ${blue[400]};
+    border-color: red;
   }
 
   &:focus {
-    border-color: ${blue[400]};
-    box-shadow: 0 0 0 3px ${(props) => props.currentTheme.palette.mode === 'dark' ? blue[600] : blue[200]};
+    border-color: 3px solid ${currentTheme.palette.sec};
+       outline: none;
   }
 
   &:focus-visible {
-    outline: none;
+ 
   }
 `,
 );
 
 export default function CreateRatingDialog() {
-  const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
+  const {currentTheme, setCurrentTheme, IsDarkTheme} = React.useContext(ThemeContext)
   const [open, setOpen] = React.useState(false);
   const [commentValue, setCommentValue] = React.useState('');
   const {movie} = React.useContext(MovieContext)
@@ -135,16 +135,16 @@ color: currentTheme.palette.contra
               <Typography  sx={{width: '350px', maxWidth: '100%',
 userSelect: 'none',
     paddingTop: '7px',
-    color: currentTheme.palette.contra,
+    color: currentTheme.palette.darker_font_color,
     fontWeight: 600,
-    fontSize: '1.6em',
+    fontSize: '1.2em',
                 margin: 0
               }}>
           Deixe seu Comentário
         </Typography>
         <Typography id="alert-dialog-title" sx={{ 
-    color: currentTheme.palette.contra,
-    fontWeight: 500,
+    color: currentTheme.palette.font_color,
+    fontWeight: 400,
     marign: 0,
     userSelect: 'none',
     fontSize: '1em'}}>
@@ -158,7 +158,7 @@ userSelect: 'none',
      <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
           <Rating
               sx={{color: currentTheme.palette.sec, fontSize: '2.5em'}}
-        emptyIcon={<StarIcon style={{ opacity: 0.85, color: currentTheme.palette.lighter }} fontSize="inherit" />}
+        emptyIcon={<StarIcon style={{ opacity: 0.85, color: IsDarkTheme ?'' : currentTheme.palette.light}} fontSize="inherit" />}
         value={starvalue}
         defaultValue={starvalue}
         onChange={(event, newValue) => {
@@ -170,7 +170,7 @@ userSelect: 'none',
          <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
 
         <TextareaAutosize currentTheme={currentTheme}  aria-label="empty textarea" 
-placeholder="Escreva seu comentário..."  autoFocus value={commentValue} onChange={(e) => setCommentValue(e.target.value)}/>
+placeholder='Seu comentário'  autoFocus value={commentValue} onChange={(e) => setCommentValue(e.target.value)}/>
 </div>
   
   </div>
@@ -180,7 +180,7 @@ placeholder="Escreva seu comentário..."  autoFocus value={commentValue} onChang
 
         <DialogActions sx={{padding: 0}}>
           <div style={{width: '100%', background: currentTheme.palette.dark, padding: '15px', display: 'flex', justifyContent: 'flex-end'}}>
-          <Button  style={{color: currentTheme.palette.lighter, marginRight: '10px'}} onClick={handleClose}>Cancelar</Button>
+          <Button  style={{color: currentTheme.palette.editnomebtn, marginRight: '10px'}} onClick={handleClose}>Cancelar</Button>
           <Button variant='contained' style={{backgroundColor: currentTheme.palette.sec, boxShadow: 'none'}} onClick={createComment}>Comentar</Button>
           </div>
         </DialogActions>
@@ -232,49 +232,3 @@ placeholder="Escreva seu comentário..."  autoFocus value={commentValue} onChang
 }
 
 
-
-function AlertDialog() {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-              <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        <h1>cool</h1>
-        </DialogTitle>
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </React.Fragment>
-  );
-}

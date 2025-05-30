@@ -50,7 +50,7 @@ function ThemeContextProvider ({ children }) {
                 currentTheme.palette.movie2_bg = 'rgb(35,35,35)' //dark
                 currentTheme.palette.loading_1 = 'rgb(40,45,45)' //dark
                 currentTheme.palette.cover_l = 'linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%)' //dark
-                currentTheme.palette.cover_r = 'linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%)' //dark
+                currentTheme.palette.cover_r = 'linear-gradient(90deg, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0.19) 100%)' //dark
                 currentTheme.palette.editnomebtn = 'rgb(55,50,55)' //dark
                 currentTheme.palette.movie2_loading_bg = 'rgb(35,35,35)' //mid
                 currentTheme.palette.movie2_loading_band = 'rgb(40,45,45)' //light

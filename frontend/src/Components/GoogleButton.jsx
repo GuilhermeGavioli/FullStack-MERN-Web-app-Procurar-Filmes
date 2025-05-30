@@ -19,7 +19,7 @@ import { useState } from 'react';
 
 export default function GoogleButonComp() {
   const { setUser } = useContext(AuthContext)
-  const {currentTheme, } = useContext(ThemeContext)
+  const {currentTheme, isDarkMode } = useContext(ThemeContext)
   const navigator = useNavigate()
   const [googleButonActive, setGoogleButtonActive] = useState(true)
 
@@ -54,9 +54,10 @@ return (
       height: '45px',
       color: currentTheme.palette.contra,
       padding: '0',
-      
+      boxShadow: 'none',
+      border: isDarkMode ? 'none' : '1px solid rgb(225,225,225)',
       // border: `1px solid ${theme.palette.light}`,
-      backgroundColor: currentTheme.palette.contra,
+      backgroundColor: 'white',
       
       textTransform: 'none',
       // border: `1px solid ${theme.palette.sec.main}`,

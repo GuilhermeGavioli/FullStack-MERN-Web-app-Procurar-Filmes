@@ -10,9 +10,29 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import CircularProgress from '@mui/material/CircularProgress';
 import { ThemeContext } from '../Contexts/ThemeContext';
+import styled from 'styled-components';
 
+
+// ({currentTheme, isDarkTheme}) => `
+
+    const StyledTextarea = styled('input')((props) => ({
+width: '100%',
+    padding: '5px',
+    resize: 'unset',
+    border: `${props.isDarkTheme  ? 'none' : '1px solid rgb(220,220,220)'}`,
+    color: props.currentTheme.palette.bottom_bar_icon,
+    fontSize: '1.1em',
+    '&:focus': {
+        border: `2px solid ${props.currentTheme.palette.sec}`,
+        outline: 'none',
+        resize: 'unset',
+    }
+    }))
+
+
+     
 export default function ProfilePage (){
-        const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
+        const {currentTheme, setCurrentTheme, isDarkTheme} = React.useContext(ThemeContext)
     const {user, userLoading, logout, loggingOutLoading} = React.useContext(AuthContext)
     const [isEditMode, setIsEditMode] = React.useState(false)
     const [name2, setName2] = React.useState(user.name)
@@ -66,7 +86,10 @@ function exitEditMode(){
         isEditMode ? 
         <>
             <div style={{marginTop: '10px'}}> 
-                <TextareaAutosize style={{border: 'none', width: '100%',width: 'fit-content', padding: '5px'}}
+                <StyledTextarea
+   
+                currentTheme={currentTheme}
+                isDarkTheme={isDarkTheme}
             value={newNameValue} onChange={(e) => setNewNameValue(e.target.value)}/>
             </div>
                                         <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'center', gap: '0'}}>
@@ -121,9 +144,18 @@ function exitEditMode(){
 
 {
     loggingOutLoading &&
-<Button disabled loading variant="outlined" sx={{width: '100px', height: '40px'}}>
+
+    
+        <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
+    <Button onClick={enterEditMode} disabled='true' sx={{color: currentTheme.palette.editnomebtn, border: `1px solid ${currentTheme.palette.editnomebtn}` }} variant="outlined">
+     <EditIcon style={{color: currentTheme.palette.editnomebtn, fontSize: '1.2em', marginRight: '5px'}}/>
+    Editar Nome</Button>
+
+<Button disabled loading variant="outlined" sx={{width: '100px', height: '40px', display: 'flex', gap: '10px'}}>
 <CircularProgress size={20} sx={{color: currentTheme.palette.light}} />
+Sair
 </Button>
+    </div>
 }
 
 {/* <Button sx={{color: currentTheme.palette.contra}} variant="text" >

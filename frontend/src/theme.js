@@ -29,7 +29,7 @@ import { createTheme } from '@mui/material/styles';
       movie2_bg: 'rgb(35,35,35)', //dark
       loading_1: 'rgb(40,45,45)', //dark
       cover_l: 'linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%)',
-      cover_r: 'linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%)',
+      cover_r: 'linear-gradient(90deg, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0.19) 100%)',
       editnomebtn: 'rgb(55,50,55)',
 
       movie2_loading_bg: 'rgb(35,35,35)', //mid
