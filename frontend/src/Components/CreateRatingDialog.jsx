@@ -93,7 +93,7 @@ export default function CreateRatingDialog() {
       try{
         if (starvalue == 0) setstarvalue(1)
         console.log(commentValue)
-        const res = await fetch(`http://localhost:80/ratings/create/for_movie/${movie?._id}`, {
+        const res = await fetch(`https://procurarfilmes.xyz/ratings/create/for_movie/${movie?._id}`, {
             method: 'POST',
             body: JSON.stringify({comment: commentValue, stars: starvalue}),
         

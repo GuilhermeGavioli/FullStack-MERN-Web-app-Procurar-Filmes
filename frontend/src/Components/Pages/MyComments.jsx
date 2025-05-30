@@ -93,7 +93,7 @@ export default function MyComments(){
  
 
     const getMyComments = async () => {
-      const url = `http://localhost:80/myratings?page=${page}`
+      const url = `https://procurarfilmes.xyz/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -137,7 +137,7 @@ export default function MyComments(){
     }
     console.log(page)
       setLoadingMore(true)
-      const url = `http://localhost:80/myratings?page=${page}`
+      const url = `https://procurarfilmes.xyz/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -226,7 +226,7 @@ const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
       return myComments.filter((c) => { return c._id !== currentCommentId})
     })
     handleShowingRFeedback()
-      const url = `http://localhost:80/ratings/delete/${currentCommentId}`
+      const url = `https://procurarfilmes.xyz/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

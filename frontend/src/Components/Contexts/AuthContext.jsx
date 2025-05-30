@@ -37,7 +37,7 @@ export default function AuthContextProvider({children}){
 
   async function loginWithEmail(email, password){
     setLoginButtonActive(false)
-  const res = await fetch('http://localhost:80/auth/email', {
+  const res = await fetch('https://procurarfilmes.xyz/auth/email', {
     method: 'POST',
     body: JSON.stringify({email, password}),
      headers: {
@@ -75,7 +75,7 @@ export default function AuthContextProvider({children}){
     }
 
       const getMyUserInfo = async () => {
-        const res = await fetch('http://localhost:80/auth/user/getinfo', {
+        const res = await fetch('https://procurarfilmes.xyz/auth/user/getinfo', {
           headers: {
             'authorization': `Bearer ${localStorage.getItem('access_token')}`
           }

@@ -337,7 +337,7 @@ export default function MovieScreen() {
     setRatingsLoading(true)
     setLoadingMoreRatings(true)
     setIsRatingsContainerOpen(true)
-    const url = `http://localhost:80/ratings/${movie?._id}?page=${ratingsPage}`
+    const url = `https://procurarfilmes.xyz/ratings/${movie?._id}?page=${ratingsPage}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -367,7 +367,7 @@ export default function MovieScreen() {
     console.log('firing gettting more ratings')
     if (isRatingsEnd || loadingMoreRatings) return
     setLoadingMoreRatings(true)
-    const res = await fetch(`http://localhost:80/ratings/${movie?._id}?page=${ratingsPage}`, {
+    const res = await fetch(`https://procurarfilmes.xyz/ratings/${movie?._id}?page=${ratingsPage}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
@@ -399,7 +399,7 @@ export default function MovieScreen() {
       return prev.filter((c) => { return c._id !== currentCommentId})
     })
     handleShowingRFeedback()
-      const url = `http://localhost:80/ratings/delete/${currentCommentId}`
+      const url = `https://procurarfilmes.xyz/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

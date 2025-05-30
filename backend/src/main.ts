@@ -8,24 +8,23 @@ import { Database } from './database';
 // import { router as userRouter } from './Routes/user.route';
 // import { router as ratingRouter } from './Routes/rating.route';
 
+// import { authGuard } from './objects.instances';
+// import { movieController } from "./objects.instances";
+// import { userController } from "./objects.instances";
+// import { ratingController } from "./objects.instances";
+
 
 
 
 
 
 //*****************************PROD***********************************//
-// import https from 'https';
-// import fs from 'fs';
-// const options = {
-//   key: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/privkey.pem'),
-//   cert: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/fullchain.pem')
-// };
-
-// import { authGuard } from './objects.instances';
-// import { movieController } from "./objects.instances";
-// import { userController } from "./objects.instances";
-// import { ratingController } from "./objects.instances";
-
+import https from 'https';
+import fs from 'fs';
+const options = {
+  key: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/procurarfilmes.xyz/fullchain.pem')
+};
 // -----------------------------------
 
 import { MovieRepository, MovieRepositoryImpl } from './Repository/movie.repository';
@@ -107,10 +106,10 @@ app.get('/health', (req,res)=> {
     res.send('ok')
 })
 
-app.listen(process.env.PORT, () => {
-  console.log('Server is Up and Running on 80');
-});
-//*****************************PROD***********************************//
-// https.createServer(options, app).listen(process.env.PORT, () => {
-//   console.log('UpOn443');
+// app.listen(process.env.PORT, () => {
+//   console.log('Server is Up and Running on 80');
 // });
+//*****************************PROD***********************************//
+https.createServer(options, app).listen(process.env.PORT, () => {
+  console.log('UpOn443');
+});

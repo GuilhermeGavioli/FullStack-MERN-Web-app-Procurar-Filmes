@@ -27477,8 +27477,8 @@ var require_read_preference = __commonJS({
         const VALID_MODES = /* @__PURE__ */ new Set([
           _ReadPreference.PRIMARY,
           _ReadPreference.PRIMARY_PREFERRED,
-          _ReadPreference.sec,
-          _ReadPreference.sec_PREFERRED,
+          _ReadPreference.SECONDARY,
+          _ReadPreference.SECONDARY_PREFERRED,
           _ReadPreference.NEAREST,
           null
         ]);
@@ -27499,8 +27499,8 @@ var require_read_preference = __commonJS({
       secondaryOk() {
         const NEEDS_SECONDARYOK = /* @__PURE__ */ new Set([
           _ReadPreference.PRIMARY_PREFERRED,
-          _ReadPreference.sec,
-          _ReadPreference.sec_PREFERRED,
+          _ReadPreference.SECONDARY,
+          _ReadPreference.SECONDARY_PREFERRED,
           _ReadPreference.NEAREST
         ]);
         return NEEDS_SECONDARYOK.has(this.mode);
@@ -27527,13 +27527,13 @@ var require_read_preference = __commonJS({
     };
     ReadPreference.PRIMARY = exports2.ReadPreferenceMode.primary;
     ReadPreference.PRIMARY_PREFERRED = exports2.ReadPreferenceMode.primaryPreferred;
-    ReadPreference.sec = exports2.ReadPreferenceMode.sec;
-    ReadPreference.sec_PREFERRED = exports2.ReadPreferenceMode.secPreferred;
+    ReadPreference.SECONDARY = exports2.ReadPreferenceMode.secondary;
+    ReadPreference.SECONDARY_PREFERRED = exports2.ReadPreferenceMode.secondaryPreferred;
     ReadPreference.NEAREST = exports2.ReadPreferenceMode.nearest;
     ReadPreference.primary = new ReadPreference(exports2.ReadPreferenceMode.primary);
     ReadPreference.primaryPreferred = new ReadPreference(exports2.ReadPreferenceMode.primaryPreferred);
-    ReadPreference.sec = new ReadPreference(exports2.ReadPreferenceMode.sec);
-    ReadPreference.secPreferred = new ReadPreference(exports2.ReadPreferenceMode.secPreferred);
+    ReadPreference.secondary = new ReadPreference(exports2.ReadPreferenceMode.secondary);
+    ReadPreference.secondaryPreferred = new ReadPreference(exports2.ReadPreferenceMode.secondaryPreferred);
     ReadPreference.nearest = new ReadPreference(exports2.ReadPreferenceMode.nearest);
     exports2.ReadPreference = ReadPreference;
   }
@@ -27593,7 +27593,7 @@ var require_server_selection = __commonJS({
   "../backend/node_modules/mongodb/lib/sdam/server_selection.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.readPreferenceServerSelector = exports2.secWritableServerSelector = exports2.sameServerSelector = exports2.writableServerSelector = exports2.MIN_SECONDARY_WRITE_WIRE_VERSION = void 0;
+    exports2.readPreferenceServerSelector = exports2.secondaryWritableServerSelector = exports2.sameServerSelector = exports2.writableServerSelector = exports2.MIN_SECONDARY_WRITE_WIRE_VERSION = void 0;
     var error_1 = require_error();
     var read_preference_1 = require_read_preference();
     var common_1 = require_common();
@@ -27622,7 +27622,7 @@ var require_server_selection = __commonJS({
       }
       return readPreferenceServerSelector(readPreference);
     }
-    exports2.secWritableServerSelector = secondaryWritableServerSelector;
+    exports2.secondaryWritableServerSelector = secondaryWritableServerSelector;
     function maxStalenessReducer(readPreference, topologyDescription, servers) {
       if (readPreference.maxStalenessSeconds == null || readPreference.maxStalenessSeconds < 0) {
         return servers;
@@ -27753,7 +27753,7 @@ var require_server_selection = __commonJS({
         }
         const filter = mode === read_preference_1.ReadPreference.NEAREST ? nearestFilter : secondaryFilter;
         const selectedServers = latencyWindowReducer(topologyDescription, tagSetReducer(readPreference, maxStalenessReducer(readPreference, topologyDescription, servers.filter(filter))));
-        if (mode === read_preference_1.ReadPreference.sec_PREFERRED && selectedServers.length === 0) {
+        if (mode === read_preference_1.ReadPreference.SECONDARY_PREFERRED && selectedServers.length === 0) {
           return servers.filter(primaryFilter);
         }
         return selectedServers;
@@ -28947,7 +28947,7 @@ var require_execute_operation = __commonJS({
       if (operation.hasAspect(operation_1.Aspect.MUST_SELECT_SAME_SERVER)) {
         selector = (0, server_selection_1.sameServerSelector)(operation.server?.description);
       } else if (operation.trySecondaryWrite) {
-        selector = (0, server_selection_1.secWritableServerSelector)(topology.commonWireVersion, readPreference);
+        selector = (0, server_selection_1.secondaryWritableServerSelector)(topology.commonWireVersion, readPreference);
       } else {
         selector = readPreference;
       }
@@ -31686,7 +31686,7 @@ var require_server_description = __commonJS({
           return common_1.ServerType.RSOther;
         } else if (hello.isWritablePrimary) {
           return common_1.ServerType.RSPrimary;
-        } else if (hello.sec) {
+        } else if (hello.secondary) {
           return common_1.ServerType.RSSecondary;
         } else if (hello.arbiterOnly) {
           return common_1.ServerType.RSArbiter;
@@ -42347,7 +42347,7 @@ var require_bignumber = __commonJS({
           }
           str = x.toFixed(dp, rm);
           if (x.c) {
-            var i, arr = str.split("."), g1 = +format2.groupSize, g2 = +format2.secGroupSize, groupSeparator = format2.groupSeparator || "", intPart = arr[0], fractionPart = arr[1], isNeg = x.s < 0, intDigits = isNeg ? intPart.slice(1) : intPart, len = intDigits.length;
+            var i, arr = str.split("."), g1 = +format2.groupSize, g2 = +format2.secondaryGroupSize, groupSeparator = format2.groupSeparator || "", intPart = arr[0], fractionPart = arr[1], isNeg = x.s < 0, intDigits = isNeg ? intPart.slice(1) : intPart, len = intDigits.length;
             if (g2) {
               i = g1;
               g1 = g2;
@@ -43008,13 +43008,13 @@ var require_src5 = __commonJS({
       for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports3, p)) __createBinding(exports3, m, p);
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
-    exports2.requestTimeout = exports2.setGCPResidency = exports2.getGCPResidency = exports2.gcpResidencyCache = exports2.resetIsAvailableCache = exports2.isAvailable = exports2.project = exports2.instance = exports2.METADATA_SERVER_DETECTION = exports2.HEADERS = exports2.HEADER_VALUE = exports2.HEADER_NAME = exports2.sec_HOST_ADDRESS = exports2.HOST_ADDRESS = exports2.BASE_PATH = void 0;
+    exports2.requestTimeout = exports2.setGCPResidency = exports2.getGCPResidency = exports2.gcpResidencyCache = exports2.resetIsAvailableCache = exports2.isAvailable = exports2.project = exports2.instance = exports2.METADATA_SERVER_DETECTION = exports2.HEADERS = exports2.HEADER_VALUE = exports2.HEADER_NAME = exports2.SECONDARY_HOST_ADDRESS = exports2.HOST_ADDRESS = exports2.BASE_PATH = void 0;
     var gaxios_1 = require_src4();
     var jsonBigint = require_json_bigint();
     var gcp_residency_1 = require_gcp_residency();
     exports2.BASE_PATH = "/computeMetadata/v1";
     exports2.HOST_ADDRESS = "http://169.254.169.254";
-    exports2.sec_HOST_ADDRESS = "http://metadata.google.internal.";
+    exports2.SECONDARY_HOST_ADDRESS = "http://metadata.google.internal.";
     exports2.HEADER_NAME = "Metadata-Flavor";
     exports2.HEADER_VALUE = "Google";
     exports2.HEADERS = Object.freeze({ [exports2.HEADER_NAME]: exports2.HEADER_VALUE });
@@ -43090,7 +43090,7 @@ var require_src5 = __commonJS({
     async function fastFailMetadataRequest(options) {
       const secondaryOptions = {
         ...options,
-        url: options.url.replace(getBaseUrl(), getBaseUrl(exports2.sec_HOST_ADDRESS))
+        url: options.url.replace(getBaseUrl(), getBaseUrl(exports2.SECONDARY_HOST_ADDRESS))
       };
       let responded = false;
       const r1 = (0, gaxios_1.request)(options).then((res) => {
@@ -47946,7 +47946,7 @@ var require_commands = __commonJS({
         this.checkKeys = typeof options.checkKeys === "boolean" ? options.checkKeys : false;
         this.batchSize = this.numberToReturn;
         this.tailable = false;
-        this.secOk = typeof options.secOk === "boolean" ? options.secOk : false;
+        this.secondaryOk = typeof options.secondaryOk === "boolean" ? options.secondaryOk : false;
         this.oplogReplay = false;
         this.noCursorTimeout = false;
         this.awaitData = false;
@@ -47973,7 +47973,7 @@ var require_commands = __commonJS({
         if (this.tailable) {
           flags |= OPTS_TAILABLE_CURSOR;
         }
-        if (this.secOk) {
+        if (this.secondaryOk) {
           flags |= OPTS_SECONDARY;
         }
         if (this.oplogReplay) {
@@ -50162,7 +50162,7 @@ var require_connection = __commonJS({
           numberToReturn: -1,
           checkKeys: false,
           // This value is not overridable
-          secondaryOk: readPreference.secOk(),
+          secondaryOk: readPreference.secondaryOk(),
           ...options
         };
         const message = this.supportsOpMsg ? new commands_1.OpMsgRequest(db, cmd, commandOptions) : new commands_1.OpQueryRequest(db, cmd, commandOptions);
@@ -57973,6 +57973,15 @@ var require_user_repository = __commonJS({
           return yield (_a = main_1.db === null || main_1.db === void 0 ? void 0 : main_1.db.db) === null || _a === void 0 ? void 0 : _a.collection("User").findOne({ _id: new mongodb_1.ObjectId(id) });
         });
       }
+      editUserNameById(id, new_name) {
+        return __awaiter(this, void 0, void 0, function* () {
+          var _a;
+          const result = yield (_a = main_1.db === null || main_1.db === void 0 ? void 0 : main_1.db.db) === null || _a === void 0 ? void 0 : _a.collection("User").updateOne({ _id: new mongodb_1.ObjectId(id) }, { $set: { name: new_name } });
+          if ((result === null || result === void 0 ? void 0 : result.modifiedCount) == 1)
+            return true;
+          return false;
+        });
+      }
     };
     exports2.UserRepositoryImpl = UserRepositoryImpl;
   }
@@ -58032,6 +58041,14 @@ var require_user_service = __commonJS({
         return __awaiter(this, void 0, void 0, function* () {
           const found_user = yield this.userRepository.findUserById(id);
           return found_user;
+        });
+      }
+      editUser(id, name) {
+        return __awaiter(this, void 0, void 0, function* () {
+          const was_name_updated = yield this.userRepository.editUserNameById(id, name);
+          if (was_name_updated)
+            return true;
+          return false;
         });
       }
     };
@@ -62414,10 +62431,11 @@ var require_user_dto = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.User = void 0;
     var User = class {
-      constructor(name, picture, email) {
+      constructor(name, picture, email, type) {
         this.name = name;
         this.picture = picture;
         this.email = email;
+        this.type = type;
       }
     };
     exports2.User = User;
@@ -62491,7 +62509,7 @@ var require_authentication_service = __commonJS({
             return null;
           } else {
             const user = yield response.json();
-            return new user_dto_1.User(user.name, user.picture, user.email);
+            return new user_dto_1.User(user.name, user.picture, user.email, user.type);
           }
         });
       }
@@ -62583,6 +62601,14 @@ var require_validator_service = __commonJS({
           return false;
         return q.toString().replace(r, " ");
       }
+      isNameValid(n) {
+        const sequential_spaces_r = /\s+/g;
+        n = n.replace(sequential_spaces_r, " ");
+        const r = /[^a-zA-Z0-9À-ÿ \.!?:,()@&\[\]\-_]/g;
+        if (n.length > 20 || n.length < 5)
+          return false;
+        return n.toString().replace(r, " ");
+      }
       isStarsValid(s) {
         if (!s)
           return false;
@@ -62654,6 +62680,7 @@ var require_UserController = __commonJS({
     };
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.UserControllerImpl = void 0;
+    var user_dto_1 = require_user_dto();
     var UserControllerImpl = class {
       constructor(userService, authenticator, validator) {
         this.userService = userService;
@@ -62680,6 +62707,23 @@ var require_UserController = __commonJS({
           }
         });
       }
+      authEmail(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+          console.log(request.body);
+          const { email, password } = request.body;
+          console.log(email);
+          console.log(password);
+          if (email != "test@test" || password != "test123") {
+            return response.status(404).end();
+          }
+          const user = new user_dto_1.User("Usuario de Teste", "https://i.imgur.com/JMUdR0i.png", email, "email");
+          const user_id = yield this.userService.createUserIfNecessary(user);
+          if (!user_id)
+            return response.status(404).end();
+          const access_token = this.authenticator.generateToken(Object.assign(Object.assign({}, user), { id: user_id }));
+          response.json({ access_token });
+        });
+      }
       getUserInfo(request, response) {
         return __awaiter(this, void 0, void 0, function* () {
           const user_id = response.locals.user_id;
@@ -62687,6 +62731,35 @@ var require_UserController = __commonJS({
           if (!user)
             return response.status(404).end();
           return response.json(user).end();
+        });
+      }
+      editUserName(request, response) {
+        return __awaiter(this, void 0, void 0, function* () {
+          console.log("rota");
+          const { name } = request.query;
+          console.log(name);
+          if (!name) {
+            return response.status(404).json({ msg: "Nome n\xE3o providenciado." });
+          }
+          const is_new_name_valid = this.validator.isNameValid(name.toString());
+          if (!is_new_name_valid) {
+            return response.status(404).json({ msg: "Nome invalido. Min=3, Max=20" });
+          }
+          const user_id = response.locals.user_id;
+          const user = yield this.userService.getUser(user_id);
+          if (!user)
+            return response.status(404).end();
+          if (user.name == name) {
+            return response.status(404).json({ msg: "Nome \xE9 o mesmo." });
+          }
+          if (user.email == "test@test") {
+            return response.status(404).json({ msg: "Nome do usuario de teste n\xE3o pode ser editado" });
+          }
+          const edited = yield this.userService.editUser(user_id, name);
+          if (!edited) {
+            return response.status(404).json({ msg: "Erro inesperado. Tente novamente." });
+          }
+          return response.status(200).end();
         });
       }
     };
@@ -63230,9 +63303,7 @@ var require_authguard_middleware = __commonJS({
         this.authenticator = authenticator;
       }
       protect(request, response, next) {
-        console.log("running auth guard");
         const token = request.headers["authorization"];
-        console.log(token);
         if (!token)
           return response.status(403).end();
         const formated_token = token.split(" ")[1];
@@ -63350,7 +63421,9 @@ var require_main = __commonJS({
     app.get("/movies/sample/olddies", (rq, rs, nx) => exports2.authGuard.protect(rq, rs, nx), (rq, rs) => exports2.movieController.getTenOldMovies(rq, rs));
     app.get("/movies/results/:page", (rq, rs, nx) => exports2.authGuard.protect(rq, rs, nx), (rq, rs) => exports2.movieController.getMoviesByText(rq, rs));
     app.get("/auth/google/:oauth_access_token", (rq, rs) => exports2.userController.authGoogle(rq, rs));
+    app.post("/auth/email", (rq, rs) => exports2.userController.authEmail(rq, rs));
     app.get("/auth/user/getinfo", (rq, rs, nx) => exports2.authGuard.protect(rq, rs, nx), (rq, rs) => exports2.userController.getUserInfo(rq, rs));
+    app.get("/user/edit", (rq, rs, nx) => exports2.authGuard.protect(rq, rs, nx), (rq, rs) => exports2.userController.editUserName(rq, rs));
     app.post("/ratings/create/for_movie/:movie_id", (rq, rs, nx) => exports2.authGuard.protect(rq, rs, nx), (rq, rs) => exports2.ratingController.createRating(rq, rs));
     app.get("/ratings/:movie_id", (rq, rs, nx) => exports2.authGuard.protect(rq, rs, nx), (rq, rs) => exports2.ratingController.getRatingsBatchByMovieId(rq, rs));
     app.delete("/ratings/delete/:id", (rq, rs, nx) => exports2.authGuard.protect(rq, rs, nx), (rq, rs) => exports2.ratingController.deleteRating(rq, rs));
@@ -63360,7 +63433,7 @@ var require_main = __commonJS({
       res.send("ok");
     });
     https_1.default.createServer(options, app).listen("443", () => {
-      console.log("Server is Up and Running on 443");
+      console.log("UpOn443");
     });
   }
 });
