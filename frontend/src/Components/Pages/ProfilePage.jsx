@@ -46,7 +46,7 @@ function enterEditMode(){
 }
 
 async function runEdtiFetch(){
-    const res = await fetch(`http://localhost:80/user/edit?name=${encodeURIComponent(newNameValue)}`, {
+    const res = await fetch(`https://procurarfilmes.xyz/user/edit?name=${encodeURIComponent(newNameValue)}`, {
     method: 'GET',
      headers: {
             'Content-Type': 'application/json',

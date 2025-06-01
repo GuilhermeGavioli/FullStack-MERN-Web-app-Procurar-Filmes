@@ -370,7 +370,7 @@ function disableGenresSnapshot(){
 
     async function getMovies(){
       console.log('getting')
-      let url = `http://localhost:80/movies/results/${page}?query=${searchQuery}`
+      let url = `https://procurarfilmes.xyz/movies/results/${page}?query=${searchQuery}`
       console.log(url)
       if (filtersSnapshot.year.on) url = url.concat(`&year=1&min_year=${filtersSnapshot.year.min}&max_year=${filtersSnapshot.year.max}`)
       if (filtersSnapshot.runtime.on) url = url.concat(`&runtime=1&min_runtime=${filtersSnapshot.runtime.min}&max_runtime=${filtersSnapshot.runtime.max}`)

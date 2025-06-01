@@ -98,7 +98,7 @@ export default function Comment({  handleShowingEdFeedback, c_id, userid, userna
   }
     async function updateCommentFetch(){
  try{
-        const res = await fetch(`http://localhost:80/ratings/update/${c_id}`, {
+        const res = await fetch(`https://procurarfilmes.xyz/ratings/update/${c_id}`, {
             method: 'PUT',
             body: JSON.stringify({comment: editMode.newText, stars: editMode.newStars, movie_id: movie._id}),
         

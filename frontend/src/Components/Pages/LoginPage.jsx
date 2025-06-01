@@ -29,7 +29,7 @@ export default function LoginPage() {
 
        async function loginWithEmail(){
     setLoginButtonActive(false)
-  const res = await fetch('http://localhost:80/auth/email', {
+  const res = await fetch('https://procurarfilmes.xyz/auth/email', {
     method: 'POST',
     body: JSON.stringify({email, password}),
      headers: {
