@@ -96,58 +96,60 @@ export default function SettingsPage (){
     aria-labelledby="demo-radio-buttons-group-label"
     name="radio-buttons-group"
   >
-    <div style={{display:'flex', flexDirection: 'column', padding: '5px',
+    <div     onClick={() => changeTheme(3)} style={{display:'flex', flexDirection: 'column', padding: '5px',
          borderRadius: '12px', width: 'fit-content', alignItems: 'center', height: 'fit-content',
          border: currentThemeN == 3 ? `3px solid ${currentTheme.palette.sec}`  : '3px solid rgba(0,0,0,0)'}}>
     <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(47, 255, 227)'/>
     <FormControlLabel style={{ margin: 0, padding: 0}}  control={<Radio  checked={currentThemeN == 3 ? true : false}
-    onClick={() => changeTheme(3)}
+
     sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}
     />
     </div>
 
 
-    <div style={{display:'flex', flexDirection: 'column', padding: '5px',
+    <div  onClick={() => changeTheme(1)} style={{display:'flex', flexDirection: 'column', padding: '5px',
          borderRadius: '12px', width: 'fit-content', alignItems: 'center',
              border: currentThemeN == 1 ? `3px solid ${currentTheme.palette.sec}` : '3px solid rgba(0,0,0,0)'}}>
     <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(255,47,47)'/>
     <FormControlLabel style={{ margin: 0, padding: 0}} value="1" control={<Radio checked={currentThemeN == 1 ? true : false}
-    onClick={() => changeTheme(1)}
+   
     sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}
     />
     </div>
 
-
-    <div style={{display:'flex', flexDirection: 'column', padding: '5px',
-         borderRadius: '12px', width: 'fit-content', alignItems: 'center', 
-           border: currentThemeN == 2 ? `3px solid ${currentTheme.palette.sec}` : '3px solid rgba(0,0,0,0)'}}>
-    <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(255, 251, 27)'/>
-    <FormControlLabel style={{ margin: 0, padding: 0}} value="2" control={<Radio checked={currentThemeN == 2 ? true : false}
-    onClick={() => changeTheme(2)}
-    sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}
-    />
-    </div>
-
-
-    <div style={{display:'flex', flexDirection: 'column', padding: '5px',
-         borderRadius: '12px', width: 'fit-content', alignItems: 'center', 
-           border: currentThemeN == 4 ? `3px solid ${currentTheme.palette.sec}` : '3px solid rgba(0,0,0,0)'}}>
-    <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(141, 1, 255)'/>
-    <FormControlLabel style={{ margin: 0, padding: 0}} value="4" control={<Radio checked={currentThemeN == 4 ? true : false}
-    onClick={() => changeTheme(4)}
-    sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}
-    />
-    </div>
-    
-    <div style={{display:'flex', flexDirection: 'column', padding: '5px',
+      <div  onClick={() => changeTheme(5)} style={{display:'flex', flexDirection: 'column', padding: '5px',
          borderRadius: '12px', width: 'fit-content', alignItems: 'center', 
            border: currentThemeN == 5 ? `3px solid ${currentTheme.palette.sec}` : '3px solid rgba(0,0,0,0)'}}>
     <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(252, 116, 5)'/>
     <FormControlLabel style={{ margin: 0, padding: 0}} value="5" control={<Radio checked={currentThemeN == 5 ? true : false}
-    onClick={() => changeTheme(5)}
+   
     sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}
     />
     </div>
+
+
+    <div   onClick={() => changeTheme(2)} style={{display:'flex', flexDirection: 'column', padding: '5px',
+         borderRadius: '12px', width: 'fit-content', alignItems: 'center', 
+           border: currentThemeN == 2 ? `3px solid ${currentTheme.palette.sec}` : '3px solid rgba(0,0,0,0)'}}>
+    <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(255, 251, 27)'/>
+    <FormControlLabel style={{ margin: 0, padding: 0}} value="2" control={<Radio checked={currentThemeN == 2 ? true : false}
+  
+    sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}
+    />
+    </div>
+
+
+    <div     onClick={() => changeTheme(4)} style={{display:'flex', flexDirection: 'column', padding: '5px',
+         borderRadius: '12px', width: 'fit-content', alignItems: 'center', 
+           border: currentThemeN == 4 ? `3px solid ${currentTheme.palette.sec}` : '3px solid rgba(0,0,0,0)'}}>
+    <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(141, 1, 255)'/>
+    <FormControlLabel style={{ margin: 0, padding: 0}} value="4" control={<Radio checked={currentThemeN == 4 ? true : false}
+
+    sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}
+    />
+    </div>
+    
+  
 
 
   </div>

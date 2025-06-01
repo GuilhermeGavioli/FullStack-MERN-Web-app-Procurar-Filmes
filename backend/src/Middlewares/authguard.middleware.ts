@@ -24,6 +24,9 @@ export class AuthGuardImpl implements AuthGuard{
 
         const validation: Validation = this.authenticator.verifyToken(formated_token) as Validation
         console.log(validation)
+        if (!validation) {
+        return response.status(403).end()
+        }
         if (validation.valid == false){
             console.log('invalid')
             return response.status(403).end()

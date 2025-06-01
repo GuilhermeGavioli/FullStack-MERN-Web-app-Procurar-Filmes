@@ -117,6 +117,22 @@ export default function RattingsScreen() {
         isCSnackBarVisible
        } = React.useContext(RatingsContext)
 
+
+         const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
+         const [isEdSnackBarVisible, setIsEdSnackBarVisible] = useState(false)
+         function handleShowingEdFeedback(){
+           setIsEdSnackBarVisible(true)
+           setTimeout(() => {
+             setIsEdSnackBarOpen(true)
+           }, 300);
+           setTimeout(()=>{
+             setIsEdSnackBarOpen(false)
+           },3500)
+           setTimeout(() => {
+             setIsEdSnackBarVisible(false)
+           }, 4000);
+         }
+
   const handleClickOpen = () => {
     handleOpenAndGetRatings()
   };
@@ -193,7 +209,7 @@ export default function RattingsScreen() {
 
 <SnackBar text={'Remoção Agendada!'} state={{open: isRSnackBarOpen, visible: isRSnackBarVisible}} setter={setIsRSnackBarOpen}/>
 <SnackBar text={'Criado com Sucesso!'} state={{open: isCSnackBarOpen, visible: isCSnackBarVisible}} setter={setIsCSnackBarOpen}/>
-
+<SnackBar text={'Editado com Sucesso!'} state={{open: isEdSnackBarOpen, visible: isEdSnackBarVisible}} setter={setIsEdSnackBarOpen}/>
 
 <AppBar position="static" sx={{background: currentTheme.palette.bars}}>
         <Toolbar variant="regular" sx={{justifyContent: 'space-between', gap: '5px', alignItems: 'center'}}>
@@ -234,7 +250,7 @@ export default function RattingsScreen() {
         <Stack spacing={'10px'} sx={{width: '100%', margin: "auto", }}>
           {ratings.map(rating => {
             return (
-              <Comment openDialog={() => openDialog(rating._id)} c_id={rating._id} key={rating._id} comment={rating.comment} stars={rating.stars} userid={rating.user?._id} username={rating?.user?.name} pic={rating?.user?.picture}></Comment>
+              <Comment handleShowingEdFeedback={handleShowingEdFeedback} openDialog={() => openDialog(rating._id)} c_id={rating._id} key={rating._id} comment={rating.comment} stars={rating.stars} userid={rating.user?._id} username={rating?.user?.name} pic={rating?.user?.picture}></Comment>
             )
           })}
          

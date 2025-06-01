@@ -29,26 +29,26 @@ export default function BottomBar() {
        padding: '10px',
         overflow: 'hidden',
         boxShadow: 'none',
-       
+            transition: 'none',
     }}>
 
     
     <BottomNavigation
      sx={{ 
-
-
+       
        width: '100%',
        transition: '0.3s ease-in-out',
        zIndex: 10, display: 'flex', justifyContent: 'space-evenly', 
        borderRadius: '10px',
        boxShadow: 'none',
-      margin: 'auto',
+       margin: 'auto',
       padding: '0px',
-       background: currentTheme.palette.bars,
-       overflow: 'hidden'
+      background: currentTheme.palette.bars,
+      overflow: 'hidden',
+      transition: 'none',
        }}>
      
-      <Box value={0} sx={{ display: 'flex' , justifyContent:'center', alignItems: 'center', width: '25%'}} 
+      <Box value={0} sx={{      transition: 'none', display: 'flex' , justifyContent:'center', alignItems: 'center', width: '25%'}} 
       onClick={() => {goTo('/')}}>
        
         <HomeIcon sx={{

@@ -9,17 +9,19 @@ import { RatingsContext } from './Screen/MovieScreen';
 import { theme } from '../theme';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { ThemeContext } from './Contexts/ThemeContext';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
-export default function SnackBar({state, setter, text}) {
+export default function GeneralErrorSnackBar({text, errorMessage}) {
    const {currentTheme } = React.useContext(ThemeContext)
+  
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
 
-    setter(false);
-  };
+  }
 
   const action = (
         <div sx={{width: '100%', height: '100%', background: 'none'}}>
@@ -31,37 +33,39 @@ export default function SnackBar({state, setter, text}) {
   );
 
   return (
-    <div style={{background: currentTheme.palette.sec , width: 'fit-content', maxWidth: '300px', height: 'fit-content', transition: '0.3s ease-in-out',
-    position: 'fixed',  margin: 'auto', left: 0, right: 0, zIndex: 150, 
-    alignItems: 'center', justifyContent: 'space-between', borderRadius: '5px', fontWeight: 400, fontSize: '1em', color: 'rgb(50,50,50)',
-    transition: '0.3s ease-in-out', alignContent: 'center',
-    display: state?.visible ? 'flex' : 'none' , 
-    top: state?.open ? '25px' : '-100px',
+    <div style={{background: currentTheme.palette.sec , width: 'fit-content', maxWidth: '250px', height: 'fit-content',
+    position: 'fixed', top: '20px', right: 0, left:0, margin: 'auto', zIndex: 15, 
+     borderRadius: '5px', fontWeight: 400, fontSize: '1em',
+    display: errorMessage.display ? 'flex' : 'none' ,
+    opacity: errorMessage.opacity ? '100%' : '0%',
+    transition: '1.2s ease-in-out', justifyContent: 'center', alignItems: 'center',
     }}>
+    
       <div style={{position:'relative', width: '100%', gap: '5px', height: '100%', padding: '20px 25px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
 
-  <CheckCircleOutlineIcon sx={{color: 'white'}}></CheckCircleOutlineIcon>
-<p style={{color: 'white', fontWeight: 600 }}>
+ <WarningAmberIcon sx={{color: 'white',marginRight: '12px'}}/>
+<p style={{ color: 'white',padding: 0, margin: 0,fontWeight: 400, }}>
   {text}</p>
+      </div>
    
 {/* <IconButton
 sx={{
-  position: 'absolute',
-  top: 0,
-  right: '0',
-  fontSize: '0.9em'
+    position: 'absolute',
+    top: 0,
+    right: 0
 }}
         size="small"
         onClick={handleClose}>
         <CloseIcon fontSize="small"     
           sx={{
-            color: 'white'
+       
+            color: currentTheme.palette.contra
       }} />
       </IconButton> */}
     
-      </div>
+      
 
-      <Snackbar
+      {/* <Snackbar
 
         action={action}
         sx={{
@@ -69,7 +73,7 @@ sx={{
             background: 'none',
 
           }}
-      />
+      /> */}
     </div>
   );
 }

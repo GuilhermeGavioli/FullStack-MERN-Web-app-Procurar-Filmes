@@ -33,18 +33,20 @@ export default function ErrorSnackBar({text}) {
   );
 
   return (
-    <div style={{background: currentTheme.palette.sec , width: 'fit-content', maxWidth: '320px', height: 'fit-content',
+    <div style={{background: currentTheme.palette.sec , width: 'fit-content', maxWidth: '250px', height: 'fit-content',
     position: 'fixed', top: '20px', right: 0, left:0, margin: 'auto', zIndex: 15, 
      borderRadius: '5px', fontWeight: 400, fontSize: '1em',
     display: authErrorMessage.display ? 'flex' : 'none' ,
     opacity: authErrorMessage.opacity ? '100%' : '0%',
     transition: '1.2s ease-in-out', justifyContent: 'center', alignItems: 'center',
-    padding: '15px'
     }}>
     
+      <div style={{position:'relative', width: '100%', gap: '5px', height: '100%', padding: '20px 25px', display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+
  <WarningAmberIcon sx={{color: 'white',marginRight: '12px'}}/>
 <p style={{ color: 'white',padding: 0, margin: 0,fontWeight: 400, }}>
   {text}</p>
+      </div>
    
 {/* <IconButton
 sx={{

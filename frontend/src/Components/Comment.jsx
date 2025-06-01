@@ -39,7 +39,7 @@ aria-label="settings" aria-controls={open ? 'basic-menu' : undefined}  aria-hasp
 onClick={handleClick} 
 >
 
-              <MoreVertIcon sx={{color: currentTheme.palette.font_color}} />
+              <MoreVertIcon sx={{margin: 0, padding: 0, fontSize: '1.2em',color: currentTheme.palette.font_color}} />
 
             </IconButton>
 
@@ -66,7 +66,7 @@ onClick={handleClick}
 
 
 
-export default function Comment({c_id, userid, username, pic, comment, openDialog, stars}) {
+export default function Comment({  handleShowingEdFeedback, c_id, userid, username, pic, comment, openDialog, stars}) {
     const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
     const {movie} = React.useContext(MovieContext)
   const {user} = React.useContext(AuthContext)
@@ -87,6 +87,7 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
     setEditMode({editMode: false, newText: null, newStars: null})
   }
  async function saveEditMode(){
+  handleShowingEdFeedback()
     await updateCommentFetch()
   }
   function setNewCommentValue(v){
@@ -134,7 +135,7 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
         (user._id == userid) &&
 
           <div style={{position: 'absolute', top: 0, right: 0, display: 'flex', alignItems: 'center', gap: '5px'}} aria-label="settings">
-                       <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.font_color, fontSize: '1.2em'}}/>
+                       <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.font_color, fontSize: '1.3em'}}/>
                   <ThreeDotsPainel movie_id={movie._id} currentTheme={currentTheme} openDialog={openDialog} c_id={c_id} aria-label="settings" />
                   </div>
        
@@ -147,11 +148,11 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
       <CardHeader sx={{height: 'fit-content', padding:0}}
         avatar={
         
-        <div style={{ width: '40px', height: '40px', borderRadius: '50%', 
+        <div style={{ width: '46px', height: '46px', borderRadius: '50%', 
          background: currentTheme.palette.mid, display: 'flex',
          alignItems: 'center', justifyContent: 'center'
          }}>
-            <Avatar sx={{ width: '40px', height: '40px',bgcolor: currentTheme.palette.dark }}
+            <Avatar sx={{ width: '46px', height: '46px',bgcolor: currentTheme.palette.dark }}
             alt={username}
                  src={imgSrc || fallbackSrc}
           onError={() => setImgSrc(fallbackSrc)}
@@ -161,8 +162,15 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
            
         }
         title={
-            <Typography onClick={() => openProfilePage(username, pic)} variant="body1" style={{
-              userSelect: 'none', color: currentTheme.palette.font_color, fontWeight: 600}}>{username}</Typography>
+                               <div style={{width: '100%', display: 'flex', justifyContent: 'flex-start'}}>
+             <div style={{flex: 1, width: '50%'}}>
+<p variant="body1" style={{ color: currentTheme.palette.darker_font_color, fontWeight: 600, fontSize: '1.1em',
+                        overflow: 'hidden',
+                         textOverflow: 'ellipsis',
+                         whiteSpace: 'nowrap',
+  }}>{username}</p> 
+                         </div>
+           </div>
         }
         subheader={
         <>
@@ -203,7 +211,10 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
                     editMode.editMode ?
                     <>
                     <div style={{marginTop: '10px'}}> 
-                        <TextareaAutosize style={{border: 'none', width: '100%', padding: '5px'}}
+                        <TextareaAutosize style={{border: 'none', width: '100%', padding: '5px',         
+                            '&:focus': {border: `2px solid ${currentTheme.palette.sec}`}
+                          }
+                          }
                  value={editMode.newText} onChange={(e) => setNewCommentValue(e.target.value)}/>
                     </div>
                             <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'end', gap: '0'}}>
@@ -212,7 +223,7 @@ export default function Comment({c_id, userid, username, pic, comment, openDialo
                             </DialogActions>  
                 </>
                     :
-                    <Typography variant="body2"  component="p" sx={{userSelect: 'none', textAlign: 'justify', color: currentTheme.palette.font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
+                    <Typography variant="body2"  component="p" sx={{fontSize: '1em', userSelect: 'none', textAlign: 'justify', color: currentTheme.palette.font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
                         {comment2}
                     </Typography>
                   }

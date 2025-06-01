@@ -20,7 +20,7 @@ const Movie = styled.img`
 
   ${theme.breakpoints.down('md')} {
       width: 135px;
-      height: 160px;
+      height: 175px;
       max-width: 150px;
   }
 
@@ -52,11 +52,11 @@ export default function MovieCard({movie}) {
 return (
 
 
-    
+
     <Movie draggable='false' src={movie?.cover} onError={(e) => replaceImage(e.target)} onClick={viewMovie}/>
-     
+
+
   
-      
     
 
 

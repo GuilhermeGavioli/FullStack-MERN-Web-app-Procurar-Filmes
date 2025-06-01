@@ -34,7 +34,7 @@ return (
 
          
     <div  onClick={viewMovie} key={movie._id} style={{width: '100%', background: currentTheme.palette.movie2_bg, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-    <img src={movie?.cover} style={{width: '100px', minWidth: '100px', height: '130px', minHeight: '130px', background: currentTheme.palette.light, borderRadius: '15px'}} />
+    <img src={movie?.cover} style={{width: '120px', minWidth: '120px', height: '155px', minHeight: '155px', background: currentTheme.palette.light, borderRadius: '10px'}} />
     <div style={{padding: '10px'}}>
       <p style={{color: currentTheme.palette.darker_font_color, fontWeight: 500, fontSize: '1.2em',
   display: '-webkit-box',

@@ -11,6 +11,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import CircularProgress from '@mui/material/CircularProgress';
 import { ThemeContext } from '../Contexts/ThemeContext';
 import styled from 'styled-components';
+import ErrorSnackBar from '../ErrorSnackBar';
+import GeneralErrorSnackBar from '../GeneralErrorSnackBar';
 
 
 // ({currentTheme, isDarkTheme}) => `
@@ -37,6 +39,7 @@ export default function ProfilePage (){
     const [isEditMode, setIsEditMode] = React.useState(false)
     const [name2, setName2] = React.useState(user.name)
     const [newNameValue, setNewNameValue] = React.useState(name2)
+    const [salvarDisable, setSalvarDisable] = React.useState(false)
 
 function enterEditMode(){
     setIsEditMode(true)
@@ -55,17 +58,42 @@ async function runEdtiFetch(){
         setIsEditMode(false)
     } else {
         const {msg} = await res.json()
-        alert('err' +msg)
+        setEditErrorErrorMessageText(msg)
+        showErrorMessage()
     }
 }
+    const [EditErrorErrorMessage, setEditErrorErrorMessage] = React.useState({display: false, opacity: false})
+    const [EditErrorErrorMessageText, setEditErrorErrorMessageText] = React.useState(null)
+    function showErrorMessage(){
+      setEditErrorErrorMessage({opacity: false, display: true})
+      setTimeout(() => {
+        setEditErrorErrorMessage({display: true, opacity: true})
+      }, 200);
+      setTimeout(() => {
+        hideErrorMessage()
+      }, 2200);
+    }
 
 async function saveEditMode(){
+    setSalvarDisable(true)
     await runEdtiFetch()
-    
+    setSalvarDisable(false)
 }
 function exitEditMode(){
     setIsEditMode(false)
 }
+
+
+      function hideErrorMessageImediatly(){
+         setEditErrorErrorMessage({opacity: false, display: false})
+      }
+
+    function hideErrorMessage(){
+        setEditErrorErrorMessage({opacity: false, display: true})
+          setTimeout(() => {
+            setEditErrorErrorMessage({display: false, opacity: false})
+          }, 1300);
+      }
 
     return(
         <React.Fragment>
@@ -94,7 +122,7 @@ function exitEditMode(){
             </div>
                                         <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'center', gap: '0'}}>
                               <Button  style={{color: currentTheme.palette.editnomebtn}} onClick={()=> exitEditMode()}>Cancelar</Button>
-                              <Button style={{color: currentTheme.palette.sec}} onClick={()=> saveEditMode()}>Salvar</Button>
+                              <Button disabled={salvarDisable} style={{color: currentTheme.palette.sec}} onClick={()=> saveEditMode()}>Salvar</Button>
                             </DialogActions>  
             </>
         :
@@ -121,6 +149,8 @@ function exitEditMode(){
 }
 </div>
 
+<GeneralErrorSnackBar errorMessage={EditErrorErrorMessage} text={EditErrorErrorMessageText}/>
+
 {
     userLoading ?
     <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '5px'}} variant='rectangular' width={'120px'} height={'35px'} />
@@ -131,7 +161,7 @@ function exitEditMode(){
 
         <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
     <Button onClick={enterEditMode} disabled={isEditMode} sx={{color: currentTheme.palette.editnomebtn, border: `1px solid ${currentTheme.palette.editnomebtn}` }} variant="outlined">
-     <EditIcon style={{color: currentTheme.palette.editnomebtn, fontSize: '1.2em', marginRight: '5px'}}/>
+     {/* <EditIcon style={{color: currentTheme.palette.editnomebtn, fontSize: '1.2em', marginRight: '5px'}}/> */}
     Editar Nome</Button>
     
 

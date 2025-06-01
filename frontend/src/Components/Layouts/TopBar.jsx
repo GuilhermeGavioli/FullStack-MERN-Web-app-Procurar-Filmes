@@ -41,7 +41,7 @@ export default function TopBar() {
   }
 
   function goToResults(){
-    console.log()
+    if (!searchInput) return
     goTo(`/results?search=${searchInput}`)
   }
 

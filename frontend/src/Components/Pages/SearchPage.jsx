@@ -488,7 +488,7 @@ function disableGenresSnapshot(){
       
      
 
-      <div style={{height: '100%', width: '30%', background: currentTheme.palette.sec}}>
+      <div style={{height: '100%', width: '30%',}}>
               <button onClick={queryMovies}
               style={{ borderRadius: '0',background: 'none', textTransform: 'none', color: 'white',border: 'none', height: '100%', width: '100%',
             margin: 0, padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'

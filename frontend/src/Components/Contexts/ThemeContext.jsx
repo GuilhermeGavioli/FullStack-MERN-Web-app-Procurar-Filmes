@@ -5,7 +5,7 @@ export const ThemeContext = createContext();
 
 function ThemeContextProvider ({ children }) {
     const [currentTheme, setCurrentTheme] = useState(theme) // 1, 2 ou 3
-    const [currentThemeN, setCurrentThemeN] = useState(3) // 1, 2 ou 3
+    const [currentThemeN, setCurrentThemeN] = useState(5) // 1, 2 ou 3
 
         const [isDarkMode, setIsDarkMode] = useState(true)
         function changeDarkMode(mode){
@@ -31,6 +31,10 @@ function ThemeContextProvider ({ children }) {
                 currentTheme.palette.movie2_loading_bg = 'rgb(245,245,245)' //mid
                 currentTheme.palette.movie2_loading_band = 'rgb(240,240,240)' //light
                 currentTheme.palette.slider_bg = 'rgb(245,245,245)' //light
+
+                currentTheme.palette.logininputbg = 'rgb(255,255,255)' //light
+                currentTheme.palette.logininputclr = 'rgb(0,0,0)' //light
+                
                 localStorage.setItem('thememode', 'light')
                 setIsDarkMode(false)
             } else if (mode == 'd'){
@@ -51,10 +55,13 @@ function ThemeContextProvider ({ children }) {
                 currentTheme.palette.loading_1 = 'rgb(40,45,45)' //dark
                 currentTheme.palette.cover_l = 'linear-gradient(90deg, rgba(0, 0, 0, 0.19) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0) 100%)' //dark
                 currentTheme.palette.cover_r = 'linear-gradient(90deg, rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.08) 72%, rgba(0,0,0,0.19) 100%)' //dark
-                currentTheme.palette.editnomebtn = 'rgb(55,50,55)' //dark
+                currentTheme.palette.editnomebtn = 'rgb(80,80,80)' //dark
                 currentTheme.palette.movie2_loading_bg = 'rgb(35,35,35)' //mid
                 currentTheme.palette.movie2_loading_band = 'rgb(40,45,45)' //light
                 currentTheme.palette.slider_bg = 'rgb(20,20,20)' //light
+
+                currentTheme.palette.logininputbg = 'rgb(20,20, 20)' //light
+                currentTheme.palette.logininputclr = 'rgb(255,255,255)' //light
                 localStorage.setItem('thememode', 'dark')
                 setIsDarkMode(true)
             }

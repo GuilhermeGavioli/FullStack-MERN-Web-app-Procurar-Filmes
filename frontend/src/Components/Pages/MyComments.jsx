@@ -246,21 +246,21 @@ const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
       <div 
       ref={listRef}
       onScroll={handleFetchingMoreOnScroll}
-      style={{width: '100%', height: '100%', overflowY:'scroll', position: 'relative'}}>
+      style={{width: '100%', height: '100%', overflowY:'scroll', position: 'relative', paddingTop: '5px'}}>
 
 <div style={{width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-  padding: '4px 15px',
+  padding: '4px 15px'
 }}>
 
           <Typography sx={{
       
             color: currentTheme.palette.darker_font_color,
             fontWeight: 600,
-            fontSize: '1.5em'
+            fontSize: '1.6em'
           }}>Meus Comentários</Typography>
 
 {!loading ? 
-          <ReplayIcon onClick={reloading}style={{color: currentTheme.palette.darker_font_color, fontSize: '1.6em'}}/>
+          <ReplayIcon onClick={reloading}style={{color: currentTheme.palette.darker_font_color, fontSize: '1.8em'}}/>
 : <></>}
           </div>
 

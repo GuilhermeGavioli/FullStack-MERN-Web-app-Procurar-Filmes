@@ -60,6 +60,7 @@ user-select: none;
     gap: 8px;
     font-family: roboto;
     font-size: 1.1em;
+          white-space: nowrap;
     
     ${(props) => props.currentTheme.breakpoints.down('md')} {
       padding: 12px 15px 12px 15px;
@@ -98,6 +99,9 @@ const RuntimeItem = styled.p`
     font-weight: 500;
     font-family: roboto;
     font-size: 1.1em;
+         
+                         
+                         white-space: nowrap;
 
           ${(props) => props.currentTheme.breakpoints.up('lg')} {
        padding: 20px 35px 20px 35px;
@@ -122,7 +126,7 @@ const YearItem = styled.div`
     font-weight: 500;
     font-family: roboto;
  font-size: 1.1em;
-
+      white-space: nowrap;
           ${(props) => props.currentTheme.breakpoints.up('lg')} {
        padding: 20px 35px 20px 35px;
       border-radius: 30px;

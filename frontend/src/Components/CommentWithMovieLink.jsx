@@ -23,6 +23,7 @@ import { ThemeContext } from './Contexts/ThemeContext';
 import StarIcon from '@mui/icons-material/Star';
 
 import EditIcon from '@mui/icons-material/Edit';
+import { LocationContext } from './Contexts/LocationContext';
 function ThreeDotsPainel({openDialog, c_id, currentTheme, movie_id }){
   const { handleOpenAndGetMovie } = useContext(MovieContext)
     const [anchorEl, setAnchorEl] = useState(null);
@@ -52,10 +53,10 @@ function ThreeDotsPainel({openDialog, c_id, currentTheme, movie_id }){
 
 <IconButton 
 aria-label="settings" aria-controls={open ? 'basic-menu' : undefined}  aria-haspopup="true"  aria-expanded={open ? 'true' : undefined}
-onClick={handleClick}
+onClick={handleClick} sx={{margin: 0, padding: 0}}
 >
 
-              <MoreVertIcon sx={{color: currentTheme.palette.font_color}} />
+              <MoreVertIcon sx={{margin: 0,padding: 0,color: currentTheme.palette.font_color, fontSize: '1.2em'}} />
 
             </IconButton>
 
@@ -84,6 +85,7 @@ onClick={handleClick}
 
 export default function CommentWithMovieLink({handleShowingEdFeedback, c_id, userid, username, pic, comment, openDialog, movie_id, stars}) {
       const {currentTheme} = React.useContext(ThemeContext)
+      const {goTo} = React.useContext(LocationContext)
   const {user} = useContext(AuthContext)
   const [editMode, setEditMode] = useState({editMode: false, newText: null, stars: null})
 
@@ -146,20 +148,28 @@ export default function CommentWithMovieLink({handleShowingEdFeedback, c_id, use
    
       {
         (user._id == userid) &&
-          <div style={{position: 'absolute', top: 0, right: 0, display: 'flex', alignItems: 'center', gap: '5px'}} aria-label="settings">
-               <EditIcon onClick={()=> enterEditMode()} style={{color: currentTheme.palette.font_color, fontSize: '1.2em'}}/>
-          <ThreeDotsPainel movie_id={movie_id} currentTheme={currentTheme} openDialog={openDialog} c_id={c_id} aria-label="settings" />
+          <div style={{position: 'absolute', top: '5px',right: 0, display: 'flex', alignItems: 'center', gap: '5px'}} aria-label="settings">
+               <EditIcon onClick={()=> enterEditMode()} sx={{color: currentTheme.palette.font_color, fontSize: '1.3em'}}/>
+          <ThreeDotsPainel movie_id={movie_id} currentTheme={currentTheme} openDialog={openDialog} c_id={c_id} 
+          aria-label="settings" />
           </div>
           }
+
+                        {/* <Typography variant="body1" sx={{ color: currentTheme.palette.darker_font_color, fontWeight: 600, fontSize: '1.1em',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+
+                      }}>{username}AOSCoaoasdokca dpakpo dcpoapoks</Typography> */}
 
       <CardHeader sx={{height: 'fit-content', padding:0}}
         avatar={
        
-        <div style={{ width: '40px', height: '40px', borderRadius: '50%', 
+        <div style={{ width: '46px', height: '46px', borderRadius: '50%', 
          background: currentTheme.palette.mid, display: 'flex',
          alignItems: 'center', justifyContent: 'center'
          }}>
-            <Avatar sx={{ width: '40px', height: '40px',bgcolor: currentTheme.palette.dark }}
+            <Avatar onClick={() => goTo('/profile/me')} sx={{ width: '46px', height: '46px',bgcolor: currentTheme.palette.dark }}
             alt={username}
                             src={imgSrc || fallbackSrc}  
                  onError={() => setImgSrc(fallbackSrc)}
@@ -168,8 +178,22 @@ export default function CommentWithMovieLink({handleShowingEdFeedback, c_id, use
         
         }
         title={
-            <Typography variant="body1" style={{color: currentTheme.palette.darker_font_color, fontWeight: 600}}>{username}</Typography>
+  
+                     <div style={{width: '100%', display: 'flex', justifyContent: 'flex-start'}}>
+             <div style={{flex: 1, width: '50%'}}>
+<p onClick={() => goTo('/profile/me')} variant="body1" style={{ color: currentTheme.palette.darker_font_color, fontWeight: 600, fontSize: '1.1em',
+                        overflow: 'hidden',
+                         textOverflow: 'ellipsis',
+                         whiteSpace: 'nowrap',
+  }}>{username}</p> 
+                         </div>
+           </div>
+
+
+
         }
+        
+
         subheader={
           <>
           {
@@ -198,7 +222,11 @@ export default function CommentWithMovieLink({handleShowingEdFeedback, c_id, use
           editMode.editMode ?
           <>
           <div style={{marginTop: '10px'}}> 
-              <TextareaAutosize style={{border: 'none', width: '100%', padding: '5px'}}
+              <TextareaAutosize style={{border: 'none', width: '100%', padding: '5px', outline: 'none',
+                  '&:focus': {border: `2px solid ${currentTheme.palette.sec}`, outline: 'none'},
+                  '&:hover': {border: `2px solid ${currentTheme.palette.sec}`, }
+                          
+              }}
        value={editMode.newText} onChange={(e) => setNewCommentValue(e.target.value)}/>
           </div>
                   <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'end', gap: '0'}}>
@@ -207,13 +235,15 @@ export default function CommentWithMovieLink({handleShowingEdFeedback, c_id, use
                   </DialogActions>  
       </>
           :
-          <Typography variant="body2"  component="p" sx={{ textAlign: 'justify', color: currentTheme.palette.darker_font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
+          <Typography variant="body2"  component="p" sx={{fontSize: '1em', textAlign: 'justify', color: currentTheme.palette.darker_font_color, margin: 0,padding: 0, paddingTop: '10px', fontWeight: 500}}>
               {comment2}
           </Typography>
         }
       </div>
     </Card>
     <MovieScreen draggable='false'/>
+
+    
 
     </React.Fragment>
   )

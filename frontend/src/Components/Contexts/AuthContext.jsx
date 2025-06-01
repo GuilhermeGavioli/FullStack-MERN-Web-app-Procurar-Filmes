@@ -21,7 +21,7 @@ export default function AuthContextProvider({children}){
     const [authRetry, setAuthRetry] = useState(false)
     const [authErrorMessage, setAuthErrorMessage] = useState({display: false, opacity: false})
     
-    
+    const location = useLocation()
     const [loginButtonActive, setLoginButtonActive] = useState(true)
 
 
@@ -88,7 +88,7 @@ export default function AuthContextProvider({children}){
           setUser(userdata)
           setAuth(true)
           setAuthRetry(false)
-        } else if (res.status == 403 ){ // not auth
+        } else if (res.status == 403 && location.pathname != '/login' ){ // not auth
           showErrorMessage()
           setUserLoading(false)
           setAuth(false)
@@ -102,26 +102,35 @@ export default function AuthContextProvider({children}){
        }
 
     useEffect(() => {
-        console.log('auth context use effect')
+        console.log('auth context use effect' +  location.pathname)
 
-
+     
           
           const token = localStorage.getItem('access_token')
           console.log(token)
-          if (!token) {
+          if (!token && location.pathname != '/login') {
              setUserLoading(false)
                        showErrorMessage()
                        setAuth(false)
                        return
                       } else{
                         try{
-          getMyUserInfo()
+                          if (location.pathname != '/login') {
+                            getMyUserInfo()
+                          } else {
+                                      setUserLoading(false)
+          setAuth(false)
+          setAuthRetry(false)
+                          }
         } catch(err){
           //retry
-          console.log('CATCHINNG')
-          showErrorMessage()
-          setUserLoading(false)
-          setAuth(false)
+          if (location.pathname != '/login'){
+            showErrorMessage()
+          }
+
+            console.log('CATCHINNG')
+            setUserLoading(false)
+            setAuth(false)
         }
                       }
       }, [])

@@ -57795,7 +57795,7 @@ var require_database = __commonJS({
         return __awaiter(this, void 0, void 0, function* () {
           try {
             const client = yield mongodb_1.MongoClient.connect("mongodb+srv://MovieAppUser:hSHZDdTMpChmxbEh@cluster0.q6taq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
-            console.log("Connected to MongoDB");
+            console.log("Conn2Mongo");
             return client;
           } catch (error) {
             console.error("Error connecting to MongoDB:", error);
@@ -62750,7 +62750,7 @@ var require_UserController = __commonJS({
           if (!user)
             return response.status(404).end();
           if (user.name == name) {
-            return response.status(404).json({ msg: "Nome \xE9 o mesmo." });
+            return response.status(404).json({ msg: "Nome n\xE3o foi alterado para mudan\xE7a." });
           }
           if (user.email == "test@test") {
             return response.status(404).json({ msg: "Nome do usuario de teste n\xE3o pode ser editado" });
@@ -63309,6 +63309,9 @@ var require_authguard_middleware = __commonJS({
         const formated_token = token.split(" ")[1];
         const validation = this.authenticator.verifyToken(formated_token);
         console.log(validation);
+        if (!validation) {
+          return response.status(403).end();
+        }
         if (validation.valid == false) {
           console.log("invalid");
           return response.status(403).end();

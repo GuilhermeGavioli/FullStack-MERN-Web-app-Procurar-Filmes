@@ -76,7 +76,7 @@ export class UserControllerImpl implements UserController{
         const user = await this.userService.getUser(user_id)
         if (!user) return response.status(404).end()
         if (user.name == name){
-            return response.status(404).json({msg: 'Nome é o mesmo.'})
+            return response.status(404).json({msg: 'Nome não foi alterado para mudança.'})
         }
         if (user.email == 'test@test') {
             return response.status(404).json({msg: 'Nome do usuario de teste não pode ser editado'})

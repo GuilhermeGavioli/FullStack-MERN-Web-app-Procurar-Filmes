@@ -42,7 +42,7 @@ const TextareaAutosize = styled(BaseTextareaAutosize)(
   border: 1px solid ${currentTheme.palette.light};
 
   &:hover {
-    border-color: red;
+    border-color: ${currentTheme.palette.sec};
   }
 
   &:focus {

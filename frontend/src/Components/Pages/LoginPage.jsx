@@ -20,6 +20,9 @@ export default function LoginPage() {
 
     useEffect(()=>{
       hideErrorMessageImediatly()
+      setTimeout(() => {
+        hideErrorMessageImediatly()
+      },200);
     }, [])
 
   return (
@@ -49,22 +52,40 @@ export default function LoginPage() {
         }}>Demo App</p>
         </div>
 
-<div style={{display: 'flex', alignItems: 'center', gap: '8px', flexDirection: 'column'}}>
- <h1 style={{fontSize: '2.2em', fontWeight: 400, color: currentTheme.palette.contra, marginBottom: '15px'}}>Login</h1>
+<div style={{display: 'flex', alignItems: 'center', gap: '10px', flexDirection: 'column', width: '100%', padding: '15px'}}>
+
+{/* <img src="/Logo.png" style={{width: '25px', height: '25px'}} alt="" /> */}
+ {/* <h1 style={{fontSize: '2.2em', fontWeight: 400, color: currentTheme.palette.contra, marginBottom: '15px'}}>Login</h1> */}
+
  {/* <img style={{width: '30px', height: '30px'}} src="/Logo.png" alt="" /> */}
   <input placeholder='Email' style={{
-    outline: 'none', height: '30px', padding: '18px 12px', fontSize: '1.1em',
+    outline: 'none', height: '45px', padding: '18px 12px', fontSize: '1.1em',
       border: isDarkMode ? 'none' : '1px solid rgb(225,225,225)',
+      background: currentTheme.palette.logininputbg,
+      color: currentTheme.palette.logininputclr,
+          borderRadius: '10px',
+          width: '100%',
+          maxWidth: '300px'
   }} 
   value={email} type="email" onChange={(e) => setEmail(e.target.value)}/>
   <input placeholder='Senha' style={{
- outline: 'none', height: '30px', padding: '18px 12px', fontSize: '1.1em',
-  border: isDarkMode ? 'none' : '1px solid rgb(225,225,225)'
+ outline: 'none', height: '45px', padding: '18px 12px', fontSize: '1.1em',
+  border: isDarkMode ? 'none' : '1px solid rgb(225,225,225)',
+   background: currentTheme.palette.logininputbg,
+      color: currentTheme.palette.logininputclr,
+          borderRadius: '10px',
+           width: '100%',
+               maxWidth: '300px'
 }}
    value={password} type="password" onChange={(e) => setPassword(e.target.value)}/>
   {/* <button >login</button> */}
   <Button disabled={!loginButtonActive} onClick={() => loginWithEmail(email, password)} 
-  sx={{background: currentTheme.palette.sec,marginTop: '15px', width: '100%',
+  sx={{background: currentTheme.palette.sec, width: '100%',
+    borderRadius: '10px',
+        maxWidth: '300px',
+        height: '45px',
+        marginTop: '10px',
+        fontSize: '1.2em',
     '&.Mui-disabled': {
       background: currentTheme.palette.movie2_loading_bg, 
       color: currentTheme.palette.movie2_loading_band
