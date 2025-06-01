@@ -22,7 +22,7 @@ export default function AuthContextProvider({children}){
     const [authErrorMessage, setAuthErrorMessage] = useState({display: false, opacity: false})
     
     const location = useLocation()
-    const [loginButtonActive, setLoginButtonActive] = useState(true)
+
 
 
     function showErrorMessage(){
@@ -35,26 +35,7 @@ export default function AuthContextProvider({children}){
       }, 2200);
     }
 
-  async function loginWithEmail(email, password){
-    setLoginButtonActive(false)
-  const res = await fetch('https://procurarfilmes.xyz/auth/email', {
-    method: 'POST',
-    body: JSON.stringify({email, password}),
-     headers: {
-            'Content-Type': 'application/json',
-        }
-    
-  }
-      )
-      setLoginButtonActive(true)
-        if (res.status == 200){
-    const { access_token } = await res.json()
-    localStorage.setItem('access_token', access_token)
-    navigator('/')
-  }
-     
-      }
-
+ 
       function hideErrorMessageImediatly(){
          setAuthErrorMessage({opacity: false, display: false})
       }
@@ -75,7 +56,7 @@ export default function AuthContextProvider({children}){
     }
 
       const getMyUserInfo = async () => {
-        const res = await fetch('https://procurarfilmes.xyz/auth/user/getinfo', {
+        const res = await fetch('http://localhost:80/auth/user/getinfo', {
           headers: {
             'authorization': `Bearer ${localStorage.getItem('access_token')}`
           }
@@ -161,7 +142,7 @@ export default function AuthContextProvider({children}){
     }
 
       return (
-        <AuthContext.Provider value={{loginButtonActive, auth, authErrorMessage, user, userLoading, logout, loggingOutLoading, loginWithEmail, hideErrorMessageImediatly, hideErrorMessage}}>
+        <AuthContext.Provider value={{ auth, authErrorMessage, user, userLoading, logout, loggingOutLoading, hideErrorMessageImediatly, hideErrorMessage}}>
           {/* <div style={{position: 'fixed', top: 0, right: 0, zIndex: 15}}>aaa</div> */}
           {
             userLoading &&

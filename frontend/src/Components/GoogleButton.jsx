@@ -33,7 +33,7 @@ export default function GoogleButonComp() {
 async function delegateGoogleOAuthToBackend(oauth_access_token){
   setGoogleButtonActive(false)
   console.log('token:', oauth_access_token)
-  const res = await fetch(`https://procurarfilmes.xyz/auth/google/${oauth_access_token}`);
+  const res = await fetch(`http://localhost:80/auth/google/${oauth_access_token}`);
   setGoogleButtonActive(true)
   if (res.status == 200){
     const { access_token } = await res.json()
@@ -63,7 +63,7 @@ return (
       textTransform: 'none',
       // border: `1px solid ${theme.palette.sec.main}`,
       '&:hover': {
-        // border: `1px solid ${theme.palette.sec.main}`,
+        background: currentTheme.palette.logininputbg
       },
       width: '100%',
           maxWidth: '300px',

@@ -38,7 +38,7 @@ import { createTheme } from '@mui/material/styles';
 
       slider_bg: 'rgb(20,20,20)', //light
 
-      sec: 'rgb(47, 255, 227)',
+      sec: 'rgb(252, 116, 5)',
 
              logininputbg: 'rgb(20,20, 20)',
                 logininputclr: 'rgb(255,255,255)'

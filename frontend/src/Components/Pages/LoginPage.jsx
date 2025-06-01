@@ -7,15 +7,67 @@ import { ThemeContext } from '../Contexts/ThemeContext';
 import { useState } from 'react';
 import { Button } from '@mui/material';
 import PinkSwitch from '../PinkSwitch';
-
+import GeneralErrorSnackBar from '../GeneralErrorSnackBar';
+import { useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
+
+       const navigator = useNavigate()
     
     const {currentTheme, setCurrentTheme, changeDarkMode, isDarkMode} = useContext(ThemeContext)
-      const {authErrorMessage,hideErrorMessageImediatly, loginWithEmail,loginButtonActive } = useContext(AuthContext)
+      const {authErrorMessage,hideErrorMessageImediatly } = useContext(AuthContext)
 
       const [email, setEmail] = useState("test@test")
       const [password, setPassword] = useState("test123")
+
+
+
+          const [loginButtonActive, setLoginButtonActive] = useState(true)
+
+     const [EditErrorErrorMessage, setEditErrorErrorMessage] = React.useState({display: false, opacity: false})
+          const [EditErrorErrorMessageText, setEditErrorErrorMessageText] = React.useState(null)
+
+       async function loginWithEmail(){
+    setLoginButtonActive(false)
+  const res = await fetch('http://localhost:80/auth/email', {
+    method: 'POST',
+    body: JSON.stringify({email, password}),
+     headers: {
+            'Content-Type': 'application/json',
+        }
+    
+  }
+      )
+      setLoginButtonActive(true)
+        if (res.status == 200){
+    const { access_token } = await res.json()
+    localStorage.setItem('access_token', access_token)
+    navigator('/')
+  } else {
+    setEditErrorErrorMessageText('Credenciais Inválidas.')
+    showErrorMessage()
+  }
+     
+      }
+
+       
+
+          function showErrorMessage(){
+            setEditErrorErrorMessage({opacity: false, display: true})
+            setTimeout(() => {
+              setEditErrorErrorMessage({display: true, opacity: true})
+            }, 200);
+            setTimeout(() => {
+              hideErrorMessage()
+            }, 2200);
+          }
+          function hideErrorMessage(){
+              setEditErrorErrorMessage({opacity: false, display: true})
+                setTimeout(() => {
+                  setEditErrorErrorMessage({display: false, opacity: false})
+                }, 1300);
+            }
+
 
 
     useEffect(()=>{
@@ -47,7 +99,7 @@ export default function LoginPage() {
   position: 'absolute', bottom: '15px', left: '15px',
 }}>
 
-       <p style={{color: currentTheme.palette.darker_font_color, fontSize: '0.8em', 
+       <p style={{color: currentTheme.palette.darker_font_color, fontSize: '0.7em', 
         opacity: isDarkMode ? '0.4' : '100%'
         }}>Demo App</p>
         </div>
@@ -79,13 +131,16 @@ export default function LoginPage() {
 }}
    value={password} type="password" onChange={(e) => setPassword(e.target.value)}/>
   {/* <button >login</button> */}
-  <Button disabled={!loginButtonActive} onClick={() => loginWithEmail(email, password)} 
+  <Button disabled={!loginButtonActive} onClick={() => loginWithEmail()} 
   sx={{background: currentTheme.palette.sec, width: '100%',
     borderRadius: '10px',
         maxWidth: '300px',
         height: '45px',
         marginTop: '10px',
         fontSize: '1.2em',
+    '&:hover': {
+           background: currentTheme.palette.sec, 
+    },
     '&.Mui-disabled': {
       background: currentTheme.palette.movie2_loading_bg, 
       color: currentTheme.palette.movie2_loading_band
@@ -106,6 +161,9 @@ export default function LoginPage() {
 
 
      
+
+<GeneralErrorSnackBar errorMessage={EditErrorErrorMessage} text={EditErrorErrorMessageText}/>
+
         </div>
 
     

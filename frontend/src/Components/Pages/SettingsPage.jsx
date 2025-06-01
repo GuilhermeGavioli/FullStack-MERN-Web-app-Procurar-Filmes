@@ -131,7 +131,7 @@ export default function SettingsPage (){
     <div   onClick={() => changeTheme(2)} style={{display:'flex', flexDirection: 'column', padding: '5px',
          borderRadius: '12px', width: 'fit-content', alignItems: 'center', 
            border: currentThemeN == 2 ? `3px solid ${currentTheme.palette.sec}` : '3px solid rgba(0,0,0,0)'}}>
-    <UIRepresentationComponent currentTheme={currentTheme} secondary_color='rgb(255, 251, 27)'/>
+    <UIRepresentationComponent currentTheme={currentTheme} secondary_color='#1976d2'/>
     <FormControlLabel style={{ margin: 0, padding: 0}} value="2" control={<Radio checked={currentThemeN == 2 ? true : false}
   
     sx={{color: currentTheme.palette.mid, padding: 0, margin: 0, '&.Mui-checked': {color: currentTheme.palette.sec }}} />}

@@ -46,7 +46,7 @@ function enterEditMode(){
 }
 
 async function runEdtiFetch(){
-    const res = await fetch(`https://procurarfilmes.xyz/user/edit?name=${encodeURIComponent(newNameValue)}`, {
+    const res = await fetch(`http://localhost:80/user/edit?name=${encodeURIComponent(newNameValue)}`, {
     method: 'GET',
      headers: {
             'Content-Type': 'application/json',
@@ -121,12 +121,18 @@ function exitEditMode(){
             value={newNameValue} onChange={(e) => setNewNameValue(e.target.value)}/>
             </div>
                                         <DialogActions style={{width: '100%', display: 'flex', justifyContent: 'center', gap: '0'}}>
-                              <Button  style={{color: currentTheme.palette.editnomebtn}} onClick={()=> exitEditMode()}>Cancelar</Button>
-                              <Button disabled={salvarDisable} style={{color: currentTheme.palette.sec}} onClick={()=> saveEditMode()}>Salvar</Button>
+                              <Button  sx={{color: currentTheme.palette.editnomebtn,
+
+
+                              }} onClick={()=> exitEditMode()}>Cancelar</Button>
+                              <Button disabled={salvarDisable} sx={{color: currentTheme.palette.sec,
+
+
+                              }} onClick={()=> saveEditMode()}>Salvar</Button>
                             </DialogActions>  
             </>
         :
-        <h1 style={{fontSize: '1.5em', fontWeight: 500, color: currentTheme.palette.darker_font_color}}>{name2}</h1>
+        <h1 style={{fontSize: '1.6em', fontWeight: 400, color: currentTheme.palette.darker_font_color, marginTop: '10px'}}>{name2}</h1>
     }
 </div>
 }
@@ -144,7 +150,7 @@ function exitEditMode(){
 {/* <div style={{background: currentTheme.palette.mid, borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center'}}>
     <EmailIcon sx={{margin: 'auto', color: currentTheme.palette.contra, fontSize: '1em'}}/>
 </div> */}
-<p style={{fontSize: '.9em', fontWeight: 400, color: currentTheme.palette.darker_font_color}}>{user?.email}</p>
+<p style={{fontSize: '.9em', fontWeight: 300, color: currentTheme.palette.darker_font_color, }}>{user?.email}</p>
 </>
 }
 </div>
@@ -159,14 +165,28 @@ function exitEditMode(){
     !loggingOutLoading &&
 
 
-        <div style={{display: 'flex', gap: '10px', marginTop: '10px'}}>
-    <Button onClick={enterEditMode} disabled={isEditMode} sx={{color: currentTheme.palette.editnomebtn, border: `1px solid ${currentTheme.palette.editnomebtn}` }} variant="outlined">
+        <div style={{display: 'flex', gap: '10px', marginTop: '10px',}}>
+    <Button onClick={enterEditMode} disabled={isEditMode} sx={{
+        height: '45px',color: currentTheme.palette.editnomebtn, border: `1px solid ${currentTheme.palette.editnomebtn}` ,
+           '&:hover': {
+           background: currentTheme.palette.editnomebtn, 
+           border: `1px solid ${currentTheme.palette.editnomebtn}`,
+           color: 'white'
+    },
+        }} variant="outlined">
      {/* <EditIcon style={{color: currentTheme.palette.editnomebtn, fontSize: '1.2em', marginRight: '5px'}}/> */}
     Editar Nome</Button>
     
 
-        <Button sx={{backgroundColor: currentTheme.palette.sec}} variant="contained" onClick={logout}>
-    <LogoutIcon sx={{marginRight: '5px',fontSize: '1.2em'}}></LogoutIcon>
+        <Button sx={{height: '45px', backgroundColor: currentTheme.palette.sec,
+            '&:hover': {
+           backgroundColor: currentTheme.palette.sec, 
+
+           }
+        }} variant="contained" onClick={logout}>
+    <LogoutIcon sx={{marginRight: '5px',fontSize: '1.2em',
+                                           
+    }}></LogoutIcon>
     Sair</Button>
     </div>
 

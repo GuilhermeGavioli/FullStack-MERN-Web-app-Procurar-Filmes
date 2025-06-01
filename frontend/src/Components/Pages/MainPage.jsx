@@ -57,7 +57,7 @@ function MainPage() {
   }
 
     const getFirstMovies = async () => {
-    const url = `https://procurarfilmes.xyz/movies/${page}/genres?genre=${genre}`
+    const url = `http://localhost:80/movies/${page}/genres?genre=${genre}`
     const res = await fetch(url, {
     headers: {
       'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -115,7 +115,7 @@ function MainPage() {
 
   async function getRandomSample(){
 
-    const url = `https://procurarfilmes.xyz/movies/sample/random`
+    const url = `http://localhost:80/movies/sample/random`
   const res = await fetch(url, {
     headers: {
       'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -155,7 +155,7 @@ function MainPage() {
 
   async function getOldies(){
 
-      const url = `https://procurarfilmes.xyz/movies/sample/olddies`
+      const url = `http://localhost:80/movies/sample/olddies`
     const res = await fetch(url, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -198,7 +198,7 @@ function MainPage() {
   const getMoreMovies = async () => {
     if (end) return
     console.log('geting more')
-    const res = await fetch(`https://procurarfilmes.xyz/movies/${page}/genres?genre=${genre}`, {
+    const res = await fetch(`http://localhost:80/movies/${page}/genres?genre=${genre}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }

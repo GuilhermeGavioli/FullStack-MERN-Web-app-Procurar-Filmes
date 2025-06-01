@@ -81,24 +81,25 @@ function ThemeContextProvider ({ children }) {
             localStorage.setItem('theme', 1)
         } else if (ls_theme == 2){
      
-            currentTheme.palette.sec = 'rgb(255, 251, 27)'
+            currentTheme.palette.sec = '#1976d2'
             setCurrentThemeN(2)
             localStorage.setItem('theme', 2)
+        } else if (ls_theme == 3){
+     
+                localStorage.setItem('theme', 3)
+            currentTheme.palette.sec = 'rgb(47, 255, 227)'
+        
+            setCurrentThemeN(3)
         } else if (ls_theme == 4){
       
             currentTheme.palette.sec = 'rgb(141, 1, 255)'
             setCurrentThemeN(4)
             localStorage.setItem('theme', 4)
-        } else if (ls_theme == 5){
+        } else{
            
             currentTheme.palette.sec = 'rgb(252, 116, 5)'
             setCurrentThemeN(5)
             localStorage.setItem('theme', 5)
-        } else {
-            localStorage.setItem('theme', 3)
-            currentTheme.palette.sec = 'rgb(47, 255, 227)'
-        
-            setCurrentThemeN(3)
         }
     }, [theme])
 
@@ -109,7 +110,7 @@ function ThemeContextProvider ({ children }) {
             currentTheme.palette.sec = 'rgb(255,47,47)'
 
         } else if (n == 2){
-                currentTheme.palette.sec = 'rgb(255, 251, 27)'
+                currentTheme.palette.sec = '#1976d2'
        
         } else if (n == 4){
                 currentTheme.palette.sec = 'rgb(141, 1, 255)'
