@@ -56,7 +56,6 @@ export default function GenreCarrocel({runGenreChange,genre, loading, moviesRetr
                     <Item  currentTheme={currentTheme} key={g} onClick={() => runGenreChange(g)}>
         
           
-{/* <Image currentTheme={currentTheme} draggable='false' width={'100%'} style={{background: 'none'}} src={`${g}.svg`} alt="" /> */}
     
                     <p style={{color:currentTheme.palette.genre_color, userSelect: 'none', wordBreak: 'keep-all', whiteSpace: 'nowrap'}}>
                          {

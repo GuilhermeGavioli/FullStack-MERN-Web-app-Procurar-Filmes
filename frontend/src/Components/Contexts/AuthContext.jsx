@@ -6,6 +6,8 @@ import { Button, CircularProgress,Typography } from "@mui/material";
 import { ThemeContext } from "./ThemeContext";
 import { useContext } from "react";
 
+
+
 export const AuthContext = createContext()
 
 export default function AuthContextProvider({children}){
@@ -143,7 +145,7 @@ export default function AuthContextProvider({children}){
 
       return (
         <AuthContext.Provider value={{ auth, authErrorMessage, user, userLoading, logout, loggingOutLoading, hideErrorMessageImediatly, hideErrorMessage}}>
-          {/* <div style={{position: 'fixed', top: 0, right: 0, zIndex: 15}}>aaa</div> */}
+
           {
             userLoading &&
          <div style={{width: '100%', height: '100%', background: currentTheme.palette.dark, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -158,7 +160,8 @@ export default function AuthContextProvider({children}){
           <>
 <ErrorSnackBar text='Faça Login para acessar o counteúdo.'/>
 {children}
-</>
+          </>
+
         }
 
 

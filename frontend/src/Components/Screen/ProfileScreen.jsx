@@ -11,8 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { ActorContext, RatingsContext } from './MovieScreen';
-import Comment from '../Comment';
+
+
 import { Stack, styled as MUIStyled, Box, Fab, Skeleton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CreateRatingDialog from '../CreateRatingDialog';

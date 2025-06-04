@@ -6,7 +6,7 @@ import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../Contexts/ThemeContext';
 import { useState } from 'react';
 import { Button } from '@mui/material';
-import PinkSwitch from '../PinkSwitch';
+import MySwitch from '../MySwitch';
 import GeneralErrorSnackBar from '../GeneralErrorSnackBar';
 import { useNavigate } from 'react-router-dom';
 
@@ -91,8 +91,8 @@ export default function LoginPage() {
   position: 'absolute', top: '15px', left: '15px',
 }}>
 
-       <PinkSwitch style={{
-        }} state={isDarkMode} setter={() => changeDarkMode(isDarkMode ? 'l' : 'd')}></PinkSwitch>
+       <MySwitch style={{
+        }} state={isDarkMode} setter={() => changeDarkMode(isDarkMode ? 'l' : 'd')}></MySwitch>
         </div>
 
         <div style={{

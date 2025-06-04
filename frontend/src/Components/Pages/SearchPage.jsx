@@ -1,70 +1,21 @@
-import * as React from 'react';
 
 import styled  from 'styled-components';
 import Box from '@mui/material/Box';
-import MovieCard from '../MovieCard';
 import { createContext, useState, useEffect } from 'react';
 import MovieScreen from '../Screen/MovieScreen';
-
-
-import SearchInput from '../SearchInput';
 import FilterScreen from '../Screen/FilterScreen';
-import InputBase from '@mui/material/InputBase';
+import { Fragment } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-import MovieCard2 from '../MovieCard2';
+import MovieCardHorizontal from '../MovieCardHorizontal';
 import DeletableChip from '../DeletableChip';
-import { Button, Fab, Skeleton, Stack, Typography } from '@mui/material';
-import MovieCarrocel from '../MovieCarrocel';
-import { theme } from '../../theme';
+import { Fab, Skeleton, Stack, Typography } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ThemeContext } from '../Contexts/ThemeContext';
-
 import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../Contexts/AuthContext';
-import { LocationContext } from '../Contexts/LocationContext';
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
+import MovieCardHorizontalSkeleton from '../Skeleton/MovieCardHorizontalSkeleton';
 
-export const MovieContext = createContext()
-export const RatingsContext = createContext()
-
-const MyGrid = styled.div`
-  margin: auto;
-  display: grid;
-  width: fit-content;
-  width: 100%;
-  grid-template-columns: 1fr 1fr;
-  place-items: center;
-  grid-gap: 10px;
-  row-gap: 10px;
-`
-
-const Search = styled('div')((props) => ({
-
-}));
-
-const SearchIconWrapper = styled('div')(() => ({
-  height: '100%',
-  width: '50px',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  margin: '0',
-  padding: '0 0px 0 10px',
-}));
-
-const StyledInputBase = styled('input')((props) => ({
-  width: '70%',
-  height: '100%',
-  margin: 0,
-  padding: 0,
-  fontSize: '1.1em',
-  paddingLeft: '10px',
-  border: 'none',
-  outline: 'none',
-  background: 'none',
-  color: props.currentTheme.palette.contra,
-}))
 
 export const FilterContext = createContext()
 
@@ -284,7 +235,7 @@ function disableGenresSnapshot(){
   const [scrollpos, setScrollpos] = useState(0)
   const [noMovies, setNoMovies] = useState(false)
 
-  const listRef = React.useRef(null);
+  const listRef = useRef(null);
 
   function scrollToTop(){
     listRef.current.scrollTop = 0
@@ -416,7 +367,7 @@ function disableGenresSnapshot(){
     
 
     return (
-    <React.Fragment>
+    <Fragment>
       <div 
          ref={listRef}
          onScroll={handleFetchingMoreOnScroll}
@@ -445,9 +396,6 @@ function disableGenresSnapshot(){
 
       <div style={{padding: '0', width: '100%', height: '100%',background: currentTheme.palette.bars, display: 'flex', alignItems: 'center' }}>
 
-      {/* <SearchIconWrapper>
-              <SearchIcon sx={{color: 'white'}} />
-            </SearchIconWrapper> */}
             <StyledInputBase
             autoFocus
             placeholder='Procurar...'
@@ -541,7 +489,7 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
     , width: '100vw'}} direction='column' spacing={1}>
   {
     loadingMovies ?
-    <React.Fragment>
+    <Fragment>
         <div style={{width: '100%', background: currentTheme.palette.movie2_loading_bg, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
     <Skeleton animation="wave" sx={{background: currentTheme.palette.movie2_loading_band, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
     <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
@@ -570,11 +518,11 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
     </div>
 </div>
       
-    </React.Fragment>
+    </Fragment>
     :
           movies?.map(movie => {
             return (
-              <MovieCard2 key={movie?._id} movie={movie}/>
+              <MovieCardHorizontal key={movie?._id} movie={movie}/>
             )
           })
           
@@ -582,35 +530,12 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
 
         {
           loadingMoreMovies &&
-          <React.Fragment>
-          <div style={{width: '100%', background: currentTheme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-          <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
-          <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-          </div>
-      </div>
-          <div style={{width: '100%', background: currentTheme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-          <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
-          <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-          </div>
-      </div>
-          <div style={{width: '100%', background: currentTheme.palette.mid, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>
-          <Skeleton animation="wave" sx={{background: currentTheme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'80px'} height={'100px'} /> 
-          <div style={{padding: '10px', display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'150px'} height={'20px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-            <Skeleton animation="wave" sx={{background: currentTheme.palette.light}} variant="rectangular" width={'115px'} height={'12px'} /> 
-          </div>
-      </div>
-      </React.Fragment>
+          <Fragment>
+            <MovieCardHorizontalSkeleton/>
+            <MovieCardHorizontalSkeleton/>
+            <MovieCardHorizontalSkeleton/>
+            <MovieCardHorizontalSkeleton/>
+      </Fragment>
         }
 
 
@@ -633,7 +558,20 @@ filtersSnapshot.genres.on && <DeletableChip name={'Genre'} action={() => { disab
             </div>
             }
 </div>
-    </React.Fragment>
+    </Fragment>
     )
 }
 
+
+const StyledInputBase = styled('input')((props) => ({
+  width: '70%',
+  height: '100%',
+  margin: 0,
+  padding: 0,
+  fontSize: '1.1em',
+  paddingLeft: '10px',
+  border: 'none',
+  outline: 'none',
+  background: 'none',
+  color: props.currentTheme.palette.contra,
+}))

@@ -1,6 +1,6 @@
 import { Card, CardHeader, Typography, Skeleton } from "@mui/material"
-import { theme } from "../theme"
-import { ThemeContext } from "./Contexts/ThemeContext"
+import { theme } from "../../theme"
+import { ThemeContext } from "../Contexts/ThemeContext"
 import { useContext } from "react"
 
 

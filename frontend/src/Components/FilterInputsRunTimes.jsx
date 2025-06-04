@@ -12,5 +12,4 @@ export default function FilterInputsRunTimes(){
             <SingleSelectionInput name={'Max Runtime'} value={maxRuntime} setValue={setMaxRuntime} available_values={available_runtimes}/>    
         </Fragment>
     )
-
 }

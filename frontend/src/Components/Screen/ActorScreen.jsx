@@ -11,8 +11,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
-import { ActorContext, RatingsContext } from './MovieScreen';
-import Comment from '../Comment';
+import { ActorContext } from '../Contexts/ActorContext';
+
 import { Stack, styled as MUIStyled, Box, Fab, Skeleton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CreateRatingDialog from '../CreateRatingDialog';
@@ -36,7 +36,7 @@ export default function ActorScreen() {
   const listRef = useRef(null);
 
   const {isActorContainerOpen,  
-   actorName, actorPic, actorAge, actorNac, handleCloseActor, handleOpenAndGetActor} = useContext(ActorContext)
+   actorName, actorPic, actorAge, actorNac, handleCloseActor} = useContext(ActorContext)
 
 
 
@@ -56,10 +56,6 @@ export default function ActorScreen() {
   return (
     <React.Fragment>
 
-      {/* <ActorCard
-             onClick={()=> handleOpenAndGetActor('Pantera', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4knMwpdZYcBMA29ugyDxhSuf68f1mjwZ6Cg&s')}
-      >
-             </ActorCard> */}
 
                  <div style={{ display: 'flex', gap: '15px',
        width: '100%', overflowX: 'scroll', overflowY: 'scroll',

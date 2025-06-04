@@ -1,7 +1,7 @@
 import { grey } from '@mui/material/colors';
 import styled from 'styled-components'
 import { useContext } from 'react';
-import { ActorContext } from './Screen/MovieScreen';
+import { ActorContext } from './Contexts/ActorContext';
 
 export default function ActorCard({name, picture, age, nac}) {
   const {handleOpenAndGetActor} = useContext(ActorContext)

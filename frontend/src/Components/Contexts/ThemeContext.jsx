@@ -8,6 +8,7 @@ function ThemeContextProvider ({ children }) {
     const [currentThemeN, setCurrentThemeN] = useState(5) // 1, 2 ou 3
 
         const [isDarkMode, setIsDarkMode] = useState(true)
+        
         function changeDarkMode(mode){
             if (mode == 'l'){
                 currentTheme.palette.contra = 'rgb(15,15,15)'

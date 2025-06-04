@@ -35,9 +35,7 @@ function MainPage() {
   const [end, setEnd] = useState(false)
 
 
-  // const [isMovieContainerOpen, setIsMovieContainerOpen] = useState(false);
-  // const [movie, setMovie]= useState({})
-  // const [movieLoading, setMovieLoading]= useState(false)
+
 
   const [randomMovies, setRandomMovies] = useState([{id:1},{id:2},{id:3},{id:4}])
   const [randomMoviesLoading, setRandomMoviesLoading] = useState(true)
@@ -235,14 +233,6 @@ function MainPage() {
 
 
 
-{/* <Box sx={{ mt: 1, width: '100%', maxWidth: 500, padding: '0 10px 0 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-<Typography sx={{p:0,m:0,color: grey[200], fontWeight: '600', fontSize: '1.6em'}} variant="h4" gutterBottom>
-Released This Year
-</Typography>
-<Typography sx={{p:0,m:0,color: grey[300], fontWeight: '500', fontSize: '.9em', textDecoration: 'underline'}} variant="subtitle1" gutterBottom>
-See all
-</Typography>
-</Box> */}
 
 <TopMoviesContext.Provider value={{TopMovies: randomMovies, topMoviesLoading: randomMoviesLoading}}>
 

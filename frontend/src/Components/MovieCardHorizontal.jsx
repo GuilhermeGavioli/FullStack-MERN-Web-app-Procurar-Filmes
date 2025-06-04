@@ -1,36 +1,16 @@
-import { Skeleton } from '@mui/material';
-import Fab from '@mui/material/Fab';
-
-import { grey } from '@mui/material/colors';
-
-import styled from 'styled-components'
-
 import { useContext } from 'react';
 import { MovieContext } from './Contexts/MovieContext';
-import { theme } from '../theme';
 import { ThemeContext } from './Contexts/ThemeContext';
 
-const Movie = styled.img`
-    width: 150px;
-    height: 220px;
-    border-radius: 0px;
-    &: hover {
-      filter: brightness(1.1);
-      cursor: pointer;
-    }
-`
-
-export default function MovieCard2({movie}) {
-   const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
+export default function MovieCardHorizontal({movie}) {
+   const {currentTheme} = useContext(ThemeContext)
   const { handleOpenAndGetMovie } = useContext(MovieContext)
-
 
   function viewMovie(){
     handleOpenAndGetMovie(movie?._id)
   }
 
 return (
-
 
          
     <div  onClick={viewMovie} key={movie._id} style={{width: '100%', background: currentTheme.palette.movie2_bg, height: 'fit-content', padding: '10px', display: 'flex', gap: '0px'}}>

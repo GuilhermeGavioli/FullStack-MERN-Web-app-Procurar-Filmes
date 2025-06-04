@@ -6,7 +6,7 @@ import Switch from '@mui/material/Switch';
 import { FilterContext } from './Pages/SearchPage';
 import { ThemeContext } from './Contexts/ThemeContext';
 
-const PinkSwitchMUI = styled(Switch)(({currentTheme, theme }) => ({
+const SwitchMUI = styled(Switch)(({currentTheme, theme }) => ({
     '& .MuiSwitch-switchBase.Mui-checked': {
       color: currentTheme.palette.sec,
       '&:hover': {
@@ -24,12 +24,12 @@ const PinkSwitchMUI = styled(Switch)(({currentTheme, theme }) => ({
 
   
 
-export default function PinkSwitch({state, setter}) {
+export default function MySwitch({state, setter}) {
   const {currentTheme, setCurrentTheme} = React.useContext(ThemeContext)
   return (
     <div >
 
-    <PinkSwitchMUI currentTheme={currentTheme}  checked={state} onChange={() => {setter(!state)}} />
+    <SwitchMUI currentTheme={currentTheme}  checked={state} onChange={() => {setter(!state)}} />
     </div>
   )
 }

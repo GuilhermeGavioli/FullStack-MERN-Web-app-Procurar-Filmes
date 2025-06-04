@@ -4,65 +4,25 @@ import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import { Box, Fab, Rating, Typography } from '@mui/material';
+import { Fab, Rating, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { theme } from '../theme';
 import StarIcon from '@mui/icons-material/Star';
 
 import { TextareaAutosize as BaseTextareaAutosize } from '@mui/base/TextareaAutosize';
 import { styled } from '@mui/system';
-import { blue, grey } from '@mui/material/colors';
 import { MovieContext } from './Contexts/MovieContext';
-import { RatingsContext } from './Screen/MovieScreen';
+import { CommentsContext } from './Contexts/CommentsContext';
 import { AuthContext } from './Contexts/AuthContext';
 import { ThemeContext } from './Contexts/ThemeContext';
-
-
-
-
-
-const TextareaAutosize = styled(BaseTextareaAutosize)(
-  ({currentTheme}) => `
-  box-sizing: border-box;
-  width: 100%;
-  resize: unset;
-  height: 100px;
-  max-height: 100px;
-  min-height: 100px;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 8px 12px;
-  border-radius: 8px;
-  color: ${currentTheme.palette.contra};
-  background: ${currentTheme.palette.dark};
-  box-shadow: none;
-  border: none;
-  border: 1px solid ${currentTheme.palette.light};
-
-  &:hover {
-    border-color: ${currentTheme.palette.sec};
-  }
-
-  &:focus {
-    border-color: 3px solid ${currentTheme.palette.sec};
-       outline: none;
-  }
-
-  &:focus-visible {
- 
-  }
-`,
-);
+import { SnackBarContext } from './Contexts/SnackBarContext';
 
 export default function CreateRatingDialog() {
-  const {currentTheme, setCurrentTheme, IsDarkTheme} = React.useContext(ThemeContext)
+  const {currentTheme, IsDarkTheme} = React.useContext(ThemeContext)
   const [open, setOpen] = React.useState(false);
   const [commentValue, setCommentValue] = React.useState('');
   const {movie} = React.useContext(MovieContext)
-  const { setRatings, handleCloseRatings, isCSnackBarOpen, isCSnackBarVisible,  handleShowingCFeedback
-   } = React.useContext(RatingsContext)
+  const { setRatings } = React.useContext(CommentsContext)
+  const { handleDisplaySnackBar } = React.useContext(SnackBarContext)
   const { user } = React.useContext(AuthContext)
 
   const [starvalue, setstarvalue] = React.useState(3)
@@ -89,7 +49,7 @@ export default function CreateRatingDialog() {
       }
       setRatings((p) => {return [r, ...p]})
       handleClose()
-      handleShowingCFeedback()
+      handleDisplaySnackBar('create', 'O Comentário foi Agendado para Criação!')
       try{
         if (starvalue == 0) setstarvalue(1)
         console.log(commentValue)
@@ -166,18 +126,12 @@ userSelect: 'none',
         }}
         />
         </div>
-
          <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginTop: '20px'}}>
-
         <TextareaAutosize currentTheme={currentTheme}  aria-label="empty textarea" 
 placeholder='Seu comentário'  autoFocus value={commentValue} onChange={(e) => setCommentValue(e.target.value)}/>
 </div>
-  
   </div>
 </DialogContent>
-
-
-
         <DialogActions sx={{padding: 0}}>
           <div style={{width: '100%', background: currentTheme.palette.dark, padding: '15px', display: 'flex', justifyContent: 'flex-end'}}>
           <Button  style={{color: currentTheme.palette.editnomebtn, marginRight: '10px'}} onClick={handleClose}>Cancelar</Button>
@@ -185,50 +139,39 @@ placeholder='Seu comentário'  autoFocus value={commentValue} onChange={(e) => s
           </div>
         </DialogActions>
       </Dialog>
-
-  
-
-        {/* <div style={{background: 'blue',zIndex: '20',height: '100%', width:'100%'}}>
-        <h1>Oi</h1>
-        </div>
-        <h1>Oi</h1> */}
-
-
-
-        {/* <div   style={{borderRadius: '0px', background: currentTheme.palette.darker, width: '100vw', height: '100%', background: 'red'}}>
-
-        <DialogTitle sx={{color: currentTheme.palette.contra, fontSize: '1.4em'}}>O que Acha do Filme?</DialogTitle>
-   <img src={movie.cover} style={{height: '150px', width: '120px'}} alt="" />
-<div style={{padding: '0 20px 0 20px'}}>
-
-              <Rating
-              sx={{color: currentTheme.palette.sec}}
-        emptyIcon={<StarIcon style={{ opacity: 0.85 }} fontSize="inherit" />}
-        value={starvalue}
-        defaultValue={starvalue}
-        onChange={(event, newValue) => {
-          setstarvalue(newValue);
-        }}
-        />
-        </div>
-
-        <DialogContent>
-
-<TextareaAutosize currentTheme={currentTheme} style={{border: 'none'}}  aria-label="empty textarea" 
-placeholder="Escreva seu comentário..."  autoFocus value={commentValue} onChange={(e) => setCommentValue(e.target.value)}/>
-
-
-        </DialogContent>
-        <DialogActions>
-          <Button  style={{color: currentTheme.palette.lighter}} onClick={handleClose}>Cancelar</Button>
-          <Button style={{color: currentTheme.palette.sec}} onClick={createComment}>Comentar</Button>
-        </DialogActions>
-
-     
-        </div> */}
-    
     </React.Fragment>
   );
 }
 
+const TextareaAutosize = styled(BaseTextareaAutosize)(
+  ({currentTheme}) => `
+  box-sizing: border-box;
+  width: 100%;
+  resize: unset;
+  height: 100px;
+  max-height: 100px;
+  min-height: 100px;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: ${currentTheme.palette.contra};
+  background: ${currentTheme.palette.dark};
+  box-shadow: none;
+  border: none;
+  border: 1px solid ${currentTheme.palette.light};
 
+  &:hover {
+    border-color: ${currentTheme.palette.sec};
+  }
+
+  &:focus {
+    border-color: 3px solid ${currentTheme.palette.sec};
+       outline: none;
+  }
+
+  &:focus-visible {
+ 
+  }
+`,
+);

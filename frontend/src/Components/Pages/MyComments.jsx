@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Fab, Skeleton, Stack, Typography } from "@mui/material"
-import Comment from "../Comment"
+
 import { grey } from "@mui/material/colors"
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
 
@@ -13,14 +13,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState, Fragment, useEffect, useRef, useContext } from "react";
 
 import { AuthContext } from "../Contexts/AuthContext";
-import CommentSkeleton from "../CommentSkeleton";
-import SnackBar from '../SnackBar';
-import CommentWithMovieLink from '../CommentWithMovieLink';
-import { RatingsContext } from '../Screen/MovieScreen';
+import CommentSkeleton from "../Skeleton/CommentSkeleton";
+
 
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ThemeContext } from '../Contexts/ThemeContext';
 import ReplayIcon from '@mui/icons-material/Replay';
+import UnifiedComment from '../Comment';
+import ProfileScreen from '../Screen/ProfileScreen';
+import ProfileContextProvider from '../Contexts/ProfileContext';
+
 
 //todo
 //alert dialog here and on ratingscreen is the same // reuse it //
@@ -68,6 +70,7 @@ export default function MyComments(){
   
   const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
   const {user, userLoading, auth } = useContext(AuthContext)
+
 
   const listRef = useRef(null);
 
@@ -188,44 +191,16 @@ export default function MyComments(){
 
   }
 
-const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
-  const [isEdSnackBarVisible, setIsEdSnackBarVisible] = useState(false)
 
-  const [isRSnackBarOpen, setIsRSnackBarOpen] = useState(false)
-  const [isRSnackBarVisible, setIsRSnackBarVisible] = useState(false)
-  function handleShowingRFeedback(){
-    setIsRSnackBarVisible(true)
-    setTimeout(() => {
-      setIsRSnackBarOpen(true)
-    }, 300);
-    setTimeout(()=>{
-      setIsRSnackBarOpen(false)
-    },3500)
-    setTimeout(() => {
-      setIsRSnackBarVisible(false)
-    }, 4000);
-  }
 
-  function handleShowingEdFeedback(){
-    setIsEdSnackBarVisible(true)
-    setTimeout(() => {
-      setIsEdSnackBarOpen(true)
-    }, 300);
-    setTimeout(()=>{
-      setIsEdSnackBarOpen(false)
-    },3500)
-    setTimeout(() => {
-      setIsEdSnackBarVisible(false)
-    }, 4000);
-  }
 
   async function deleteComment(){
-    console.log('deleting')
-    closeDialog()
+    // OPTIMISTIC HANDLING
     setMyComments(prev => {
       return myComments.filter((c) => { return c._id !== currentCommentId})
     })
-    handleShowingRFeedback()
+    closeDialog()
+    
       const url = `https://procurarfilmes.xyz/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
@@ -242,6 +217,10 @@ const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
   }
   
     return(
+
+
+                  <ProfileContextProvider>
+                     <ProfileScreen/>
 
       <div 
       ref={listRef}
@@ -286,8 +265,7 @@ const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
 {/* <SnackBar text={'Criado com Sucesso!'} state={isCSnackBarOpen} setter={setIsCSnackBarOpen}/>
 <SnackBar text={'Remoção Agendada!'}  state={isRSnackBarOpen} setter={setIsRSnackBarOpen}/> */}
 
-<SnackBar text={'Remoção Agendada!'} state={{open: isRSnackBarOpen, visible: isRSnackBarVisible}} setter={setIsRSnackBarOpen}/>
-<SnackBar text={'Editado com Sucesso!'} state={{open: isEdSnackBarOpen, visible: isEdSnackBarVisible}} setter={setIsEdSnackBarOpen}/>
+
      
       {
         loading ? 
@@ -301,8 +279,8 @@ const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
         myComments?.map(c => {
           console.log(c)
             return (
-              <CommentWithMovieLink handleShowingEdFeedback={handleShowingEdFeedback} key={c?._id} openDialog={openDialog}
-                c_id={c?._id} comment={c?.comment} userid={c?.user_id} username={user?.name} stars={c?.stars} pic={user?.picture} movie_id={c?.movie_id}></CommentWithMovieLink>
+              <UnifiedComment containMovieView={true} key={c?._id} openDialog={openDialog}
+                c_id={c?._id} comment={c?.comment} userid={c?.user_id} username={user?.name} stars={c?.stars} pic={user?.picture} movie_id={c?.movie_id}></UnifiedComment>
             )
         })
       }
@@ -330,6 +308,7 @@ const [isEdSnackBarOpen, setIsEdSnackBarOpen] = useState(false)
 
       </div>
        </div>
+       </ProfileContextProvider>
 
     )
 

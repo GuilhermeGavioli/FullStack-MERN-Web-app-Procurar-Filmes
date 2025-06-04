@@ -5,7 +5,6 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { AuthContext } from './Contexts/AuthContext';
 import { useContext } from 'react';
-import { RatingsContext } from './Screen/MovieScreen';
 import { theme } from '../theme';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { ThemeContext } from './Contexts/ThemeContext';

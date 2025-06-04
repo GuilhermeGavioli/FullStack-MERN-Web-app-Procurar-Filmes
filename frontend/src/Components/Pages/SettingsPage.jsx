@@ -9,7 +9,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import CircularProgress from '@mui/material/CircularProgress';
-import PinkSwitch from '../PinkSwitch';
 import { ThemeContext } from '../Contexts/ThemeContext';
 import { useContext } from 'react';
 import { styled } from '@mui/material/styles';

@@ -15,6 +15,7 @@ import ProfilePage from './Components/Pages/ProfilePage';
 import AuthContextProvider from './Components/Contexts/AuthContext';
 import SettingsPage from './Components/Pages/SettingsPage';
 import ThemeContextProvider from './Components/Contexts/ThemeContext';
+import SnackBarContextProvider from './Components/Contexts/SnackBarContext';
 
 function App() {
   
@@ -29,9 +30,10 @@ function App() {
                 <Route element={<BarsWrapper />}>
 
     
-                  <Route path="/"       element={ <MovieContextProvider><AuthContextProvider><MainPage/></AuthContextProvider></MovieContextProvider> }></Route>
-                  <Route path="/mycomments" element={ <MovieContextProvider><AuthContextProvider><MyComments /></AuthContextProvider></MovieContextProvider>}></Route>
-                  <Route path="/results"  element={ <MovieContextProvider><SearchPage /></MovieContextProvider> }></Route>
+                  <Route path="/"       element={ <SnackBarContextProvider><MovieContextProvider><AuthContextProvider><MainPage/></AuthContextProvider></MovieContextProvider></SnackBarContextProvider> }></Route>
+                  {/* <Route path="/mycomments" element={ <MovieContextProvider><AuthContextProvider><MyComments /></AuthContextProvider></MovieContextProvider>}></Route> */}
+                  <Route path="/mycomments" element={ <MovieContextProvider><AuthContextProvider><SnackBarContextProvider><MyComments /></SnackBarContextProvider></AuthContextProvider></MovieContextProvider>}></Route>
+                  <Route path="/results"  element={ <MovieContextProvider><SnackBarContextProvider><SearchPage /></SnackBarContextProvider></MovieContextProvider> }></Route>
                   <Route path="/profile/me"  element={ <AuthContextProvider><ProfilePage/></AuthContextProvider> }></Route>
                   <Route path="/settings"  element={ <SettingsPage/> }></Route>
 

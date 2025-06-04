@@ -31,7 +31,9 @@ export class AuthGuardImpl implements AuthGuard{
             console.log('invalid')
             return response.status(403).end()
         } else if (validation.expired == true){
-            console.log('expired') // refresh
+            console.log('expired') 
+            // TODO: implement refresh token
+            return response.status(403).end()
         } else {
             response.locals.user_id = validation.data.user.id
             return next()

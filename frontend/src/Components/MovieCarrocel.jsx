@@ -1,100 +1,16 @@
 import styled from 'styled-components'
 import MovieCard from './MovieCard';
-import { useState, useContext, useRef, useEffect } from 'react';
-import { Loadingtctx, MoviesContext } from './Pages/MainPage';
+import { useState, useContext } from 'react';
 import { Skeleton } from '@mui/material';
-import { grey } from '@mui/material/colors';
-import { theme } from '../theme';
 import { ThemeContext } from './Contexts/ThemeContext';
-
 
 import ReplayIcon from '@mui/icons-material/Replay';
 import { AuthContext } from './Contexts/AuthContext';
-const MasterWrapper = styled.div`
-  width: 100vw;
-  position: relative;
 
-  ${theme.breakpoints.down('md')} {
-    height: 180px;
-  }
-
-  ${theme.breakpoints.up('md')} {
-      height: 165px;
-  }
-
-  ${theme.breakpoints.up('lg')} {
-    height: 205px;
-}
-
-`
-
-const WrapperF = styled.div`
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-`
-
-const Wrapper = styled.div`
-    width: 100vw;
-    position: relative;
-    overflow-x: scroll;
-    scrollbar-width: 2px;
-    ${theme.breakpoints.down('md')} {
-      height: 180px;
-    }
-
-    ${theme.breakpoints.up('md')} {
-      height: 165px;
-  }
-
-  ${theme.breakpoints.up('lg')} {
-    height: 205px;
-}
-`
-
-const CardsWrapper = styled.div`
-    position: absolute;
-    left: 0;
-    width: fit-content;
-    height: 100%;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 40px 0 10px;
-`
-
-const LeftMask = styled.div`
-  left: 0;
-  pointer-events: none;
-  z-index: 3;
-  position: absolute;
-  width: 80px;
-  background: ${({ currentTheme }) => currentTheme.palette.cover_l};
-  height: 89%;
-  margin: auto 0;
-  bottom: 0;
-  top: 0;
-  `
-  
-  const RightMask = styled.div`
-  right: 0;
-  pointer-events: none;
-  z-index: 3;
-  position: absolute;
-  width: 60px;
-  background: ${({ currentTheme }) => currentTheme.palette.cover_r};
-  height: 89%;
-  margin: auto 0;
-  bottom: 0;
-  top: 0;
-`
 
 export default function MovieCarrocel({ finite = true, movies, loading, getMoreMovies, moviesRetry, retry }){
     const {userLoading, auth} = useContext(AuthContext)
-    const {currentTheme, setCurrentTheme} = useContext(ThemeContext)
+    const {currentTheme} = useContext(ThemeContext)
     const [fetchinmore, setFetchingmore ] = useState(false)
 
     async function fetchMoreMovies(e){
@@ -112,11 +28,11 @@ export default function MovieCarrocel({ finite = true, movies, loading, getMoreM
 
     return (
  
- <MasterWrapper>
- <WrapperF>
+ <MasterWrapper currentTheme={currentTheme}>
+ <SecondaryWrapper>
   <LeftMask currentTheme={currentTheme}/>
   <RightMask currentTheme={currentTheme}/>
-<Wrapper onScroll={(e) => fetchMoreMovies(e)}>
+<Wrapper currentTheme={currentTheme} onScroll={(e) => fetchMoreMovies(e)}>
 
 {
 
@@ -160,138 +76,91 @@ moviesRetry &&
 </CardsWrapper>
         </Wrapper> 
 
-        </WrapperF>
+        </SecondaryWrapper>
         </MasterWrapper>
     )
 }
 
 
 
+const MasterWrapper = styled.div`
+  width: 100vw;
+  position: relative;
 
+  ${({ currentTheme }) => currentTheme.breakpoints.down('md')} {
+    height: 180px;
+  }
 
+  ${({ currentTheme }) => currentTheme.breakpoints.up('md')} {
+      height: 165px;
+  }
 
+  ${({ currentTheme }) => currentTheme.breakpoints.up('lg')} {
+    height: 205px;
+}
 
+`
 
+const SecondaryWrapper = styled.div`
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+`
 
+const Wrapper = styled.div`
+    width: 100vw;
+    position: relative;
+    overflow-x: scroll;
+    scrollbar-width: 2px;
+    ${({ currentTheme }) => currentTheme.breakpoints.down('md')} {
+      height: 180px;
+    }
 
+    ${({ currentTheme }) => currentTheme.breakpoints.up('md')} {
+      height: 165px;
+  }
 
+  ${({ currentTheme }) => currentTheme.breakpoints.up('lg')} {
+    height: 205px;
+}
+`
 
+const CardsWrapper = styled.div`
+    position: absolute;
+    left: 0;
+    width: fit-content;
+    height: 100%;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 40px 0 10px;
+`
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const MasterWrapper = styled.div`
-//     width: 100vw;
-//     height: 145px;
-//     position: relative;
-//     overflow: scroll;
-// `
-
-// const Wrapper = styled.div`
-//     width: 100vw;
-//     height: 145px;
-//     position: relative;
-//     overflow: scroll;
-// `
-
-// const CardsWrapper = styled.div`
-//     position: absolute;
-//     left: 0;
-//     width: fit-content;
-//     height: 100%;
-//     padding: 5px;
-//     display: flex;
-//     align-items: center;
-//     gap: 8px;
-//     padding: 0 10px 0 10px;
-// `
-
-// const LeftMask = styled.div`
-//   left: 0;
-//   pointer-events: none;
-//   z-index: 3;
-//   position: absolute;
-//   width: 50px;
-//   background: red;
-//   height: 145px;
-//   `
-// const RightMask = styled.div`
-//   right: 0;
-//   pointer-events: none;
-//   z-index: 3;
-//   position: fixed;
-//   width: 50px;
-//   background: red;
-//   height: 80%;
-// `
-
-// export default function MovieCarrocel({ finite = true, movies, loading, getMoreMovies }){
-
-//     const [fetchinmore, setFetchingmore ] = useState(false)
-
-//     async function fetchMoreMovies(e){
-//       if (finite) {
-//         return
-//       }
-//       const maxScroll = e.target.scrollLeftMax
-//       const nearEnd = (maxScroll - 500)
-//       if (e.target.scrollLeft >= nearEnd && !fetchinmore){
-//         setFetchingmore(true)
-//         await getMoreMovies()
-//         setFetchingmore(false)
-//       }
-//     }
-
-//     return (
- 
-// <Wrapper onScroll={(e) => fetchMoreMovies(e)}>
-//   <LeftMask/>
-//   <RightMask/>
-// <CardsWrapper>
-//         {
-//           movies?.map((movie) => {
-//             return(
-//               loading
-//                 ? 
-//               <Skeleton animation="wave" sx={{background: theme.palette.light, borderRadius: '15px'}} variant="rectangular" width={'115px'} height={'135px'} /> 
-//                 : 
-//               <MovieCard key={movie?._id} movie={movie} alt="" />
-//             )
-//           })
-//         }
-// </CardsWrapper>
-//         </Wrapper> 
-//     )
-// }
+const LeftMask = styled.div`
+  left: 0;
+  pointer-events: none;
+  z-index: 3;
+  position: absolute;
+  width: 80px;
+  background: ${({ currentTheme }) => currentTheme.palette.cover_l};
+  height: 89%;
+  margin: auto 0;
+  bottom: 0;
+  top: 0;
+  `
+  
+const RightMask = styled.div`
+  right: 0;
+  pointer-events: none;
+  z-index: 3;
+  position: absolute;
+  width: 60px;
+  background: ${({ currentTheme }) => currentTheme.palette.cover_r};
+  height: 89%;
+  margin: auto 0;
+  bottom: 0;
+  top: 0;
+`
