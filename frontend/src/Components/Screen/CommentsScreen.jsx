@@ -58,7 +58,7 @@ export default function CommentsScreen() {
                return prev.filter((c) => { return c._id !== currentCommentId})
              })
              handleDisplaySnackBar('delete', 'A Remoção foi Agendada com Sucesso!')
-               const url = `https://procurarfilmes.xyz/ratings/delete/${currentCommentId}`
+               const url = `https://procurarfilmes.xyz:442/ratings/delete/${currentCommentId}`
                const res = await fetch(url, {
                  method: 'DELETE',
                  headers: {

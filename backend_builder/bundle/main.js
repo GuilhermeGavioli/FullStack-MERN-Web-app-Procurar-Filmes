@@ -63317,6 +63317,7 @@ var require_authguard_middleware = __commonJS({
           return response.status(403).end();
         } else if (validation.expired == true) {
           console.log("expired");
+          return response.status(403).end();
         } else {
           response.locals.user_id = validation.data.user.id;
           return next();
@@ -63435,7 +63436,7 @@ var require_main = __commonJS({
     app.get("/health", (req, res) => {
       res.send("ok");
     });
-    https_1.default.createServer(options, app).listen("443", () => {
+    https_1.default.createServer(options, app).listen("442", () => {
       console.log("UpOn443");
     });
   }

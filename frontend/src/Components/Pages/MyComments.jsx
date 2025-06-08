@@ -96,7 +96,7 @@ export default function MyComments(){
  
 
     const getMyComments = async () => {
-      const url = `https://procurarfilmes.xyz/myratings?page=${page}`
+      const url = `https://procurarfilmes.xyz:442/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -140,7 +140,7 @@ export default function MyComments(){
     }
     console.log(page)
       setLoadingMore(true)
-      const url = `https://procurarfilmes.xyz/myratings?page=${page}`
+      const url = `https://procurarfilmes.xyz:442/myratings?page=${page}`
       const res = await fetch(url, {
         headers: {
           'authorization': `Bearer ${localStorage.getItem('access_token')}`
@@ -201,7 +201,7 @@ export default function MyComments(){
     })
     closeDialog()
     
-      const url = `https://procurarfilmes.xyz/ratings/delete/${currentCommentId}`
+      const url = `https://procurarfilmes.xyz:442/ratings/delete/${currentCommentId}`
       const res = await fetch(url, {
         method: 'DELETE',
         headers: {

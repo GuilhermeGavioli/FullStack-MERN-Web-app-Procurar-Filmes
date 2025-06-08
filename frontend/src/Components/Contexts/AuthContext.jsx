@@ -58,7 +58,7 @@ export default function AuthContextProvider({children}){
     }
 
       const getMyUserInfo = async () => {
-        const res = await fetch('https://procurarfilmes.xyz/auth/user/getinfo', {
+        const res = await fetch('https://procurarfilmes.xyz:442/auth/user/getinfo', {
           headers: {
             'authorization': `Bearer ${localStorage.getItem('access_token')}`
           }

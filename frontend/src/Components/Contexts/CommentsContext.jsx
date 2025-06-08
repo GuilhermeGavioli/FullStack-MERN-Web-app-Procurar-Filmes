@@ -19,7 +19,7 @@ function CommentsContextProvider ({children}) {
     console.log('firing gettting more ratings')
     if (isRatingsEnd || loadingMoreRatings) return
     setLoadingMoreRatings(true)
-    const res = await fetch(`https://procurarfilmes.xyz/ratings/${movie?._id}?page=${ratingsPage}`, {
+    const res = await fetch(`https://procurarfilmes.xyz:442/ratings/${movie?._id}?page=${ratingsPage}`, {
       headers: {
         'authorization': `Bearer ${localStorage.getItem('access_token')}`
       }
@@ -42,7 +42,7 @@ function CommentsContextProvider ({children}) {
       setRatingsLoading(true)
       setLoadingMoreRatings(true)
       setIsRatingsContainerOpen(true)
-      const url = `https://procurarfilmes.xyz/ratings/${movie?._id}?page=${ratingsPage}`
+      const url = `https://procurarfilmes.xyz:442/ratings/${movie?._id}?page=${ratingsPage}`
       const res = await fetch(url, {
           headers: {
               'authorization': `Bearer ${localStorage.getItem('access_token')}`
